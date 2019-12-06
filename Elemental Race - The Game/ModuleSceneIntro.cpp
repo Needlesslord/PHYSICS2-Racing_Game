@@ -26,7 +26,7 @@ bool ModuleSceneIntro::Start()
 		float posX = 0;
 		float posY = 0;
 		float posZ = -5;
-		CreateObjectCourse(posX, posY, posZ);
+		CreateObject_BorderCourse(posX, posY, posZ);
 
 	}
 	return ret;
@@ -50,7 +50,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-bool ModuleSceneIntro::CreateObjectCourse(float posX, float posY, float posZ) {
+bool ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float posZ) {
 	bool ret = true;
 	
 	float massCube = 1;
