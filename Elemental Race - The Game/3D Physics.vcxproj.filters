@@ -19,6 +19,9 @@
     <Filter Include="Sources\Modules\Game">
       <UniqueIdentifier>{83f46af7-e02f-40c0-9e56-41d76082527b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\Data">
+      <UniqueIdentifier>{2a930f3f-aa7e-4728-9578-6932a3efdf6d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -140,5 +143,10 @@
     <ClCompile Include="ModulePlayer.cpp">
       <Filter>Sources\Modules\Game</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="config.xml">
+      <Filter>Sources\Tools\Data</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
