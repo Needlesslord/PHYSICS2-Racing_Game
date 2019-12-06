@@ -22,12 +22,13 @@ bool ModuleSceneIntro::Start()
 
 	// course
 	int n = 1;
+	int num = 1;
+
 	for (int i = 0; i < n; i++) {
 		float posX = 0;
 		float posY = 0;
 		float posZ = -5;
-		CreateObject_BorderCourse(posX, posY, posZ);
-
+		CreateObject_BorderCourse(posX, posY, posZ, num);
 	}
 	return ret;
 }
@@ -50,7 +51,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-bool ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float posZ) {
+bool ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float posZ, int course) {
 	bool ret = true;
 	
 	float massCube = 1;
@@ -60,8 +61,10 @@ bool ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float p
 	Cube c(sizeX, sizeY, sizeZ);
 	c.SetPos(posX, posY, posZ);
 	App->physics->AddBody(c, massCube);
-
-
+	if (course == 1) { c.color = Blue; }
+	else if (course == 2) { c.color = Black; }
+	else if (course == 3) { c.color = White; }
+	else { c.color = Red; }
 	////float massSphere = 1;
 	////float radius = 1;
 	////Sphere s(radius);
