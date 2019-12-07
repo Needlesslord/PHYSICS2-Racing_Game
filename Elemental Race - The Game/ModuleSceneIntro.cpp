@@ -30,6 +30,9 @@ bool ModuleSceneIntro::Start()
 		float posZ = -5;
 		CreateObject_BorderCourse(posX, posY, posZ, num);
 	}
+
+	FromListToCreateObject();
+
 	return ret;
 }
 
@@ -61,30 +64,44 @@ bool ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float p
 	Cube c(sizeX, sizeY, sizeZ);
 	c.SetPos(posX, posY, posZ);
 	App->physics->AddBody(c, massCube);
-	if (course == 1) { c.color = Blue; }
-	else if (course == 2) { c.color = Black; }
-	else if (course == 3) { c.color = White; }
-	else { c.color = Red; }
-	////float massSphere = 1;
-	////float radius = 1;
-	////Sphere s(radius);
-	////s.SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
-	////App->physics->AddBody(s, massSphere);
-	////App->physics->AddBody(s)->Push(-(0), -(100), -(0));
-	//float massCube = 1;
-	//float sizeX = 1;
-	//float sizeY = 3;
-	//float sizeZ = 1;
-	//Cube c(sizeX, sizeY, sizeZ);
-	////c.SetPos(App->camera->Position.x + 2, App->camera->Position.y + 2, App->camera->Position.z + 2);
-	//App->physics->AddBody(c, massCube);
-	////App->physics->AddBody(c)->Push(-(0), -(100), -(0));
+	if (course == 1) { c.color = Blue; }			// The water course
+	else if (course == 2) { c.color = Black; }		// The earth course
+	else if (course == 3) { c.color = White; }		// The air course
+	else { c.color = Red; }							// The fire course
+
+	return ret;
+}
+
+bool ModuleSceneIntro::FromListToCreateObject() {
+	bool ret = true;
+
+	int size = 0;
+	int course = 1;
+	float list[3] = { 1, 2, 3};
+
+	float posX = 0;
+	float posY = 0;
+	float posZ = 0;
+	int n = 0;
+	for (int i = 0; i < size; i++) {
+		if (n == 0) {
+			posX = list[i];
+			n++;
+		}
+		else if (n == 1) {
+			posY = list[i];
+			n++;
+		}
+		else if (n == 2) {
+			posZ = list[i];
+			n++;
+		}
+		if (n == 3) CreateObject_BorderCourse(posX, posY, posZ, course);
+	}
 
 	return ret;
 }
 
 
-void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
-{
-}
+void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2) {}
 

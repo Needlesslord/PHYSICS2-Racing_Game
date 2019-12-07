@@ -48,9 +48,7 @@
   <scene current_scene ="1"> <!-- water [1] / earth [2] / air [3] / fire [4] -->
     <pivot_size x="1" y="3" z="1"/>
     <water>
-      <course>
-        <piv1 x ="0" z ="0"/>
-      </course>
+      <high_score high_score="0"/>
     </water>
     <earth></earth>
     <air></air>

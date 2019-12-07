@@ -21,6 +21,7 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	bool CreateObject_BorderCourse(float posX, float posY, float posZ, int num_colour);
+	bool FromListToCreateObject();
 
 public:
 	/*
