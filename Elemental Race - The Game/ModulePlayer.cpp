@@ -4,6 +4,8 @@
 #include "Primitive.h"
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
+#include "Primitive.h"
+
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), Bus(NULL)
 {
@@ -60,6 +62,7 @@ bool ModulePlayer::Start()
 	bus.wheels[0].drive = true;
 	bus.wheels[0].brake = false;
 	bus.wheels[0].steering = true;
+	bus.wheels[0].color = Black;
 
 	// FRONT-RIGHT ------------------------
 	bus.wheels[1].connection.Set(-bus_half_width + 0.3f * bus_wheel_width, bus_connection_height, bus_half_length * 0.95f - bus_wheel_radius);
@@ -72,6 +75,7 @@ bool ModulePlayer::Start()
 	bus.wheels[1].drive = true;
 	bus.wheels[1].brake = false;
 	bus.wheels[1].steering = true;
+	bus.wheels[1].color = Black;
 
 	// REAR-LEFT ------------------------
 	bus.wheels[2].connection.Set(bus_half_width - 0.3f * bus_wheel_width, bus_connection_height, -bus_half_length * 0.95f + bus_wheel_radius);
@@ -84,6 +88,7 @@ bool ModulePlayer::Start()
 	bus.wheels[2].drive = false;
 	bus.wheels[2].brake = true;
 	bus.wheels[2].steering = false;
+	bus.wheels[2].color = Black;
 
 	// REAR-RIGHT ------------------------
 	bus.wheels[3].connection.Set(-bus_half_width + 0.3f * bus_wheel_width, bus_connection_height, -bus_half_length * 0.95f + bus_wheel_radius);
@@ -96,6 +101,7 @@ bool ModulePlayer::Start()
 	bus.wheels[3].drive = false;
 	bus.wheels[3].brake = true;
 	bus.wheels[3].steering = false;
+	bus.wheels[3].color = Black;
 
 	// MID-FRONT-LEFT ------------------------
 	bus.wheels[4].connection.Set(bus_half_width - 0.3f * bus_wheel_width, bus_connection_height, bus_half_length * 0.5f - bus_wheel_radius);
@@ -108,6 +114,7 @@ bool ModulePlayer::Start()
 	bus.wheels[4].drive = false;
 	bus.wheels[4].brake = false;
 	bus.wheels[4].steering = true;
+	bus.wheels[4].color = Black;
 
 	// MID-FORNT-RIGHT ------------------------
 	bus.wheels[5].connection.Set(-bus_half_width + 0.3f * bus_wheel_width, bus_connection_height, bus_half_length * 0.5f - bus_wheel_radius);
@@ -120,6 +127,7 @@ bool ModulePlayer::Start()
 	bus.wheels[5].drive = false;
 	bus.wheels[5].brake = false;
 	bus.wheels[5].steering = true;
+	bus.wheels[5].color = Black;
 
 	// MID-BACK-LEFT ------------------------
 	bus.wheels[6].connection.Set(bus_half_width - 0.3f * bus_wheel_width, bus_connection_height, -bus_half_length * 0.5f + bus_wheel_radius);
@@ -132,6 +140,7 @@ bool ModulePlayer::Start()
 	bus.wheels[6].drive = false;
 	bus.wheels[6].brake = false;
 	bus.wheels[6].steering = false;
+	bus.wheels[6].color = Black;
 
 	// MID-BACK-RIGHT ------------------------
 	bus.wheels[7].connection.Set(-bus_half_width + 0.3f * bus_wheel_width, bus_connection_height, -bus_half_length * 0.5f + bus_wheel_radius);
@@ -144,6 +153,7 @@ bool ModulePlayer::Start()
 	bus.wheels[7].drive = false;
 	bus.wheels[7].brake = false;
 	bus.wheels[7].steering = false;
+	bus.wheels[7].color = Black;
 
 	Bus = App->physics->AddVehicle(bus);
 	Bus->SetPos(0, 12, 10);
@@ -209,7 +219,6 @@ bool ModulePlayer::Start()
 	Bike = App->physics->AddVehicle(bike);
 	Bike->SetPos(0, 12, -10);
 	
-
 	return true;
 }
 

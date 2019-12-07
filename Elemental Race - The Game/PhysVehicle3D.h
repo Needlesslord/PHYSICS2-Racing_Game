@@ -1,10 +1,12 @@
 #pragma once
 
 #include "PhysBody3D.h"
+#include "Color.h"
 #include "glmath.h"
 
 class btRaycastVehicle;
 struct PhysBody3D;
+struct Color;
 
 struct Wheel
 {
@@ -18,6 +20,9 @@ struct Wheel
 	bool drive; // does this wheel received engine power ?
 	bool brake; // does breakes affect this wheel ?
 	bool steering; // does this wheel turns ?
+	Color color;
+	void SetColor(Color c);
+	Color GetColor();
 };
 
 struct VehicleInfo

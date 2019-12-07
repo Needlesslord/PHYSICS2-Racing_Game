@@ -61,7 +61,7 @@ Cube ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float p
 	else if (course == 2) { Course[course_index]->color = Black; }		// The earth course
 	else if (course == 3) { Course[course_index]->color = White; }		// The   air course
 	else { Course[course_index]->color = Red; }							// The  fire course
-
+	
 	course_index++;
 	return *Course[course_index - 1];
 }

@@ -25,13 +25,11 @@ void PhysVehicle3D::Render()
 {
 	Cylinder wheel;
 
-	wheel.color = Red;
-
 	for(int i = 0; i < vehicle->getNumWheels(); ++i)
 	{
 		wheel.radius = info.wheels[0].radius;
 		wheel.height = info.wheels[0].width;
-
+		wheel.color = info.wheels[0].color;
 		vehicle->updateWheelTransform(i);
 		vehicle->getWheelInfo(i).m_worldTransform.getOpenGLMatrix(&wheel.transform);
 
@@ -94,3 +92,9 @@ float PhysVehicle3D::GetKmh() const
 {
 	return vehicle->getCurrentSpeedKmHour();
 }
+
+void Wheel::SetColor(Color c) {
+	color = c;
+}
+
+Color Wheel::GetColor() { return color; }
