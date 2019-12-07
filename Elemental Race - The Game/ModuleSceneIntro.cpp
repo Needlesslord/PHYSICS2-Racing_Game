@@ -75,22 +75,23 @@ update_status ModuleSceneIntro::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-bool ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float posZ, int course) {
-	bool ret = true;
+Cube ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float posZ, int course) {
+	Cube* ret;
 	
-	float massCube = 1;
+	float massCube = 100000;
 	float sizeX = 1;
-	float sizeY = 1;
-	float sizeZ = 2;
-	Cube c(sizeX, sizeY, sizeZ);
-	c.SetPos(posX, posY, posZ);
-	App->physics->AddBody(c, massCube);
-	if (course == 1) { c.color = Blue; }			// The water course
-	else if (course == 2) { c.color = Black; }		// The earth course
-	else if (course == 3) { c.color = White; }		// The air course
-	else { c.color = Red; }							// The fire course
 
-	return ret;
+	float sizeY = 3;
+	float sizeZ = 1;
+	ret = new Cube(sizeX, sizeY, sizeZ);
+	ret->SetPos(posX, posY, posZ);
+	App->physics->AddBody(*ret, massCube);
+	if (course == 1) { ret->color = Blue; }				// The water course
+	else if (course == 2) { ret->color = Black;}		// The earth course
+	else if (course == 3) { ret->color = White; }		// The air course
+	else { ret->color = Red; }							// The fire course
+
+	return *ret;
 }
 
 bool ModuleSceneIntro::FromListToCreateObject() {
