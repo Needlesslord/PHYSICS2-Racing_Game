@@ -19,8 +19,12 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
+	uint course_index = 0;
 	Cube CreateObject_BorderCourse(float posX, float posY, float posZ, int num_colour);
-	bool FromListToCreateObject();
+	uint size;
+	uint numCourse;
+	bool CreateCourse(float list[], uint size, uint courseNum);
+	Cube* Course[180];
 
 public:
 	/*

@@ -1,7 +1,7 @@
 #ifndef __DATAFORTHECOURSES_H__
 #define __DATAFORTHECOURSES_H__
 
-float CourseWater[180] = {
+float CourseWater[180] = {		// Spcace for 60 Pivots
 	271.4f,		0.0f,		72.6f,
 	266.4f,		0.0f,		76.6f,
 	262.4f,		0.0f,		81.4f,
@@ -15,6 +15,15 @@ float CourseWater[180] = {
 	221.4f,		0.0f,		118.4f,
 	217.6f,		0.0f,		122.4f,
 	212.2f,		0.0f,		126.8f
+
+	
+	
+	//5, 0,  0,
+	//-5, 0,  0,
+	// 5, 0,  2,
+	// 5, 0, -2,
+	//-5, 0,  2,
+	//-5, 0, -2
 
 };
 
