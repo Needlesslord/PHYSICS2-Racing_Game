@@ -3,6 +3,7 @@
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
 #include "PhysBody3D.h"
+#include "DataForTheCourses.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -16,43 +17,12 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
-
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
-
-	// course
-	//int n = 1;
-	int num = 1;
-
-	float CourseWater[180] = {
-	5, 0, 0,
-	-5, 0, 0,
-	5, 0, 2,
-	5, 0, -2,
-	-5, 0, 2,
-	-5, 0, -2
-
-	};
-
-	int n = 0;
-	for (int i = 0; i < 18; i++) {
-		if (n == 0) {
-			posX = CourseWater[i];
-			n++;
-		}
-		else if (n == 1) {
-			posY = CourseWater[i];
-			n++;
-		}
-		else if (n == 2) {
-			posZ = CourseWater[i];
-			n++;
-		}
-		if (n == 3) CreateObject_BorderCourse(posX, posY, posZ, num);
-	}
-
-
-	FromListToCreateObject();
+	
+	size = 18;
+	numCourse = 1;
+	CreateCourse(CourseWater, size, numCourse);
 
 	return ret;
 }
@@ -61,7 +31,9 @@ bool ModuleSceneIntro::Start()
 bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
-
+	for (uint i = 0; i < course_index; i++) {
+		delete Course[i];
+	}
 	return true;
 }
 
@@ -71,57 +43,38 @@ update_status ModuleSceneIntro::Update(float dt)
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
-
+	for (uint i = 0; i < course_index; i++) {
+		Course[i]->Render();
+	}
 	return UPDATE_CONTINUE;
 }
 
 Cube ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float posZ, int course) {
-	Cube* ret;
-	
-	float massCube = 100000;
+	float mass = 10;
 	float sizeX = 1;
-
 	float sizeY = 3;
 	float sizeZ = 1;
-	ret = new Cube(sizeX, sizeY, sizeZ);
-	ret->SetPos(posX, posY, posZ);
-	App->physics->AddBody(*ret, massCube);
-	if (course == 1) { ret->color = Blue; }				// The water course
-	else if (course == 2) { ret->color = Black;}		// The earth course
-	else if (course == 3) { ret->color = White; }		// The air course
-	else { ret->color = Red; }							// The fire course
+	Course[course_index] = new Cube(sizeX, sizeY, sizeZ);
+	Course[course_index]->SetPos(posX, posY, posZ);
+	App->physics->AddBody(*Course[course_index], mass);
+	if      (course == 1) { Course[course_index]->color = Blue; }		// The water course
+	else if (course == 2) { Course[course_index]->color = Black; }		// The earth course
+	else if (course == 3) { Course[course_index]->color = White; }		// The   air course
+	else { Course[course_index]->color = Red; }							// The  fire course
 
-	return *ret;
+	course_index++;
+	return *Course[course_index - 1];
 }
 
-bool ModuleSceneIntro::FromListToCreateObject() {
-	bool ret = true;
-
-	int size = 0;
-	int course = 1;
-	float list[3] = { 1, 2, 3};
-
-	float posX = 0;
-	float posY = 0;
-	float posZ = 0;
-	int n = 0;
-	for (int i = 0; i < size; i++) {
-		if (n == 0) {
-			posX = list[i];
-			n++;
-		}
-		else if (n == 1) {
-			posY = list[i];
-			n++;
-		}
-		else if (n == 2) {
-			posZ = list[i];
-			n++;
-		}
-		if (n == 3) CreateObject_BorderCourse(posX, posY, posZ, course);
+bool ModuleSceneIntro::CreateCourse(float list[], uint size, uint numCourse) {
+	for (int i = 0; i < size; i += 3) {
+		float x = list[i];
+		float y = list[i + 1];
+		float z = list[i + 2];
+		CreateObject_BorderCourse(x, y, z, numCourse);
 	}
-
-	return ret;
+	
+	return true;
 }
 
 
