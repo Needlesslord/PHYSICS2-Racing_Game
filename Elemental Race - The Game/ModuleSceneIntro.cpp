@@ -30,6 +30,9 @@ bool ModuleSceneIntro::Start()
 		float posZ = -5;
 		CreateObject_BorderCourse(posX, posY, posZ, num);
 	}
+
+	FromListToCreateObject();
+
 	return ret;
 }
 
@@ -61,16 +64,44 @@ Cube ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float p
 	ret = new Cube(sizeX, sizeY, sizeZ);
 	ret->SetPos(posX, posY, posZ);
 	App->physics->AddBody(*ret, massCube);
-	if (course == 1) { ret->color = Blue; }
-	else if (course == 2) { ret->color = Black; }
-	else if (course == 3) { ret->color = White; }
-	else { ret->color = Red; }
+	if (course == 1) { ret->color = Blue; }				// The water course
+	else if (course == 2) { ret->color = Black;}		// The earth course
+	else if (course == 3) { ret->color = White; }		// The air course
+	else { ret->color = Red; }							// The fire course
 
 	return *ret;
 }
 
+bool ModuleSceneIntro::FromListToCreateObject() {
+	bool ret = true;
 
-void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
-{
+	int size = 0;
+	int course = 1;
+	float list[3] = { 1, 2, 3};
+
+	float posX = 0;
+	float posY = 0;
+	float posZ = 0;
+	int n = 0;
+	for (int i = 0; i < size; i++) {
+		if (n == 0) {
+			posX = list[i];
+			n++;
+		}
+		else if (n == 1) {
+			posY = list[i];
+			n++;
+		}
+		else if (n == 2) {
+			posZ = list[i];
+			n++;
+		}
+		if (n == 3) CreateObject_BorderCourse(posX, posY, posZ, course);
+	}
+
+	return ret;
 }
+
+
+void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2) {}
 
