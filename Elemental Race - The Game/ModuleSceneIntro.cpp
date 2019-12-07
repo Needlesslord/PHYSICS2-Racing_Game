@@ -50,7 +50,7 @@ update_status ModuleSceneIntro::Update(float dt)
 }
 
 Cube ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float posZ, int course) {
-	float mass = 10;
+	float mass = 100000;
 	float sizeX = 1;
 	float sizeY = 3;
 	float sizeZ = 1;
