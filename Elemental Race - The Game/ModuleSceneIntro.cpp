@@ -20,7 +20,7 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 	
-	size = 18;
+	size = 58*3;
 	numCourse = 1;
 	CreateCourse(CourseWater, size, numCourse);
 
@@ -51,9 +51,9 @@ update_status ModuleSceneIntro::Update(float dt)
 
 Cube ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float posZ, int course) {
 	float mass = 100000;
-	float sizeX = 1;
-	float sizeY = 3;
-	float sizeZ = 1;
+	float sizeX = 3;
+	float sizeY = 5;
+	float sizeZ = 3;
 	Course[course_index] = new Cube(sizeX, sizeY, sizeZ);
 	Course[course_index]->SetPos(posX, posY, posZ);
 	App->physics->AddBody(*Course[course_index], mass);
