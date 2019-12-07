@@ -51,36 +51,22 @@ update_status ModuleSceneIntro::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-bool ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float posZ, int course) {
-	bool ret = true;
+Cube ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float posZ, int course) {
+	Cube* ret;
 	
-	float massCube = 1;
+	float massCube = 100000;
 	float sizeX = 1;
 	float sizeY = 3;
 	float sizeZ = 1;
-	Cube c(sizeX, sizeY, sizeZ);
-	c.SetPos(posX, posY, posZ);
-	App->physics->AddBody(c, massCube);
-	if (course == 1) { c.color = Blue; }
-	else if (course == 2) { c.color = Black; }
-	else if (course == 3) { c.color = White; }
-	else { c.color = Red; }
-	////float massSphere = 1;
-	////float radius = 1;
-	////Sphere s(radius);
-	////s.SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
-	////App->physics->AddBody(s, massSphere);
-	////App->physics->AddBody(s)->Push(-(0), -(100), -(0));
-	//float massCube = 1;
-	//float sizeX = 1;
-	//float sizeY = 3;
-	//float sizeZ = 1;
-	//Cube c(sizeX, sizeY, sizeZ);
-	////c.SetPos(App->camera->Position.x + 2, App->camera->Position.y + 2, App->camera->Position.z + 2);
-	//App->physics->AddBody(c, massCube);
-	////App->physics->AddBody(c)->Push(-(0), -(100), -(0));
+	ret = new Cube(sizeX, sizeY, sizeZ);
+	ret->SetPos(posX, posY, posZ);
+	App->physics->AddBody(*ret, massCube);
+	if (course == 1) { ret->color = Blue; }
+	else if (course == 2) { ret->color = Black; }
+	else if (course == 3) { ret->color = White; }
+	else { ret->color = Red; }
 
-	return ret;
+	return *ret;
 }
 
 
