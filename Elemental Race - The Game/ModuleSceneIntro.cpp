@@ -21,15 +21,36 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	// course
-	int n = 1;
+	//int n = 1;
 	int num = 1;
 
-	for (int i = 0; i < n; i++) {
-		float posX = 0;
-		float posY = 0;
-		float posZ = -5;
-		CreateObject_BorderCourse(posX, posY, posZ, num);
+	float CourseWater[180] = {
+	5, 0, 0,
+	-5, 0, 0,
+	5, 0, 2,
+	5, 0, -2,
+	-5, 0, 2,
+	-5, 0, -2
+
+	};
+
+	int n = 0;
+	for (int i = 0; i < 18; i++) {
+		if (n == 0) {
+			posX = CourseWater[i];
+			n++;
+		}
+		else if (n == 1) {
+			posY = CourseWater[i];
+			n++;
+		}
+		else if (n == 2) {
+			posZ = CourseWater[i];
+			n++;
+		}
+		if (n == 3) CreateObject_BorderCourse(posX, posY, posZ, num);
 	}
+
 
 	FromListToCreateObject();
 
@@ -59,8 +80,8 @@ bool ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float p
 	
 	float massCube = 1;
 	float sizeX = 1;
-	float sizeY = 3;
-	float sizeZ = 1;
+	float sizeY = 1;
+	float sizeZ = 2;
 	Cube c(sizeX, sizeY, sizeZ);
 	c.SetPos(posX, posY, posZ);
 	App->physics->AddBody(c, massCube);

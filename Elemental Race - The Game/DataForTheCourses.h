@@ -2,7 +2,12 @@
 #define __DATAFORTHECOURSES_H__
 
 float CourseWater[180] = {
-	309, 0, 797,
+	5, 0, 0,
+	-5, 0, 0,
+	5, 0, 2,
+	5, 0, -2,
+	-5, 0, 2,
+	-5, 0, -2
 
 };
 
