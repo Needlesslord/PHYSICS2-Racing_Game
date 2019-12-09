@@ -28,7 +28,7 @@
   </map>
 
   <player>
-    <car car ="a"/> <!-- car [A] / bus [B] / motorcycle [C] / truck [D] / van [E] / taxi [F] / convertible [G] / mini [H] / car + trailer [I] / skateborad [J] / scooter [K] / sidecar [L] / tricycle [M] / segway [N] / monstertruck [O] -->
+    <car car ="a"/> <!-- car [A] / bus [B] / motorcycle [C] / truck [D] / van [E] / taxi [F] / convertible [G] / mini [H] / car + trailer [I] / skateborad [J] / scooter [K] / sidecar [L] / tricycle [M] / segway [N] / monstertruck [O] / kart [P] / wheelbar [Q] -->
     <position_water x="0" y="0"/>
     <position_earth x="0" y="0"/>
     <position_air x="0" y="0"/>
@@ -45,7 +45,7 @@
 
   <enemies></enemies>
 
-  <scene current_scene ="1"> <!-- water [1] / earth [2] / air [3] / fire [4] -->
+  <scene current_scene ="1"> <!-- tutorial [0] / water [1] / earth [2] / air [3] / fire [4] -->
     <pivot_size x="1" y="3" z="1"/>
     <water>
       <high_score high_score="0"/>
