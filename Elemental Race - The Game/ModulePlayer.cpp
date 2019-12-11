@@ -156,10 +156,8 @@ bool ModulePlayer::Start()
 	bus.wheels[7].color = Black;
 
 	Bus = App->physics->AddVehicle(bus);
-	Bus->SetPos(0, 12, 10);
-	
-	
-	
+	Bus->SetPos(-72.5, 12, -5);
+
 	// THIS CANNOT BE DONE IN THE UPDATE BECAUSE HEY ARE LOCAL VARIBLES! WE NEED A STRUCT
 
 
@@ -223,8 +221,8 @@ bool ModulePlayer::Start()
 
 	/////////////////////////////////////////////////
 
-	Bike = App->physics->AddVehicle(bike);
-	Bike->SetPos(0, 12, -10);
+	//Bike = App->physics->AddVehicle(bike);
+	//Bike->SetPos(0, 12, -10);
 
 	////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -384,31 +382,31 @@ update_status ModulePlayer::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
-		if (Bus->GetKmh() < 0) brake = BRAKE_POWER;
+		if (Bus->GetKmh() < 0) brake = BRAKE_POWER / 3;
 		else {
-			if (Bus->GetKmh() < MAX_SPEED)
-			acceleration = MAX_ACCELERATION;
+			if (Bus->GetKmh() < MAX_SPEED / 3)
+			acceleration = MAX_ACCELERATION / 3;
 		}
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
-		if(turn < TURN_DEGREES)
-			turn +=  TURN_DEGREES;
+		if(turn < TURN_DEGREES * 0.8)
+			turn +=  TURN_DEGREES * 0.8;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
-		if(turn > -TURN_DEGREES)
-			turn -= TURN_DEGREES;
+		if(turn > -TURN_DEGREES * 0.8)
+			turn -= TURN_DEGREES * 0.8;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		if(Bus->GetKmh() > 0) brake = BRAKE_POWER;
+		if(Bus->GetKmh() > 0) brake = BRAKE_POWER / 3;
 		else {
-			if (Bus->GetKmh() > MIN_SPEED)
-			acceleration = -BRAKE_POWER;
+			if (Bus->GetKmh() > MIN_SPEED / 3)
+			acceleration = -BRAKE_POWER / 3;
 		}
 	}
 

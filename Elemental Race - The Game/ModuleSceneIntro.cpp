@@ -20,7 +20,7 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 	
-	size = 1119;
+	size = 1248;
 	numCourse = 1;
 	CreateCourse(Mario, size, numCourse);
 

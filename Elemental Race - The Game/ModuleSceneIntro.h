@@ -24,7 +24,7 @@ public:
 	uint size;
 	uint numCourse;
 	bool CreateCourse(float list[], uint size, uint courseNum);
-	Cube* Course[300];
+	Cube* Course[400];//MIGHT NEED TO BE BIGGER
 
 public:
 	/*
