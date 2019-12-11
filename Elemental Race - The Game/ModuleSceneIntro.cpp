@@ -20,9 +20,9 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 	
-	size = 58*3;
+	size = 895;
 	numCourse = 1;
-	CreateCourse(CourseWater, size, numCourse);
+	CreateCourse(Mario, size, numCourse);
 
 	return ret;
 }
@@ -68,9 +68,9 @@ Cube ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float p
 
 bool ModuleSceneIntro::CreateCourse(float list[], uint size, uint numCourse) {
 	for (int i = 0; i < size; i += 3) {
-		float x = list[i];
-		float y = list[i + 1];
-		float z = list[i + 2];
+		float x = list[i] * 300;
+		float y = list[i + 1] * 300;
+		float z = list[i + 2] * 300 - 75;
 		CreateObject_BorderCourse(x, y, z, numCourse);
 	}
 	

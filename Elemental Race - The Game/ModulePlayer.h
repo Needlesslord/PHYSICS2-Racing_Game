@@ -24,6 +24,9 @@ public:
 
 	PhysVehicle3D* Bus;
 	PhysVehicle3D* Bike;
+	PhysVehicle3D* Truck;
+	//STRUCT VEHICLE
+	
 
 	float turn;
 	float acceleration;
