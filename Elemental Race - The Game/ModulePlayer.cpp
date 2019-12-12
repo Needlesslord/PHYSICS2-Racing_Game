@@ -363,7 +363,8 @@ bool ModulePlayer::Start()
 	//Truck = App->physics->AddVehicle(truck);
 	//Truck->SetPos(0, 12, 10);
 
-	
+	VehicleInfo racingCar;//Next Vehicle (should be flatter)
+
 	return true;
 }
 
