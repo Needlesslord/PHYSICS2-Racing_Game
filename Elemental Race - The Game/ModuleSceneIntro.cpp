@@ -24,6 +24,16 @@ bool ModuleSceneIntro::Start()
 	numCourse = 1;
 	CreateCourse(Mario, size, numCourse);
 
+	////NUR
+	//createRamp({ 75.0f, 0, -156.6f }, { 90, 4.0f, -146.0f });
+
+	//START LINE
+	float start_line_size[3] = { 4, 2, 20 };
+	float start_line_position[3] = { 0, 1, 0 };
+	Cube* start_line = new Cube(4, 2, 20);
+	start_line->SetPos(300, 300, 300);
+	start_line->color = White;
+
 	return ret;
 }
 
@@ -79,4 +89,62 @@ bool ModuleSceneIntro::CreateCourse(float list[], uint size, uint numCourse) {
 
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2) {}
+
+////NUR
+//void ModuleSceneIntro::createRamp(const vec3 i_pos, const vec3 f_pos)
+//{
+//	vec3 final_projection = { f_pos.x, 0, f_pos.z };
+//	vec3 direction = normalize(f_pos - i_pos);
+//	vec3 planar_direction = normalize(final_projection - i_pos);
+//	float distance = length(f_pos - i_pos);
+//	float planar_distance = length(final_projection - i_pos);
+//
+//	float heading = 0.0f;
+//	if (f_pos.z >= i_pos.z && f_pos.x < i_pos.x)
+//		heading = acos(dot(planar_direction, { 1, 0, 0 }));
+//	else if (f_pos.z >= i_pos.z && f_pos.x >= i_pos.x)
+//		heading = acos(dot(planar_direction, { 1, 0, 0 }));
+//	else if (f_pos.z < i_pos.z && f_pos.x >= i_pos.x)
+//		heading = 2 * M_PI - acos(dot(planar_direction, { 1, 0, 0 }));
+//	else if (f_pos.z < i_pos.z && f_pos.x < i_pos.x)
+//		heading = 2 * M_PI - acos(dot(planar_direction, { 1, 0, 0 }));
+//
+//	float slope = asin(f_pos.y / distance);
+//
+//	Cube c;
+//	c.size = { distance, 0.25f, 15 - 2 };
+//	c.color = White;
+//
+//	c.SetPos(i_pos.x + (direction.x * distance / 2.0f), i_pos.y + (sin(slope)* (c.size.x / 2.0f)), i_pos.z + (direction.z * distance / 2.0f));
+//
+//	c.SetRotation(slope * 180.0f / M_PI, { 0, 0, 1 });
+//	mat4x4 R1;
+//	for (uint i = 0; i < 16; i++)
+//		R1[i] = c.transform.M[i];
+//	c.SetRotation(-heading * 180.0f / M_PI, { 0, 1, 0 });
+//	mat4x4 R2;
+//	for (uint i = 0; i < 16; i++)
+//		R2[i] = c.transform.M[i];
+//	mat4x4 R3 = R2 * R1;
+//
+//	float angle;
+//	vec3 axis;
+//	angleAndAxisFromRotMat(R3, angle, axis);
+//	c.SetRotation(-angle * 180.0f / M_PI, { axis.x, axis.y, axis.z });
+//
+//	//cube_circuit_pieces.prim_bodies.PushBack(c);
+//	//cube_circuit_pieces.phys_bodies.PushBack(App->physics->AddBody(c, this, 0.0f));
+//}
+//
+////NUR
+//void ModuleSceneIntro::angleAndAxisFromRotMat(mat4x4 m, float &angle, vec3 &axis)
+//{
+//	angle = acos((m[0] + m[5] + m[10] - 1) / 2.0f);
+//
+//	axis.x = (m[9] - m[6]) / (2 * sin(angle));
+//	axis.y = (m[2] - m[8]) / (2 * sin(angle));
+//	axis.z = (m[4] - m[1]) / (2 * sin(angle));
+//
+//	axis = normalize(axis);
+//}
 

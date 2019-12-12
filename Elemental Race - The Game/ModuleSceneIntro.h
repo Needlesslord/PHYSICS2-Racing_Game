@@ -9,6 +9,13 @@
 struct PhysBody3D;
 struct PhysMotor3D;
 
+//NUR
+struct cubePieces
+{
+	p2DynArray<PhysBody3D*>		phys_bodies;
+	p2DynArray<Cube>			prim_bodies;
+};
+
 class ModuleSceneIntro : public Module
 {
 public:
@@ -25,6 +32,12 @@ public:
 	uint numCourse;
 	bool CreateCourse(float list[], uint size, uint courseNum);
 	Cube* Course[400];//MIGHT NEED TO BE BIGGER
+
+	////NUR
+	//void createRamp(const vec3 i, const vec3 f);
+	//cubePieces cube_circuit_pieces;
+	//void angleAndAxisFromRotMat(mat4x4 m, float &angle, vec3 &axis);
+
 
 public:
 	/*
