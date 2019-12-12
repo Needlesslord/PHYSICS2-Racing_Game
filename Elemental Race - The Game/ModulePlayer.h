@@ -35,7 +35,7 @@ public:
 	PhysVehicle3D* RacingCar;
 	//STRUCT VEHICLE
 	
-	bool vehicleSelected;
+	bool vehicleSelected;//THESE SHOULD BE AN UINT
 	bool busSelected;
 	bool truckSelected;
 	bool bikeSelected;
