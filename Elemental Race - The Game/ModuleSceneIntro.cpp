@@ -52,10 +52,10 @@ update_status ModuleSceneIntro::Update(float dt)
 Cube ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float posZ, int course) {
 	float mass = 100000;
 	float sizeX = 3;
-	float sizeY = 5;
+	float sizeY = 3;
 	float sizeZ = 3;
 	Course[course_index] = new Cube(sizeX, sizeY, sizeZ);
-	Course[course_index]->SetPos(posX, posY, posZ);
+	Course[course_index]->SetPos(posX, posY + sizeY / 2, posZ);
 	App->physics->AddBody(*Course[course_index], mass);
 	if      (course == 1) { Course[course_index]->color = Blue; }		// The water course
 	else if (course == 2) { Course[course_index]->color = Black; }		// The earth course

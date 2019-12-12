@@ -2,6 +2,8 @@
 #include "Module.h"
 #include "Globals.h"
 #include "p2Point.h"
+#include "PhysVehicle3D.h"
+
 
 struct PhysVehicle3D;
 
@@ -22,11 +24,24 @@ public:
 
 public:
 
+	VehicleInfo bus;
+	VehicleInfo bike;
+	VehicleInfo truck;
+	VehicleInfo racingCar;
+
 	PhysVehicle3D* Bus;
 	PhysVehicle3D* Bike;
 	PhysVehicle3D* Truck;
+	PhysVehicle3D* RacingCar;
 	//STRUCT VEHICLE
 	
+	bool vehicleSelected;
+	bool busSelected;
+	bool truckSelected;
+	bool bikeSelected;
+	bool defaultCarSelected;
+	bool racingCarSelected;
+
 
 	float turn;
 	float acceleration;
