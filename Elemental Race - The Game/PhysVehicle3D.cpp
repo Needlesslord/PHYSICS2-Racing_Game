@@ -37,7 +37,10 @@ void PhysVehicle3D::Render()
 	}
 
 	Cube chassis(info.chassis_size.x, info.chassis_size.y, info.chassis_size.z);
-	chassis.color = Purple;
+	
+	chassis.color = info.chasisColor;
+
+
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&chassis.transform);
 	btQuaternion q = vehicle->getChassisWorldTransform().getRotation();
 	btVector3 offset(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z);
@@ -98,3 +101,7 @@ void Wheel::SetColor(Color c) {
 }
 
 Color Wheel::GetColor() { return color; }
+
+void VehicleInfo::SetChasisColor(Color c) {
+	chasisColor = c;
+}

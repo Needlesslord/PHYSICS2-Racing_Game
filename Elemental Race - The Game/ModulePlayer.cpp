@@ -5,7 +5,7 @@
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
 #include "Primitive.h"
-
+#include "Color.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), Bus(NULL)
 {
@@ -29,7 +29,8 @@ bool ModulePlayer::Start()
 	bus.maxSuspensionTravelCm = 1000.0f;
 	bus.frictionSlip = 50.5;
 	bus.maxSuspensionForce = 6000.0f;
-
+	bus.chasisColor = Purple;
+	
 	// Wheel properties ---------------------------------------
 	float bus_connection_height = 0.6f;
 	float bus_wheel_radius = 1.2f;
@@ -127,68 +128,10 @@ bool ModulePlayer::Start()
 	
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-		//BIKE
-	bike.chassis_size.Set( 0.1f, 1.0f, 3);
-	bike.chassis_offset.Set(0, 0.45f, 0);
-	bike.mass = 30.0f;
-	bike.suspensionStiffness = 1.5f;
-	bike.suspensionCompression = 0.083f;
-	bike.suspensionDamping = 0.088f;
-	bike.maxSuspensionTravelCm = 100.0f;
-	bike.frictionSlip = 5.0f;
-	bike.maxSuspensionForce = 600.0f;
-
-	/////////////////////////////////////////////////
-
-	float bike_connection_height = 0.3f;
-	float bike_wheel_radius = 0.4f;
-	float bike_wheel_width = 0.1f;
-	float bike_suspensionRestLength = 0.2f;
-
-	/////////////////////////////////////////////////
-
-	float bike_half_width = bike.chassis_size.x * 0.5f;
-	float bike_half_length = bike.chassis_size.z * 0.5f;
-
-	vec3 bike_direction(0, -1, 0);
-	vec3 bike_axis(-1, 0, 0);
-
-	bike.num_wheels = 2;
-	bike.wheels = new Wheel[2];
-
-	/////////////////////////////////////////////////
-
-	bike.wheels[0].connection.Set(bike_half_width - bike_wheel_width * 0.5, bike_connection_height, bike_half_length * 0.95f - bike_wheel_radius);
-	bike.wheels[0].direction = bike_direction;
-	bike.wheels[0].axis = bike_axis;
-	bike.wheels[0].suspensionRestLength = bike_suspensionRestLength;
-	bike.wheels[0].radius = bike_wheel_radius;
-	bike.wheels[0].width = bike_wheel_width;
-	bike.wheels[0].front = true;
-	bike.wheels[0].drive = true;
-	bike.wheels[0].brake = false;
-	bike.wheels[0].steering = true;
-	
-	bike.wheels[1].connection.Set(bike_half_width - bike_wheel_width * 0.5, bike_connection_height, -bike_half_length * 0.95f + bike_wheel_radius);
-	bike.wheels[1].direction = bike_direction;
-	bike.wheels[1].axis = bike_axis;
-	bike.wheels[1].suspensionRestLength = bike_suspensionRestLength;
-	bike.wheels[1].radius = bike_wheel_radius;
-	bike.wheels[1].width = bike_wheel_width;
-	bike.wheels[1].front = false;
-	bike.wheels[1].drive = false;
-	bike.wheels[1].brake = true;
-	bike.wheels[1].steering = false;
-
-	//Bike = App->physics->AddVehicle(bike);
-	//Bike->SetPos(0, 12, -10);
-
-	////////////////////////////////////////////////////////////////////////////////////////////
 
 	// Truck properties ----------------------------------------
 
-	truck.chassis_size.Set(8, 8, 24);
+	truck.chassis_size.Set(6, 8, 24);
 	truck.chassis_offset.Set(0, 4.5, 0);
 	truck.mass = 1000.0f;
 	truck.suspensionStiffness = 15.88f;
@@ -197,6 +140,7 @@ bool ModulePlayer::Start()
 	truck.maxSuspensionTravelCm = 1000.0f;
 	truck.frictionSlip = 50.5;
 	truck.maxSuspensionForce = 6000.0f;
+	truck.chasisColor = White;
 
 	// Wheel properties ---------------------------------------
 	float truck_connection_height = 0.8f;
@@ -269,10 +213,10 @@ bool ModulePlayer::Start()
 	truck.wheels[3].steering = false;
 	truck.wheels[3].color = Black;
 
-
+//
 
 	// REAR-LEFT ------------------------
-	truck.wheels[4].connection.Set(truck_half_width - 0.3f * truck_wheel_width - truck_wheel_width, truck_connection_height, -truck_half_length * 0.80f + truck_wheel_radius);
+	truck.wheels[4].connection.Set(truck_half_width - 0.3f * truck_wheel_width - truck_wheel_width, truck_connection_height, -truck_half_length * 0.65f + truck_wheel_radius);
 	truck.wheels[4].direction = truck_direction;
 	truck.wheels[4].axis = truck_axis;
 	truck.wheels[4].suspensionRestLength = truck_suspensionRestLength;
@@ -285,7 +229,7 @@ bool ModulePlayer::Start()
 	truck.wheels[4].color = Black;
 
 	// REAR-RIGHT ------------------------
-	truck.wheels[5].connection.Set(-truck_half_width + 0.3f * truck_wheel_width + truck_wheel_width, truck_connection_height, -truck_half_length * 0.80f + truck_wheel_radius);
+	truck.wheels[5].connection.Set(-truck_half_width + 0.3f * truck_wheel_width + truck_wheel_width, truck_connection_height, -truck_half_length * 0.65f + truck_wheel_radius);
 	truck.wheels[5].direction = truck_direction;
 	truck.wheels[5].axis = truck_axis;
 	truck.wheels[5].suspensionRestLength = truck_suspensionRestLength;
@@ -300,7 +244,7 @@ bool ModulePlayer::Start()
 
 
 	// BACK-FRONT-MID-LEFT ------------------------
-	truck.wheels[6].connection.Set(truck_half_width, truck_connection_height, -truck_half_length * 0.80f + truck_wheel_radius);
+	truck.wheels[6].connection.Set(truck_half_width, truck_connection_height, -truck_half_length * 0.65f + truck_wheel_radius);
 	truck.wheels[6].direction = truck_direction;
 	truck.wheels[6].axis = truck_axis;
 	truck.wheels[6].suspensionRestLength = truck_suspensionRestLength;
@@ -313,7 +257,7 @@ bool ModulePlayer::Start()
 	truck.wheels[6].color = Black;
 
 	// BACK-FRONT-MID-RIGHT ------------------------
-	truck.wheels[7].connection.Set(-truck_half_width, truck_connection_height, -truck_half_length * 0.80f + truck_wheel_radius);
+	truck.wheels[7].connection.Set(-truck_half_width, truck_connection_height, -truck_half_length * 0.65f + truck_wheel_radius);
 	truck.wheels[7].direction = truck_direction;
 	truck.wheels[7].axis = truck_axis;
 	truck.wheels[7].suspensionRestLength = truck_suspensionRestLength;
@@ -328,7 +272,7 @@ bool ModulePlayer::Start()
 
 
 	// BACK-BACK-LEFT ------------------------
-	truck.wheels[8].connection.Set(truck_half_width - 0.3f * truck_wheel_width - truck_wheel_width, truck_connection_height, -truck_half_length * 0.95f + truck_wheel_radius);
+	truck.wheels[8].connection.Set(truck_half_width - 0.3f * truck_wheel_width - truck_wheel_width, truck_connection_height, -truck_half_length * 0.90f + truck_wheel_radius);
 	truck.wheels[8].direction = truck_direction;
 	truck.wheels[8].axis = truck_axis;
 	truck.wheels[8].suspensionRestLength = truck_suspensionRestLength;
@@ -341,7 +285,7 @@ bool ModulePlayer::Start()
 	truck.wheels[8].color = Black;
 
 	// BACK-BACK-RIGHT ------------------------
-	truck.wheels[9].connection.Set(-truck_half_width + 0.3f * truck_wheel_width + truck_wheel_width, truck_connection_height, -truck_half_length * 0.95f + truck_wheel_radius);
+	truck.wheels[9].connection.Set(-truck_half_width + 0.3f * truck_wheel_width + truck_wheel_width, truck_connection_height, -truck_half_length * 0.90f + truck_wheel_radius);
 	truck.wheels[9].direction = truck_direction;
 	truck.wheels[9].axis = truck_axis;
 	truck.wheels[9].suspensionRestLength = truck_suspensionRestLength;
@@ -356,7 +300,7 @@ bool ModulePlayer::Start()
 
 
 	// BACK-BACK-MID-LEFT ------------------------
-	truck.wheels[10].connection.Set(truck_half_width, truck_connection_height, -truck_half_length * 0.80f + truck_wheel_radius);
+	truck.wheels[10].connection.Set(truck_half_width, truck_connection_height, -truck_half_length * 0.90f + truck_wheel_radius);
 	truck.wheels[10].direction = truck_direction;
 	truck.wheels[10].axis = truck_axis;
 	truck.wheels[10].suspensionRestLength = truck_suspensionRestLength;
@@ -369,7 +313,7 @@ bool ModulePlayer::Start()
 	truck.wheels[10].color = Black;
 
 	// BACK-BACK-MID-RIGHT ------------------------
-	truck.wheels[11].connection.Set(-truck_half_width, truck_connection_height, -truck_half_length * 0.80f + truck_wheel_radius);
+	truck.wheels[11].connection.Set(-truck_half_width, truck_connection_height, -truck_half_length * 0.90f + truck_wheel_radius);
 	truck.wheels[11].direction = truck_direction;
 	truck.wheels[11].axis = truck_axis;
 	truck.wheels[11].suspensionRestLength = truck_suspensionRestLength;
@@ -382,11 +326,7 @@ bool ModulePlayer::Start()
 	truck.wheels[11].color = Black;
 
 	vehicleSelected = false;
-	busSelected = false;
-	truckSelected = false;
-	bikeSelected = false;
-	defaultCarSelected = false;
-	racingCarSelected = false;
+	vehicleSelectedNum == 0;
 	return true;
 }
 
@@ -406,65 +346,96 @@ update_status ModulePlayer::Update(float dt)
 			Bus = App->physics->AddVehicle(bus);
 			Bus->SetPos(-72.5, 2, -5);
 			vehicleSelected = true;
-			busSelected = true;
+			vehicleSelectedNum = 1;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) { //
 			Truck = App->physics->AddVehicle(truck);
 			Truck->SetPos(-72.5, 1, -5);
 			vehicleSelected = true;
-			truckSelected = true;
+			vehicleSelectedNum = 2;
 		}
 	}
 
-	else {
+	
+	else if (vehicleSelectedNum == 1) {	//BUS
 		turn = acceleration = brake = 0.0f;
 
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
-			if (busSelected) {
-				if (Bus->GetKmh() < 0) brake = BRAKE_POWER / 3;
-				else {
-					if (Bus->GetKmh() < MAX_SPEED / 3)
-						acceleration = MAX_ACCELERATION / 3;
-				}
-			}
+				if (Bus->GetKmh() < MAX_SPEED)
+					acceleration = MAX_ACCELERATION / 3;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-			if (busSelected) {
-				if (turn < TURN_DEGREES * 0.8)
-					turn += TURN_DEGREES * 0.8;
-			}
+			if (turn < TURN_DEGREES * 0.8)
+				turn += TURN_DEGREES * 0.8;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-			if (busSelected) {
-				if (turn > -TURN_DEGREES * 0.8)
-					turn -= TURN_DEGREES * 0.8;
-			}
-			}
+			if (turn > -TURN_DEGREES * 0.8)
+				turn -= TURN_DEGREES * 0.8;
+		}
 
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-			if (busSelected) {
-				if (Bus->GetKmh() > 0) brake = BRAKE_POWER / 3;
-				else {
-					if (Bus->GetKmh() > MIN_SPEED / 3)
-						acceleration = -BRAKE_POWER / 3;
-				}
+			if (Bus->GetKmh() > 0) brake = BRAKE_POWER / 3;
+			else {
+				if (Bus->GetKmh() > MIN_SPEED / 3)
+					acceleration = -BRAKE_POWER / 3;
 			}
 		}
-		if (busSelected) {
-			Bus->ApplyEngineForce(acceleration);
-			Bus->Turn(turn);
-			Bus->Brake(brake);
-			Bus->Render();
-		}
+
+		Bus->ApplyEngineForce(acceleration);
+		Bus->Turn(turn);
+		Bus->Brake(brake);
+		Bus->Render();
 
 		char title[80];
-		if (busSelected) 
+		if (vehicleSelectedNum == 1)
 			sprintf_s(title, "%.1f Km/h", Bus->GetKmh());
 
 		App->window->SetTitle(title);
 	}
 
+
+	else if (vehicleSelectedNum == 2) {	//TRUCK
+		turn = acceleration = brake = 0.0f;
+
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
+			if (Truck->GetKmh() < MAX_SPEED)
+			acceleration = MAX_ACCELERATION;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
+			if (Truck->GetKmh() > 3) brake = BRAKE_POWER;
+			else {
+				if (Truck->GetKmh() > MIN_SPEED)
+					acceleration = -BRAKE_POWER / 2;
+			}
+		}
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+			if (turn < TURN_DEGREES * 2.5) {
+				turn += TURN_DEGREES * 2.5;
+				acceleration *= 9;
+			}
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+			if (turn > -TURN_DEGREES * 2.5) {
+				turn -= TURN_DEGREES * 2.5;
+				acceleration *= 9;
+			}
+		}
+
+		
+
+		Truck->ApplyEngineForce(acceleration);
+		Truck->Turn(turn);
+		Truck->Brake(brake);
+		Truck->Render();
+
+		char title[80];
+		if (vehicleSelectedNum == 1)
+			sprintf_s(title, "%.1f Km/h", Truck->GetKmh());
+
+		App->window->SetTitle(title);
+	}
 	return UPDATE_CONTINUE;
 }

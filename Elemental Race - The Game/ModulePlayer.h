@@ -35,13 +35,8 @@ public:
 	PhysVehicle3D* RacingCar;
 	//STRUCT VEHICLE
 	
-	bool vehicleSelected;//THESE SHOULD BE AN UINT
-	bool busSelected;
-	bool truckSelected;
-	bool bikeSelected;
-	bool defaultCarSelected;
-	bool racingCarSelected;
-
+	bool vehicleSelected;
+	uint vehicleSelectedNum; // 0 -> No vehicle selected; 1 -> bus; 2 -> truck; 
 
 	float turn;
 	float acceleration;
