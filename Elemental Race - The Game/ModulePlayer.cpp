@@ -325,8 +325,91 @@ bool ModulePlayer::Start()
 	truck.wheels[11].steering = false;
 	truck.wheels[11].color = Black;
 
+
+	// Trailer properties ----------------------------------------
+	trailer.chassis_size.Set(5, 3, 7);
+	trailer.chassis_offset.Set(0, 2.25f, 0);
+	trailer.mass = 200.0f;
+	trailer.suspensionStiffness = 5.80f;
+	trailer.suspensionCompression = 0.63f;
+	trailer.suspensionDamping = 0.68f;
+	trailer.maxSuspensionTravelCm = 800.0f;
+	trailer.frictionSlip = 30.5;
+	trailer.maxSuspensionForce = 4000.0f;
+	trailer.chasisColor = Green;
+
+	// Wheel properties ---------------------------------------
+	float trailer_connection_height = 0.8f;
+	float trailer_wheel_radius = 1.2f;
+	float trailer_wheel_width = 0.5f;
+	float trailer_suspensionRestLength = 1.2f;
+
+	// Don't change anything below this line ------------------
+
+	float trailer_half_width = trailer.chassis_size.x * 0.5f;
+	float trailer_half_length = trailer.chassis_size.z * 0.5f;
+
+	vec3 trailer_direction(0, -1, 0);
+	vec3 trailer_axis(-1, 0, 0);
+
+	trailer.num_wheels = 4;
+	trailer.wheels = new Wheel[4];
+	
+	// FRONT-LEFT ------------------------
+	trailer.wheels[0].connection.Set(trailer_half_width - 0.3f * trailer_wheel_width, trailer_connection_height, trailer_half_length * 0.95f - trailer_wheel_radius);
+	trailer.wheels[0].direction = trailer_direction;
+	trailer.wheels[0].axis = trailer_axis;
+	trailer.wheels[0].suspensionRestLength = trailer_suspensionRestLength;
+	trailer.wheels[0].radius = trailer_wheel_radius;
+	trailer.wheels[0].width = trailer_wheel_width;
+	trailer.wheels[0].front = true;
+	trailer.wheels[0].drive = false;
+	trailer.wheels[0].brake = false;
+	trailer.wheels[0].steering = false;
+	trailer.wheels[0].color = Black;
+
+	// FRONT-RIGHT ------------------------
+	trailer.wheels[1].connection.Set(-trailer_half_width + 0.3f * trailer_wheel_width, trailer_connection_height, trailer_half_length * 0.95f - trailer_wheel_radius);
+	trailer.wheels[1].direction = trailer_direction;
+	trailer.wheels[1].axis = trailer_axis;
+	trailer.wheels[1].suspensionRestLength = trailer_suspensionRestLength;
+	trailer.wheels[1].radius = trailer_wheel_radius;
+	trailer.wheels[1].width = trailer_wheel_width;
+	trailer.wheels[1].front = true;
+	trailer.wheels[1].drive = false;
+	trailer.wheels[1].brake = false;
+	trailer.wheels[1].steering = false;
+	trailer.wheels[1].color = Black;
+
+	// REAR-LEFT ------------------------
+	trailer.wheels[2].connection.Set(trailer_half_width - 0.3f * trailer_wheel_width, trailer_connection_height, -trailer_half_length * 0.95f + trailer_wheel_radius);
+	trailer.wheels[2].direction = trailer_direction;
+	trailer.wheels[2].axis = trailer_axis;
+	trailer.wheels[2].suspensionRestLength = trailer_suspensionRestLength;
+	trailer.wheels[2].radius = trailer_wheel_radius;
+	trailer.wheels[2].width = trailer_wheel_width;
+	trailer.wheels[2].front = false;
+	trailer.wheels[2].drive = false;
+	trailer.wheels[2].brake = false;
+	trailer.wheels[2].steering = false;
+	trailer.wheels[2].color = Black;
+
+	// REAR-RIGHT ------------------------
+	trailer.wheels[3].connection.Set(-trailer_half_width + 0.3f * trailer_wheel_width, trailer_connection_height, -trailer_half_length * 0.95f + trailer_wheel_radius);
+	trailer.wheels[3].direction = trailer_direction;
+	trailer.wheels[3].axis = trailer_axis;
+	trailer.wheels[3].suspensionRestLength = trailer_suspensionRestLength;
+	trailer.wheels[3].radius = trailer_wheel_radius;
+	trailer.wheels[3].width = trailer_wheel_width;
+	trailer.wheels[3].front = false;
+	trailer.wheels[3].drive = false;
+	trailer.wheels[3].brake = false;
+	trailer.wheels[3].steering = false;
+	trailer.wheels[3].color = Black;
+
 	vehicleSelected = false;
 	vehicleSelectedNum == 0;
+	trailerAdded = false;
 	return true;
 }
 
@@ -341,6 +424,13 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN && vehicleSelectedNum == 2 && !trailerAdded) { //TRAILER
+		Trailer = App->physics->AddVehicle(trailer);
+		Trailer->SetPos(-72.5, 2, -25);
+		App->physics->AddConstraintP2P(*Truck, *Trailer, { 0, 0, 0 }, { 0, 0, 17.5f });
+		trailerAdded = true;
+	}
+
 	if (!vehicleSelected) {
 		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) { //BUS
 			Bus = App->physics->AddVehicle(bus);
@@ -355,8 +445,6 @@ update_status ModulePlayer::Update(float dt)
 			vehicleSelectedNum = 2;
 		}
 	}
-
-	
 	else if (vehicleSelectedNum == 1) {	//BUS
 		turn = acceleration = brake = 0.0f;
 
@@ -423,8 +511,6 @@ update_status ModulePlayer::Update(float dt)
 				acceleration *= 9;
 			}
 		}
-
-		
 
 		Truck->ApplyEngineForce(acceleration);
 		Truck->Turn(turn);

@@ -27,16 +27,19 @@ public:
 	VehicleInfo bus;
 	VehicleInfo bike;
 	VehicleInfo truck;
+	VehicleInfo trailer;
 	VehicleInfo racingCar;
 
 	PhysVehicle3D* Bus;
 	PhysVehicle3D* Bike;
 	PhysVehicle3D* Truck;
+	PhysVehicle3D* Trailer;
 	PhysVehicle3D* RacingCar;
 	//STRUCT VEHICLE
 	
 	bool vehicleSelected;
 	uint vehicleSelectedNum; // 0 -> No vehicle selected; 1 -> bus; 2 -> truck; 
+	bool trailerAdded;
 
 	float turn;
 	float acceleration;
