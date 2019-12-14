@@ -455,7 +455,7 @@ update_status ModulePlayer::Update(float dt)
 				vec3 f = Bus->GetForwardVector();
 				// setting camera on vehicle
 				float speed_cam = 0.05f;
-				vec3 dist_to_car = { -35.0f, 25.0f, -35.0f };
+				dist_to_car = { -60.0f, 35.0f, -60.0f };
 				vec3 new_camera_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
 				vec3 camera_disp_vec = new_camera_position - App->camera->Position;
 				App->camera->Look(App->camera->Position + (speed_cam * camera_disp_vec), p);
@@ -466,7 +466,8 @@ update_status ModulePlayer::Update(float dt)
 				vec3 f = Truck->GetForwardVector();
 				// setting camera on vehicle
 				float speed_cam = 0.05f;
-				vec3 dist_to_car = { -45.0f, 28.0f, -45.0f };
+				if (trailerAdded) dist_to_car = { -85.0f, 45.0f, -85.0f };
+				else dist_to_car = { -75.0f, 40.0f, -75.0f };
 				vec3 new_camera_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
 				vec3 camera_disp_vec = new_camera_position - App->camera->Position;
 				App->camera->Look(App->camera->Position + (speed_cam * camera_disp_vec), p);
@@ -501,7 +502,7 @@ update_status ModulePlayer::Update(float dt)
 				float speed_cam = 0.09;
 				vec3 p = Bus->GetPos();
 				vec3 f = Bus->GetForwardVector();
-				vec3 dist_to_car = { -8.0f, 5.0f, -8.0f };
+				dist_to_car = { -8.0f, 5.0f, -8.0f };
 				vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
 				vec3 speed_camera = camera_new_position - App->camera->Position;
 				App->camera->Look(App->camera->Position + (speed_cam * speed_camera), p);
@@ -511,7 +512,7 @@ update_status ModulePlayer::Update(float dt)
 				float speed_cam = 0.09;
 				vec3 p = Truck->GetPos();
 				vec3 f = Truck->GetForwardVector();
-				vec3 dist_to_car = { -8.0f, 5.0f, -8.0f };
+				dist_to_car = { -8.0f, 5.0f, -8.0f };
 				vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
 				vec3 speed_camera = camera_new_position - App->camera->Position;
 
