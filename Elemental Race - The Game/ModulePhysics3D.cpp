@@ -240,11 +240,11 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, Module* listener, float m
 	btRigidBody* body = new btRigidBody(rbInfo);
 	PhysBody3D* pbody = new PhysBody3D(body);
 
-	if (!collisionable) 
+	/*if (!collisionable) 
 		body->setCollisionFlags(body->getInternalType() | btCollisionObject::CF_NO_CONTACT_RESPONSE); 
 	else
 		body->setCollisionFlags(body->getCollisionFlags() &~btCollisionObject::CF_NO_CONTACT_RESPONSE);
-	pbody->collision_listeners.add(listener);
+	pbody->collision_listeners.add(listener);*/
 	body->setUserPointer(pbody);
 	world->addRigidBody(body);
 	bodies.add(pbody);

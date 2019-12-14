@@ -24,7 +24,7 @@ bool ModuleSceneIntro::Start()
 	CreateCourse(Mario, Mario_size);
 
 	checkpoints_list_size = 12;
-	CreateCheckpoints(checkpoints_list, checkpoints_list_size);
+	//CreateCheckpoints(checkpoints_list, checkpoints_list_size);
 
 
 	AddBridge();
@@ -122,9 +122,7 @@ bool ModuleSceneIntro::CreateCheckpoints(float list[], uint size) {
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2) {
-	if (body1 == Checkpoints[0] && !checkpointActivated[0]) {
-		checkpointActivated[0] = true;
-	}
+	
 }
 
 void ModuleSceneIntro::AddBridge() {
@@ -196,9 +194,9 @@ void ModuleSceneIntro::AddBridge() {
 	flat->color = DarkOrange_T;
 	down->color = Brown_T;
 	//add body
-	App->physics->AddBody(*(up), 0.0f);
-	App->physics->AddBody(*(flat), 0.0f);
-	App->physics->AddBody(*(down), 0.0f);
+	App->physics->AddBody(*(up), this, 0.0f);
+	App->physics->AddBody(*(flat), this, 0.0f);
+	App->physics->AddBody(*(down), this, 0.0f);
 
 }
 
@@ -239,7 +237,7 @@ void ModuleSceneIntro::AddObstacles(int zone) {
 		//colouring
 		water_lake->color = Blue2_T;
 		//add body
-		App->physics->AddBody(*(water_lake), 0.0f);
+		App->physics->AddBody(*(water_lake), this, 0.0f);
 
 	}
 	//zone 5 is air
