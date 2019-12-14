@@ -62,4 +62,12 @@ public:
 
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
+
+	//obstacles list
+	int num_trees;
+	int num_rocks;
+	int num_fire_archs;
+	int num_fireballs;
+	int num_people;
+
 };

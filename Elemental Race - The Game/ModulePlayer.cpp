@@ -6,6 +6,7 @@
 #include "PhysBody3D.h"
 #include "Primitive.h"
 #include "Color.h"
+#include "ModuleAudio.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), Bus(NULL)
 {
@@ -567,6 +568,14 @@ update_status ModulePlayer::Update(float dt)
 	}
 	//CAMERA END --------------------------------------------------------------------
 
+	//MUSIC -------------------------------------------------------------------------
+
+	//if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+	//{
+	//	App->audio->PlayFx(App->audio->accelerateFx);
+	//}
+
+	//MUSIC END ---------------------------------------------------------------------
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN && vehicleSelectedNum == 2 && !trailerAdded) { //TRAILER
 		Trailer = App->physics->AddVehicle(trailer);
 		Trailer->SetPos(-72.5, 2, -25);
