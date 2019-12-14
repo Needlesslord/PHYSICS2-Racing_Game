@@ -38,6 +38,9 @@ public:
 	//cubePieces cube_circuit_pieces;
 	//void angleAndAxisFromRotMat(mat4x4 m, float &angle, vec3 &axis);
 
+	//to add all the obstacles
+	void AddObstacles(int zone);
+	void AddBridge();
 
 public:
 	/*

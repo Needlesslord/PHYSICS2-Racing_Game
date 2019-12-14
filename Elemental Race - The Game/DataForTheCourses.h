@@ -819,4 +819,12 @@ float Mario[1248] = { //452 //678
 		0.201227f, 0, 0.600000f,//15
 	//
 };
+
+
+
+float forest[105] = {
+	-82.5, 2, -25 
+};
+
+
 #endif // !__DATAFORTHECOURSES_H__

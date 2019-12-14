@@ -22,9 +22,38 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	LOG("Loading player");
-	// Bus properties ----------------------------------------
-	bus.chassis_size.Set(5, 9, 12);
-	bus.chassis_offset.Set(0, 4.5, 0);
+	//// Bus properties ----------------------------------------
+	//bus.chassis_size.Set(5, 9, 12);
+	//bus.chassis_offset.Set(0, 4.5, 0);
+	//bus.mass = 500.0f;
+	//bus.suspensionStiffness = 15.88f;
+	//bus.suspensionCompression = 0.83f;
+	//bus.suspensionDamping = 0.88f;
+	//bus.maxSuspensionTravelCm = 1000.0f;
+	//bus.frictionSlip = 50.5;
+	//bus.maxSuspensionForce = 6000.0f;
+	//bus.chasisColor = Purple;
+	//
+	//// Wheel properties ---------------------------------------
+	//float bus_connection_height = 0.6f;
+	//float bus_wheel_radius = 1.2f;
+	//float bus_wheel_width = 0.8f;
+	//float bus_suspensionRestLength = 1.2f;
+
+	//// Don't change anything below this line ------------------
+
+	//float bus_half_width = bus.chassis_size.x * 0.5f;
+	//float bus_half_length = bus.chassis_size.z * 0.5f;
+	//
+	//vec3 bus_direction(0,-1,0);
+	//vec3 bus_axis(-1,0,0);
+	//
+	//bus.num_wheels = 6;
+	//bus.wheels = new Wheel[6];
+
+		// Bus properties (small) ----------------------------------------
+	bus.chassis_size.Set(4, 5.5, 11.5);
+	bus.chassis_offset.Set(0, 2.5, 0);
 	bus.mass = 500.0f;
 	bus.suspensionStiffness = 15.88f;
 	bus.suspensionCompression = 0.83f;
@@ -33,23 +62,24 @@ bool ModulePlayer::Start()
 	bus.frictionSlip = 50.5;
 	bus.maxSuspensionForce = 6000.0f;
 	bus.chasisColor = Purple;
-	
-	// Wheel properties ---------------------------------------
+
+	// Wheel properties (small) ---------------------------------------
 	float bus_connection_height = 0.6f;
-	float bus_wheel_radius = 1.2f;
-	float bus_wheel_width = 0.8f;
+	float bus_wheel_radius = 0.8f;
+	float bus_wheel_width = 0.65f;
 	float bus_suspensionRestLength = 1.2f;
 
-	// Don't change anything below this line ------------------
+	// Don't change anything below this line (small) ------------------
 
 	float bus_half_width = bus.chassis_size.x * 0.5f;
 	float bus_half_length = bus.chassis_size.z * 0.5f;
-	
-	vec3 bus_direction(0,-1,0);
-	vec3 bus_axis(-1,0,0);
-	
+
+	vec3 bus_direction(0, -1, 0);
+	vec3 bus_axis(-1, 0, 0);
+
 	bus.num_wheels = 6;
 	bus.wheels = new Wheel[6];
+
 
 	// FRONT-LEFT ------------------------
 	bus.wheels[0].connection.Set(bus_half_width - 0.3f * bus_wheel_width, bus_connection_height, bus_half_length * 0.95f - bus_wheel_radius);
