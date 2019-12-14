@@ -23,6 +23,7 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	LOG("Loading player");
+
 	//// Bus properties ----------------------------------------
 	//bus.chassis_size.Set(5, 9, 12);
 	//bus.chassis_offset.Set(0, 4.5, 0);
@@ -604,7 +605,13 @@ update_status ModulePlayer::Update(float dt)
 				if (Bus->GetKmh() < MAX_SPEED)
 					acceleration = MAX_ACCELERATION / 3;
 		}
-
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
+			if (Bus->GetKmh() > 3) brake = BRAKE_POWER / 3;
+			else {
+				if (Bus->GetKmh() > MIN_SPEED / 3)
+					acceleration = -BRAKE_POWER / 3;
+			}
+		}
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
 			if (turn < TURN_DEGREES * 0.8)
 				turn += TURN_DEGREES * 0.8;
@@ -615,13 +622,7 @@ update_status ModulePlayer::Update(float dt)
 				turn -= TURN_DEGREES * 0.8;
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-			if (Bus->GetKmh() > 0) brake = BRAKE_POWER / 3;
-			else {
-				if (Bus->GetKmh() > MIN_SPEED / 3)
-					acceleration = -BRAKE_POWER / 3;
-			}
-		}
+		
 
 		Bus->ApplyEngineForce(acceleration);
 		Bus->Turn(turn);
@@ -644,10 +645,10 @@ update_status ModulePlayer::Update(float dt)
 			acceleration = MAX_ACCELERATION;
 		}
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-			if (Truck->GetKmh() > 3) brake = BRAKE_POWER;
+			if (Truck->GetKmh() > 3) brake = BRAKE_POWER / 5;
 			else {
 				if (Truck->GetKmh() > MIN_SPEED)
-					acceleration = -BRAKE_POWER / 2;
+					acceleration = -BRAKE_POWER / 3;
 			}
 		}
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
@@ -668,6 +669,7 @@ update_status ModulePlayer::Update(float dt)
 		Truck->Turn(turn);
 		Truck->Brake(brake);
 		Truck->Render();
+		if (trailerAdded) Trailer->Render();
 
 		char title[80];
 		if (vehicleSelectedNum == 1)

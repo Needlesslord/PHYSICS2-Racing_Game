@@ -87,21 +87,22 @@ update_status ModulePhysics3D::PreUpdate(float dt)
 			PhysBody3D* pbodyA = (PhysBody3D*)obA->getUserPointer();
 			PhysBody3D* pbodyB = (PhysBody3D*)obB->getUserPointer();
 
-			if(pbodyA && pbodyB)
+			if (pbodyA && pbodyB)
 			{
 				p2List_item<Module*>* item = pbodyA->collision_listeners.getFirst();
-				while(item)
+				while (item)
 				{
 					item->data->OnCollision(pbodyA, pbodyB);
 					item = item->next;
 				}
 
 				item = pbodyB->collision_listeners.getFirst();
-				while(item)
+				while (item)
 				{
 					item->data->OnCollision(pbodyB, pbodyA);
 					item = item->next;
 				}
+
 			}
 		}
 	}
@@ -220,7 +221,7 @@ PhysBody3D* ModulePhysics3D::AddBody(const Sphere& sphere, float mass)
 
 
 // ---------------------------------------------------------
-PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass)
+PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, Module* listener, float mass, bool collisionable)
 {
 	btCollisionShape* colShape = new btBoxShape(btVector3(cube.size.x*0.5f, cube.size.y*0.5f, cube.size.z*0.5f));
 	shapes.add(colShape);
@@ -239,6 +240,11 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass)
 	btRigidBody* body = new btRigidBody(rbInfo);
 	PhysBody3D* pbody = new PhysBody3D(body);
 
+	/*if (!collisionable) 
+		body->setCollisionFlags(body->getInternalType() | btCollisionObject::CF_NO_CONTACT_RESPONSE); 
+	else
+		body->setCollisionFlags(body->getCollisionFlags() &~btCollisionObject::CF_NO_CONTACT_RESPONSE);
+	pbody->collision_listeners.add(listener);*/
 	body->setUserPointer(pbody);
 	world->addRigidBody(body);
 	bodies.add(pbody);

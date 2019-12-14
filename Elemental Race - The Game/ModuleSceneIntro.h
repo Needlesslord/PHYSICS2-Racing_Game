@@ -27,12 +27,17 @@ public:
 	bool CleanUp();
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	uint course_index = 0;
-	Cube CreateObject_BorderCourse(float posX, float posY, float posZ, int num_colour);
-	uint size;
-	uint numCourse;
-	bool CreateCourse(float list[], uint size, uint courseNum);
-	Cube* Course[400];//MIGHT NEED TO BE BIGGER
+	Cube CreateObject_BorderCourse(float posX, float posY, float posZ);
+	uint Mario_size;
+	bool CreateCourse(float list[], uint size);
+	Cube* Course[440]; //MIGHT NEED TO BE BIGGER
 
+	void AddCheckpoint(float posX, float posY, float posZ);
+	bool CreateCheckpoints(float list[], uint size);
+	uint checkpoint_index = 0;
+	bool checkpointActivated[4] = { false,false,false,false };
+	uint checkpoints_list_size;
+	p2DynArray<PhysBody3D*>		Checkpoints;
 	////NUR
 	//void createRamp(const vec3 i, const vec3 f);
 	//cubePieces cube_circuit_pieces;
