@@ -41,6 +41,9 @@ public:
 	//to add all the obstacles
 	void AddObstacles(int zone);
 	void AddBridge();
+	void AddPerson(float posX, float posY, float posZ, int ethnicity);
+	Cube AddHead(int ethnicity);
+	Cube AddBody(int shirt);
 
 public:
 	/*
