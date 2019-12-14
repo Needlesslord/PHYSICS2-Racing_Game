@@ -23,22 +23,31 @@ public:
 	bool CleanUp();
 
 public:
-
+	VehicleInfo car;
 	VehicleInfo bus;
 	VehicleInfo bike;
 	VehicleInfo truck;
 	VehicleInfo trailer;
 	VehicleInfo racingCar;
+	VehicleInfo monsterTruck;
+	VehicleInfo bigTruck;
+	VehicleInfo bigTrailer;
+	VehicleInfo mini;
 
+	PhysVehicle3D* Car;
 	PhysVehicle3D* Bus;
 	PhysVehicle3D* Bike;
 	PhysVehicle3D* Truck;
 	PhysVehicle3D* Trailer;
 	PhysVehicle3D* RacingCar;
+	PhysVehicle3D* MonsterTruck;
+	PhysVehicle3D* BigTruck;
+	PhysVehicle3D* BigTrailer;
+	PhysVehicle3D* Mini;
 	//STRUCT VEHICLE
 	
 	bool vehicleSelected;
-	uint vehicleSelectedNum; // 0 -> No vehicle selected; 1 -> bus; 2 -> truck; 
+	uint vehicleSelectedNum; // 0 -> car; 1 -> bus; 2 -> truck; 3 -> racingCar; 4 -> mosterTruck; 5 -> bigTruck; 6 -> mini; T -> add Trailer 
 	bool trailerAdded;
 
 	float turn;

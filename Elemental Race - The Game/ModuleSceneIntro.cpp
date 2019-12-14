@@ -20,9 +20,12 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 	
-	size = 1248;
-	numCourse = 1;
-	CreateCourse(Mario, size, numCourse);
+	Mario_size = 1248;
+	CreateCourse(Mario, Mario_size);
+
+	checkpoints_list_size = 12;
+	CreateCheckpoints(checkpoints_list, checkpoints_list_size);
+
 
 	////NUR
 	//createRamp({ 75.0f, 0, -156.6f }, { 90, 4.0f, -146.0f });
@@ -33,6 +36,8 @@ bool ModuleSceneIntro::Start()
 	Cube* start_line = new Cube(4, 2, 20);
 	start_line->SetPos(300, 300, 300);
 	start_line->color = White;
+
+	
 
 	return ret;
 }
@@ -59,36 +64,56 @@ update_status ModuleSceneIntro::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-Cube ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float posZ, int course) {
-	float mass = 100000;
+Cube ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float posZ) {
+	float mass = 0;
 	float sizeX = 3;
 	float sizeY = 3;
 	float sizeZ = 3;
 	Course[course_index] = new Cube(sizeX, sizeY, sizeZ);
 	Course[course_index]->SetPos(posX, posY + sizeY / 2, posZ);
-	App->physics->AddBody(*Course[course_index], mass);
-	if      (course == 1) { Course[course_index]->color = Blue; }		// The water course
-	else if (course == 2) { Course[course_index]->color = Black; }		// The earth course
-	else if (course == 3) { Course[course_index]->color = White; }		// The   air course
-	else { Course[course_index]->color = Red; }							// The  fire course
+	App->physics->AddBody(*Course[course_index], this, mass);
+	Course[course_index]->color = Blue;
 	
 	course_index++;
 	return *Course[course_index - 1];
 }
 
-bool ModuleSceneIntro::CreateCourse(float list[], uint size, uint numCourse) {
+bool ModuleSceneIntro::CreateCourse(float list[], uint size) {
 	for (int i = 0; i < size; i += 3) {
 		float x = list[i] * 300;
 		float y = list[i + 1] * 300;
 		float z = list[i + 2] * 300 - 75;
-		CreateObject_BorderCourse(x, y, z, numCourse);
+		CreateObject_BorderCourse(x, y, z);
 	}
 	
 	return true;
 }
 
+void ModuleSceneIntro::AddCheckpoint(float posX, float posY, float posZ) {
+	float sizeX = 5;
+	float sizeY = 5;
+	float sizeZ = 5;
+	Cube checkpoint_cube(sizeX, sizeY, sizeZ);
+	checkpoint_cube.SetPos(posX, posY + sizeY / 2, posZ);
+	PhysBody3D*	Checkpoint = App->physics->AddBody(checkpoint_cube, this, 0.0f, false);
+	Checkpoints.PushBack(Checkpoint);
+}
 
-void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2) {}
+bool ModuleSceneIntro::CreateCheckpoints(float list[], uint size) {
+	for (int i = 0; i < size; i += 3) {
+		float x = list[i];
+		float y = list[i + 1];
+		float z = list[i + 2];
+		AddCheckpoint(x, y, z);
+	}
+	return true;
+}
+
+void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2) {
+	if (body1 == Checkpoints[0] && !checkpointActivated[0]) {
+		checkpointActivated[0] = true;
+	}
+}
 
 ////NUR
 //void ModuleSceneIntro::createRamp(const vec3 i_pos, const vec3 f_pos)
