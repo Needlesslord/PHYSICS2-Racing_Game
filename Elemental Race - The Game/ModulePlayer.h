@@ -44,4 +44,7 @@ public:
 	float turn;
 	float acceleration;
 	float brake;
+
+	bool  following_camera;
+
 };
