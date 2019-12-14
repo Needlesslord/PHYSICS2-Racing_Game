@@ -429,112 +429,111 @@ update_status ModulePlayer::Update(float dt)
 {
 
 	//CAMERA --------------------------------------------------------------------
-	
-	// camera set on the beggining of the course, not set on vehicle
-	if (!vehicleSelected) following_camera = false;
-	
-	// vehicle selected, camera set on vehicle
-	else {
-
-		// selected vehicle, following vehicle from now on 
-		following_camera = true;
-		
-		//------------------- CAR, vehicleSelectedNum == 0 -------------------//
-		//vec3 p = vehicle->GetPos();
-		//vec3 f = vehicle->GetForwardVector();
-		//// setting camera on vehicle
-		//float speed_cam = 0.05f;
-		//vec3 dist_to_car = { -8.0f, 2.0f, -8.0f };
-		//vec3 new_camera_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
-		//vec3 camera_disp_vec = new_camera_position - App->camera->Position;
-		//vec3 camera_disp_vec = new_camera_position - App->camera->Position;
-		//App->camera->Look(App->camera->Position + (speed_cam * camera_disp_vec), p);
-
-		//------------------- BUS, vehicleSelectedNum == 1 -------------------//
-		if (vehicleSelectedNum == 1) {
-			vec3 p = Bus->GetPos();
-			vec3 f = Bus->GetForwardVector();
-			// setting camera on vehicle
-			float speed_cam = 0.05f;
-			vec3 dist_to_car = { -35.0f, 35.0f, -35.0f };
-			vec3 new_camera_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
-			vec3 camera_disp_vec = new_camera_position - App->camera->Position;
-			App->camera->Look(App->camera->Position + (speed_cam * camera_disp_vec), p);
-		}
-		//------------------- TRUCK SIMPLE, vehicleSelectedNum == 2 -------------------//
-		//vec3 p = vehicle->GetPos();
-		//vec3 f = vehicle->GetForwardVector();
-		//// setting camera on vehicle
-		//float speed_cam = 0.05f;
-		//vec3 dist_to_car = { -8.0f, 2.0f, -8.0f };
-		//vec3 new_camera_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
-		//vec3 camera_disp_vec = new_camera_position - App->camera->Position;
-		//vec3 camera_disp_vec = new_camera_position - App->camera->Position;
-		//App->camera->Look(App->camera->Position + (speed_cam * camera_disp_vec), p);
-
-		//------------------- TRUCK + TRAILER, vehicleSelectedNum == 3 -------------------//
-		//vec3 p = vehicle->GetPos();
-		//vec3 f = vehicle->GetForwardVector();
-		//// setting camera on vehicle
-		//float speed_cam = 0.05f;
-		//vec3 dist_to_car = { -8.0f, 2.0f, -8.0f };
-		//vec3 new_camera_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
-		//vec3 camera_disp_vec = new_camera_position - App->camera->Position;
-		//vec3 camera_disp_vec = new_camera_position - App->camera->Position;
-		//App->camera->Look(App->camera->Position + (speed_cam * camera_disp_vec), p);
-	}
-
-	// following vehicle
-	if (following_camera)
 	{
+		// camera set on the beggining of the course, not set on vehicle
+		if (!vehicleSelected) following_camera = false;
 
-		//------------------- CAR, vehicleSelectedNum == 0 -------------------//
-		//float speed_cam = 0.09;
-		//vec3 p = vehicle->GetPos();
-		//vec3 f = vehicle->GetForwardVector();
-		//vec3 dist_to_car = { -8.0f, 5.0f, -8.0f };
-		//vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
-		//vec3 speed_camera = camera_new_position - App->camera->Position;
-	
-		//App->camera->Look(App->camera->Position + (speed_cam * speed_camera), p);
+		// vehicle selected, camera set on vehicle
+		else {
 
-		//------------------- BUS, vehicleSelectedNum == 1 -------------------//
-		if (vehicleSelectedNum == 1) {
-			float speed_cam = 0.09;
-			vec3 p = Bus->GetPos();
-			vec3 f = Bus->GetForwardVector();
-			vec3 dist_to_car = { -8.0f, 5.0f, -8.0f };
-			vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
-			vec3 speed_camera = camera_new_position - App->camera->Position;
-			App->camera->Look(App->camera->Position + (speed_cam * speed_camera), p);
+			// selected vehicle, following vehicle from now on 
+			following_camera = true;
+
+			//------------------- CAR, vehicleSelectedNum == 0 -------------------//
+			//vec3 p = vehicle->GetPos();
+			//vec3 f = vehicle->GetForwardVector();
+			//// setting camera on vehicle
+			//float speed_cam = 0.05f;
+			//vec3 dist_to_car = { -8.0f, 2.0f, -8.0f };
+			//vec3 new_camera_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
+			//vec3 camera_disp_vec = new_camera_position - App->camera->Position;
+			//App->camera->Look(App->camera->Position + (speed_cam * camera_disp_vec), p);
+
+			//------------------- BUS, vehicleSelectedNum == 1 -------------------//
+			if (vehicleSelectedNum == 1) {
+				vec3 p = Bus->GetPos();
+				vec3 f = Bus->GetForwardVector();
+				// setting camera on vehicle
+				float speed_cam = 0.05f;
+				vec3 dist_to_car = { -35.0f, 25.0f, -35.0f };
+				vec3 new_camera_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
+				vec3 camera_disp_vec = new_camera_position - App->camera->Position;
+				App->camera->Look(App->camera->Position + (speed_cam * camera_disp_vec), p);
+			}
+			//------------------- TRUCK SIMPLE, vehicleSelectedNum == 2 -------------------//
+			if (vehicleSelectedNum == 2) {
+				vec3 p = Truck->GetPos();
+				vec3 f = Truck->GetForwardVector();
+				// setting camera on vehicle
+				float speed_cam = 0.05f;
+				vec3 dist_to_car = { -45.0f, 28.0f, -45.0f };
+				vec3 new_camera_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
+				vec3 camera_disp_vec = new_camera_position - App->camera->Position;
+				App->camera->Look(App->camera->Position + (speed_cam * camera_disp_vec), p);
+			}
+			//------------------- TRUCK + TRAILER, vehicleSelectedNum == 3 -------------------//
+			//vec3 p = vehicle->GetPos();
+			//vec3 f = vehicle->GetForwardVector();
+			//// setting camera on vehicle
+			//float speed_cam = 0.05f;
+			//vec3 dist_to_car = { -8.0f, 2.0f, -8.0f };
+			//vec3 new_camera_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
+			//vec3 camera_disp_vec = new_camera_position - App->camera->Position;
+			//App->camera->Look(App->camera->Position + (speed_cam * camera_disp_vec), p);
 		}
-		//------------------- TRUCK SIMPLE, vehicleSelectedNum == 2 -------------------//
-		//float speed_cam = 0.09;
-		//vec3 p = vehicle->GetPos();
-		//vec3 f = vehicle->GetForwardVector();
-		//vec3 dist_to_car = { -8.0f, 5.0f, -8.0f };
-		//vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
-		//vec3 speed_camera = camera_new_position - App->camera->Position;
 
-		//App->camera->Look(App->camera->Position + (speed_cam * speed_camera), p);
+		// following vehicle
+		if (following_camera)
+		{
 
-		//------------------- TRUCK + TRAILER, vehicleSelectedNum == 3 -------------------//
-		//float speed_cam = 0.09;
-		//vec3 p = vehicle->GetPos();
-		//vec3 f = vehicle->GetForwardVector();
-		//vec3 dist_to_car = { -8.0f, 5.0f, -8.0f };
-		//vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
-		//vec3 speed_camera = camera_new_position - App->camera->Position;
+			//------------------- CAR, vehicleSelectedNum == 0 -------------------//
+			//float speed_cam = 0.09;
+			//vec3 p = vehicle->GetPos();
+			//vec3 f = vehicle->GetForwardVector();
+			//vec3 dist_to_car = { -8.0f, 5.0f, -8.0f };
+			//vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
+			//vec3 speed_camera = camera_new_position - App->camera->Position;
 
-		//App->camera->Look(App->camera->Position + (speed_cam * speed_camera), p);
+			//App->camera->Look(App->camera->Position + (speed_cam * speed_camera), p);
+
+			//------------------- BUS, vehicleSelectedNum == 1 -------------------//
+			if (vehicleSelectedNum == 1) {
+				float speed_cam = 0.09;
+				vec3 p = Bus->GetPos();
+				vec3 f = Bus->GetForwardVector();
+				vec3 dist_to_car = { -8.0f, 5.0f, -8.0f };
+				vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
+				vec3 speed_camera = camera_new_position - App->camera->Position;
+				App->camera->Look(App->camera->Position + (speed_cam * speed_camera), p);
+			}
+			//------------------- TRUCK SIMPLE, vehicleSelectedNum == 2 -------------------//
+			if (vehicleSelectedNum == 2) {
+				float speed_cam = 0.09;
+				vec3 p = Truck->GetPos();
+				vec3 f = Truck->GetForwardVector();
+				vec3 dist_to_car = { -8.0f, 5.0f, -8.0f };
+				vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
+				vec3 speed_camera = camera_new_position - App->camera->Position;
+
+				App->camera->Look(App->camera->Position + (speed_cam * speed_camera), p);
+			}
+			//------------------- TRUCK + TRAILER, vehicleSelectedNum == 3 -------------------//
+			//float speed_cam = 0.09;
+			//vec3 p = vehicle->GetPos();
+			//vec3 f = vehicle->GetForwardVector();
+			//vec3 dist_to_car = { -8.0f, 5.0f, -8.0f };
+			//vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
+			//vec3 speed_camera = camera_new_position - App->camera->Position;
+
+			//App->camera->Look(App->camera->Position + (speed_cam * speed_camera), p);
+		}
+
+		// Activate/deactivate camera on car.
+		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		{
+			following_camera = !following_camera;
+		}
 	}
-
-	// Activate/deactivate camera on car.
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	{
-		following_camera = !following_camera;
-	}
-
 	//CAMERA END --------------------------------------------------------------------
 
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN && vehicleSelectedNum == 2 && !trailerAdded) { //TRAILER
