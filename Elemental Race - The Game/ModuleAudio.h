@@ -29,6 +29,12 @@ private:
 
 	Mix_Music*			music;
 	p2List<Mix_Chunk*>	fx;
+
+	int accelerateFx;
+	int checkpointFx;
+	int winFx;
+	int loseFx;
+	Mix_Music* background_music;
 };
 
 #endif // __ModuleAudio_H__

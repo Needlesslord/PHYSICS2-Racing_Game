@@ -105,3 +105,12 @@ Color Wheel::GetColor() { return color; }
 void VehicleInfo::SetChasisColor(Color c) {
 	chasisColor = c;
 }
+
+// NEW ----------------------------------------------------------------------------
+vec3 PhysVehicle3D::GetForwardVector() const
+{
+	btVector3 h = vehicle->getForwardVector();
+	vec3 ret;
+	ret.Set(h.getX(), h.getY(), h.getZ());
+	return ret;
+}

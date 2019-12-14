@@ -47,7 +47,7 @@ Design and Development:
 ## Elemental Race: The Game
 
 
-Elemental Race: The Game is a simple racing game where you can choose between different vehicles and 4 different courses, each one with one element base theme, and you have a limited amount of time to race each track.
+Elemental Race: The Game is a simple racing game where you can choose between different vehicles to run on a track based on (some of) the elements (water, fire, air, Earth, forest, spirit), and you have a limited amount of time to finish 3 rounds.
 
 
 ## Gameplay
@@ -96,7 +96,16 @@ CONTROLS:
 
 	COMPUTER KEYBOARD ONLY
 
+
 	PLAYER:
+
+	To choose between vehicles:
+
+	[0] Default car		-> [T] Add a trailer (if you want to, ONLY at the beggining when choosing)
+	[1] Bus
+	[2] Truck Simple
+	[3] Truck + Triler
+	
 
 	DEBUG:
 
@@ -110,6 +119,9 @@ CONTROLS:
 
 	### Innovation
 
+	It is possible to choose between different vehicles, which behave differently.
+
+	The track has different zones, which have an element base to have different obstacles.
 
 	Each course has a trait that makes it interesting:
 

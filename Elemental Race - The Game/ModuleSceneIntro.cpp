@@ -27,15 +27,18 @@ bool ModuleSceneIntro::Start()
 	CreateCheckpoints(checkpoints_list, checkpoints_list_size);
 
 
+	AddBridge();
+	AddObstacles(4);
+
 	////NUR
 	//createRamp({ 75.0f, 0, -156.6f }, { 90, 4.0f, -146.0f });
 
 	//START LINE
-	float start_line_size[3] = { 4, 2, 20 };
-	float start_line_position[3] = { 0, 1, 0 };
-	Cube* start_line = new Cube(4, 2, 20);
-	start_line->SetPos(300, 300, 300);
-	start_line->color = White;
+	//float start_line_size[3] = { 4, 2, 20 };
+	//float start_line_position[3] = { 0, 1, 0 };
+	//Cube* start_line = new Cube(4, 2, 20);
+	//start_line->SetPos(300, 300, 300);
+	//start_line->color = White;
 
 	
 
@@ -49,6 +52,7 @@ bool ModuleSceneIntro::CleanUp()
 	for (uint i = 0; i < course_index; i++) {
 		delete Course[i];
 	}
+	AddBridge();
 	return true;
 }
 
@@ -61,6 +65,14 @@ update_status ModuleSceneIntro::Update(float dt)
 	for (uint i = 0; i < course_index; i++) {
 		Course[i]->Render();
 	}
+	
+	//float start_line_size[3] = { 4, 2, 20 };
+	//float start_line_position[3] = { -75, 1, -5 };
+	//Cube* start_line = new Cube(4, 2, 20);
+	//start_line->SetPos(300, 300, 300);
+	//start_line->color = White;
+	//start_line->Render();
+
 	return UPDATE_CONTINUE;
 }
 
@@ -114,6 +126,132 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2) {
 		checkpointActivated[0] = true;
 	}
 }
+
+void ModuleSceneIntro::AddBridge() {
+
+	// up and down are actually swapped
+
+	//offsets
+	float offset_X = -244;
+	float offset_Y = 0;
+	float offset_Z = 24.15;
+	// size of the bridge/mountain
+	//up
+	float size_X_up = 43;
+	float size_Y_up = 1;
+	float size_Z_up = 23;
+	//flat
+	float size_X_flat = 25;
+	float size_Y_flat = 1;
+	float size_Z_flat = 23;
+	//down
+	float size_X_down = 55; 
+	float size_Y_down = 1;
+	float size_Z_down = 23;
+	// position of the bridge/mountain
+	//up
+	float pos_X_up = 347.5 + offset_X + 10.85;
+	float pos_Y_up = 6.25;
+	float pos_Z_up = 67.5 + offset_Z;
+	//flat
+	float pos_X_flat = 325 + offset_X;
+	float pos_Y_flat = 13.25;
+	float pos_Z_flat = 67.5 + offset_Z;
+	//down
+	float pos_X_down = 302.5 + offset_X - 17;
+	float pos_Y_down = 6.25;
+	float pos_Z_down = 67.5 + offset_Z;
+	// rotation of the bridge/mountain
+	//angle
+	float angle_up = -20;
+	float angle_flat = 0;
+	float angle_down = 15;
+	//up
+	float rot_X_up = 0;
+	float rot_Y_up = 0;
+	float rot_Z_up = 1;
+	//flat
+	float rot_X_flat = 0;
+	float rot_Y_flat = 1;
+	float rot_Z_flat = 0;
+	//down
+	float rot_X_down = 0;
+	float rot_Y_down = 0;
+	float rot_Z_down = 1;
+
+	//add cube, set the size
+	Cube* up = new Cube		(		size_X_up,		size_Y_up,		size_Z_up		);
+	Cube* flat = new Cube	(		size_X_flat,	size_Y_flat,	size_Z_flat		);
+	Cube* down = new Cube	(		size_X_down,	size_Y_down,	size_Z_down		);
+	//add location
+	up->SetPos(			pos_X_up,		pos_Y_up,		pos_Z_up		);
+	flat->SetPos(		pos_X_flat,		pos_Y_flat,		pos_Z_flat		);
+	down->SetPos(		pos_X_down,		pos_Y_down,		pos_Z_down		);
+	//add rotation
+	up->SetRotation(		angle_up,	{	rot_X_up,		rot_Y_up,		rot_Z_up	});
+	flat->SetRotation(		angle_flat, {	rot_X_flat,		rot_Y_flat,		rot_Z_flat	});
+	down->SetRotation(		angle_down, {	rot_X_down,		rot_Y_down,		rot_Z_down	});
+	//colouring
+	up->color = Yellow_T;
+	flat->color = DarkOrange_T;
+	down->color = Brown_T;
+	//add body
+	App->physics->AddBody(*(up), 0.0f);
+	App->physics->AddBody(*(flat), 0.0f);
+	App->physics->AddBody(*(down), 0.0f);
+
+}
+
+void ModuleSceneIntro::AddObstacles(int zone) {
+
+	num_trees = 10 + 11 + 10;
+	num_rocks = 12;
+	num_fire_archs = 2;
+	num_fireballs = 6;
+	num_people = 9;
+
+	//zone 1 is spirit
+	if (zone == 1){
+		for (int i = 0; i < num_people; i += 3) {}
+	}
+	//zone 2 is fire
+	else if (zone == 2){
+		for (int i = 0; i < num_fireballs; i += 3) {}
+	}
+	//zone 3 is earth
+	else if (zone == 3){
+		for (int i = 0; i < num_rocks; i += 3) {}
+	}
+	//zone 4 is water
+	else if (zone == 4){
+		// size of the bridge/mountain
+		float size_X_water_lake = 130;
+		float size_Y_water_lake = 0.5;
+		float size_Z_water_lake = 150;
+		// position of the bridge/mountain
+		float pos_X_water_lake = -58;
+		float pos_Y_water_lake = 0;
+		float pos_Z_water_lake = 145;
+		//add cube, set the size
+		Cube* water_lake = new Cube(size_X_water_lake, size_Y_water_lake, size_Z_water_lake);
+		//add location
+		water_lake->SetPos(pos_X_water_lake, pos_Y_water_lake, pos_Z_water_lake);
+		//colouring
+		water_lake->color = Blue2_T;
+		//add body
+		App->physics->AddBody(*(water_lake), 0.0f);
+
+	}
+	//zone 5 is air
+	else if (zone == 5){}
+	//zone 6 is forest
+	else if (zone == 6) {
+		for (int i = 0; i < num_trees; i += 3) {}
+	}
+	//else is going to be used to create fire archs and start line
+	else {}
+	   
+	}
 
 ////NUR
 //void ModuleSceneIntro::createRamp(const vec3 i_pos, const vec3 f_pos)

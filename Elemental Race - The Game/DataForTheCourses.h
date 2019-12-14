@@ -503,4 +503,8 @@ float checkpoints_list[12] = {
 	1000,	1000, 1000,
 	1000,	1000, 1000
 };
+
+float forest[105] = {
+	-82.5, 2, -25 
+};
 #endif // !__DATAFORTHECOURSES_H__
