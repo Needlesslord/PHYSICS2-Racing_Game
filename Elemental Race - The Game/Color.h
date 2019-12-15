@@ -31,6 +31,7 @@ extern Color Blue;
 extern Color Black;
 extern Color White;
 extern Color Purple;
+extern Color Yellow;
 
 extern Color Red_T;
 extern Color Green_T;
