@@ -575,7 +575,6 @@ bool ModulePlayer::Start()
 	monsterTruck.wheels[3].brake = true;
 	monsterTruck.wheels[3].steeringOposite = true;
 
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// Mini properties ----------------------------------------
@@ -662,7 +661,9 @@ bool ModulePlayer::Start()
 
 	//timer
 	timerOn = false;
-
+	//title values
+	int laps = 0;
+	timer.Stop();
 
 	return true;
 }
