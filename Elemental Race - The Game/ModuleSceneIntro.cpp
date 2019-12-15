@@ -24,14 +24,14 @@ bool ModuleSceneIntro::Start()
 
 	checkpoints_list_size = 12;
 	
-
+	//add bridge
 	AddBridge();
-
+	//add fire archs
 	AddFireArch();
-
+	//add bushes
+	AddBush();
 	//add lake
 	AddObstacles(4);
-
 	//adding start line
 	AddObstacles(0);
 	currentStep = SelectVehicle;
@@ -52,6 +52,7 @@ bool ModuleSceneIntro::CleanUp()
 	}
 	AddBridge();
 	AddFireArch();
+	AddBush();
 	return true;
 }
 
@@ -85,6 +86,22 @@ update_status ModuleSceneIntro::Update(float dt)
 	left_4->Render();
 	top_4->Render();
 	right_4->Render();
+	//bushes
+	bush_1->Render();
+	bush_2->Render();
+	bush_3->Render();
+	bush_4->Render();
+	bush_5->Render();
+	bush_6->Render();
+	bush_7->Render();
+	bush_8->Render();
+	bush_9->Render();
+	bush_10->Render();
+	bush_11->Render();
+	bush_12->Render();
+	bush_13->Render();
+	bush_14->Render();
+	bush_15->Render();
 
 	return UPDATE_CONTINUE;
 }
@@ -97,7 +114,7 @@ Cube ModuleSceneIntro::CreateObject_BorderCourse(float posX, float posY, float p
 	Course[course_index] = new Cube(sizeX, sizeY, sizeZ);
 	Course[course_index]->SetPos(posX, posY + sizeY / 2, posZ);
 	App->physics->AddBody(*Course[course_index], this, mass);
-	Course[course_index]->color = Blue;
+	Course[course_index]->color = Blue2_T;
 	
 	course_index++;
 	return *Course[course_index - 1];
@@ -250,7 +267,7 @@ void ModuleSceneIntro::AddObstacles(int zone) {
 		//add location
 		water_lake->SetPos(pos_X_water_lake, pos_Y_water_lake, pos_Z_water_lake);
 		//colouring
-		water_lake->color = Blue2_T;
+		water_lake->color = Blue;
 		//add body
 		App->physics->AddBody(*(water_lake), this, 0.0f);
 
@@ -339,7 +356,7 @@ Cube ModuleSceneIntro::AddBody(int shirt){
 	else if (shirt == 4) Body->color = Blue2_T;
 	else if (shirt == 5) Body->color = Black_T;
 	else if (shirt == 6) Body->color = White_T;
-	else Body->color = Grey_T;
+	else Body->color = Blue2_T;
 
 	return Cube{ 1,1,1 };
 }
@@ -482,5 +499,210 @@ void ModuleSceneIntro::AddFireArch() {
 	App->physics->AddBody(*(left_4), this, 0.0f);
 	App->physics->AddBody(*(top_4), this, 0.0f);
 	App->physics->AddBody(*(right_4), this, 0.0f);
+
+}
+
+void ModuleSceneIntro::AddBush() {
+
+	// size of the bush 
+	float size_X = 1.5;
+	float size_Y = 2;
+	float size_Z = 1.5;
+
+	// position of the bush 1
+	float pos_X = -25;
+	float pos_Y = 1;
+	float pos_Z = -65;
+	//add cube, set the size
+	bush_1 = new Cube(size_X, size_Y, size_Z);
+	//add location
+	bush_1->SetPos(pos_X, pos_Y, pos_Z);
+	//colouring
+	bush_1->color = Green2_T;
+	//add body
+	App->physics->AddBody(*(bush_1), this, 0.0f);
+
+	// position of the bush 2
+	pos_X = -13;
+	pos_Y = 1;
+	pos_Z = -80;
+	//add cube, set the size
+	bush_2 = new Cube(size_X, size_Y, size_Z);
+	//add location
+	bush_2->SetPos(pos_X, pos_Y, pos_Z);
+	//colouring
+	bush_2->color = Green;
+	//add body
+	App->physics->AddBody(*(bush_2), this, 0.0f);
+
+	// position of the bush 3
+	pos_X = 35;
+	pos_Y = 1;
+	pos_Z = -65;
+	//add cube, set the size
+	bush_3 = new Cube(size_X, size_Y, size_Z);
+	//add location
+	bush_3->SetPos(pos_X, pos_Y, pos_Z);
+	//colouring
+	bush_3->color = Green;
+	//add body
+	App->physics->AddBody(*(bush_3), this, 0.0f);
+
+	// position of the bush 4
+	pos_X = 25;
+	pos_Y = 1;
+	pos_Z = -75;
+	//add cube, set the size
+	bush_4 = new Cube(size_X, size_Y, size_Z);
+	//add location
+	bush_4->SetPos(pos_X, pos_Y, pos_Z);
+	//colouring
+	bush_4->color = Green;
+	//add body
+	App->physics->AddBody(*(bush_4), this, 0.0f);
+
+	// position of the bush 5
+	pos_X = 0;
+	pos_Y = 1;
+	pos_Z = -75;
+	//add cube, set the size
+	bush_5 = new Cube(size_X, size_Y, size_Z);
+	//add location
+	bush_5->SetPos(pos_X, pos_Y, pos_Z);
+	//colouring
+	bush_5->color = Green2_T;
+	//add body
+	App->physics->AddBody(*(bush_5), this, 0.0f);
+
+	// position of the bush 6
+	pos_X = 50;
+	pos_Y = 1;
+	pos_Z = -80;
+	//add cube, set the size
+	bush_6 = new Cube(size_X, size_Y, size_Z);
+	//add location
+	bush_6->SetPos(pos_X, pos_Y, pos_Z);
+	//colouring
+	bush_6->color = Green2_T;
+	//add body
+	App->physics->AddBody(*(bush_6), this, 0.0f);
+
+	// position of the bush 7
+	pos_X = 45;
+	pos_Y = 1;
+	pos_Z = -80;
+	//add cube, set the size
+	bush_7 = new Cube(size_X, size_Y, size_Z);
+	//add location
+	bush_7->SetPos(pos_X, pos_Y, pos_Z);
+	//colouring
+	bush_7->color = Green;
+	//add body
+	App->physics->AddBody(*(bush_7), this, 0.0f);
+
+	// position of the bush 8
+	pos_X = -45;
+	pos_Y = 1;
+	pos_Z = -80;
+	//add cube, set the size
+	bush_8 = new Cube(size_X, size_Y, size_Z);
+	//add location
+	bush_8->SetPos(pos_X, pos_Y, pos_Z);
+	//colouring
+	bush_8->color = Green2_T;
+	//add body
+	App->physics->AddBody(*(bush_8), this, 0.0f);
+
+	// position of the bush 9
+	pos_X = -40;
+	pos_Y = 1;
+	pos_Z = -60;
+	//add cube, set the size
+	bush_9 = new Cube(size_X, size_Y, size_Z);
+	//add location
+	bush_9->SetPos(pos_X, pos_Y, pos_Z);
+	//colouring
+	bush_9->color = Green;
+	//add body
+	App->physics->AddBody(*(bush_9), this, 0.0f);
+
+	//outside the road
+	// position of the bush 10
+	pos_X = -80;
+	pos_Y = 1;
+	pos_Z = -50;
+	//add cube, set the size
+	bush_10 = new Cube(size_X, size_Y, size_Z);
+	//add location
+	bush_10->SetPos(pos_X, pos_Y, pos_Z);
+	//colouring
+	bush_10->color = Green;
+	//add body
+	App->physics->AddBody(*(bush_10), this, 0.0f);
+
+	// position of the bush 11
+	pos_X = -90;
+	pos_Y = 1;
+	pos_Z = -40;
+	//add cube, set the size
+	bush_11 = new Cube(size_X, size_Y, size_Z);
+	//add location
+	bush_11->SetPos(pos_X, pos_Y, pos_Z);
+	//colouring
+	bush_11->color = Green2_T;
+	//add body
+	App->physics->AddBody(*(bush_11), this, 0.0f);
+
+	// position of the bush 12
+	pos_X = -30;
+	pos_Y = 1;
+	pos_Z = -90;
+	//add cube, set the size
+	bush_12 = new Cube(size_X, size_Y, size_Z);
+	//add location
+	bush_12->SetPos(pos_X, pos_Y, pos_Z);
+	//colouring
+	bush_12->color = Green;
+	//add body
+	App->physics->AddBody(*(bush_12), this, 0.0f);
+
+	// position of the bush 13
+	pos_X = -60;
+	pos_Y = 1;
+	pos_Z = -100;
+	//add cube, set the size
+	bush_13 = new Cube(size_X, size_Y, size_Z);
+	//add location
+	bush_13->SetPos(pos_X, pos_Y, pos_Z);
+	//colouring
+	bush_13->color = Green;
+	//add body
+	App->physics->AddBody(*(bush_13), this, 0.0f);
+
+	// position of the bush 14
+	pos_X = -40;
+	pos_Y = 1;
+	pos_Z = -50;
+	//add cube, set the size
+	bush_14 = new Cube(size_X, size_Y, size_Z);
+	//add location
+	bush_14->SetPos(pos_X, pos_Y, pos_Z);
+	//colouring
+	bush_14->color = Green2_T;
+	//add body
+	App->physics->AddBody(*(bush_14), this, 0.0f);
+
+	// position of the bush 15
+	pos_X = -50;
+	pos_Y = 1;
+	pos_Z = -110;
+	//add cube, set the size
+	bush_15 = new Cube(size_X, size_Y, size_Z);
+	//add location
+	bush_15->SetPos(pos_X, pos_Y, pos_Z);
+	//colouring
+	bush_15->color = Green;
+	//add body
+	App->physics->AddBody(*(bush_15), this, 0.0f);
 
 }

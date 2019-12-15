@@ -34,7 +34,7 @@
 
 
 Music:
-
+	Ben Sound
 
 
 Design and Development: 
@@ -47,7 +47,7 @@ Design and Development:
 ## Elemental Race: The Game
 
 
-Elemental Race: The Game is a simple racing game where you can choose between different vehicles to run on a track based on (some of) the elements (water, fire, air, Earth, forest, spirit), and you have a limited amount of time to finish 3 rounds.
+Elemental Race: The Game is a simple racing game where you can choose between different vehicles to run on a track based on some of the elements (water, fire, Earth, forest), and you have a limited amount of time to finish 3 rounds.
 
 
 ## Gameplay
@@ -91,8 +91,6 @@ Instructions can be found in this same web page or in the readme.md file include
 
 CONTROLS:
 
-	_under construction_
-
 
 	COMPUTER KEYBOARD ONLY
 
@@ -101,34 +99,41 @@ CONTROLS:
 
 	To choose between vehicles:
 
-	[0] Default car		-> [T] Add a trailer (if you want to, ONLY at the beggining when choosing)
-	[1] Bus
-	[2] Truck Simple
-	[3] Truck + Triler
-	
+	[0] 		Default car		
+	[1] 		Bus
+	[2] 		Truck Simple
+	[3] 		MonsterTruck (no Trailer available)
+	[4] 		Mini
+	[T] 		Add a trailer (if you want to, ONLY at the beggining when choosing)
+	[RETURN] 	To start the race
+	[SPACE]		Turbo (you cannot turn when activated)
 
 	DEBUG:
 
+	[F1] Collisions	(Don't be afraid if the vehicle disappears before RETURN)
+	[F2] Free camera	
+
+	Before coosing a vehicle:
+
+	[W][A][S][D] - [R][F] - [Mouse's right click]	Move the camera around - Move the camera up and down - Rotate the camera
 
 
 ## Content
 
-
-	_under construction_
-
-
 	### Innovation
 
-	It is possible to choose between different vehicles, which behave differently.
+	It is possible to choose between different vehicles, which behave differently. With some of the vehicles you can get off course, but the fun part is to try to stay inside (also, it was fun that way!).
+
+	You have a turbo as well with SPACE.
 
 	The track has different zones, which have an element base to have different obstacles.
 
 	Each course has a trait that makes it interesting:
 
-		**Water course:** it has waterfalls, sea breeze and part of the course is under water.
-		**Earth course:** it has bumps and potholes, obstacles and landslides.
-		**Air course:** it has wind randomized and jumps where wind is applied upwards.
-		**Fire course:** it will have fire coming from the walls, fire-jumps and fire archs.
+		**Water course:** it has a lake.
+		**Earth course:** it has a mountain.
+		**Forest course:** it has bushes.
+		**Fire course:** it has fire archs.
 
 
 
@@ -138,7 +143,7 @@ CONTROLS:
 This is a game made by two second year students of the Videogame Design and Development degree taught at CITM-TTC.
 
 
-The games is a simple racing game against the clock with 4 courses and different vehicles.
+The games is a simple racing game against the clock with 5 vehicles to choose from and the possibility of a trailer with the elements theme.
 
 
 The game has been made using C++, Bullet3D, SDL and pugi libraries. 
