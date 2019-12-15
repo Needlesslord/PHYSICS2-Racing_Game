@@ -605,13 +605,91 @@ bool ModulePlayer::Start()
 	monsterTruck.wheels[3].steeringOposite = true;
 
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	// Mini properties ----------------------------------------
+	mini.chassis_size.Set(2, 1, 2);
+	mini.chassis_offset.Set(0, 1.0, 0);
+	mini.mass = 300.0f;
+	mini.suspensionStiffness = 15.88f;
+	mini.suspensionCompression = 0.83f;
+	mini.suspensionDamping = 0.88f;
+	mini.maxSuspensionTravelCm = 1000.0f;
+	mini.frictionSlip = 50.5;
+	mini.maxSuspensionForce = 6000.0f;
+	mini.chasisColor = Yellow;
+
+	// Wheel properties ---------------------------------------
+	float mini_connection_height = 1.2f;
+	float mini_wheel_radius = 0.4f;
+	float mini_wheel_width = 0.3f;
+	float mini_suspensionRestLength = 1.2f;
+
+	// Don't change anything below this line ------------------
+
+	float mini_half_width = mini.chassis_size.x*0.5f;
+	float mini_half_length = mini.chassis_size.z*0.5f;
+
+	vec3 mini_direction(0, -1, 0);
+	vec3 mini_axis(-1, 0, 0);
+
+	mini.num_wheels = 4;
+	mini.wheels = new Wheel[4];
+
+	// FRONT-LEFT ------------------------
+	mini.wheels[0].connection.Set(mini_half_width - 0.3f * mini_wheel_width, mini_connection_height, mini_half_length - mini_wheel_radius);
+	mini.wheels[0].direction = mini_direction;
+	mini.wheels[0].axis = mini_axis;
+	mini.wheels[0].suspensionRestLength = mini_suspensionRestLength;
+	mini.wheels[0].radius = mini_wheel_radius;
+	mini.wheels[0].width = mini_wheel_width;
+	mini.wheels[0].front = true;
+	mini.wheels[0].drive = true;
+	mini.wheels[0].brake = false;
+	mini.wheels[0].steering = true;
+	mini.wheels->color = Black;
+
+	// FRONT-RIGHT ------------------------
+	mini.wheels[1].connection.Set(-mini_half_width + 0.3f * mini_wheel_width, mini_connection_height, mini_half_length - mini_wheel_radius);
+	mini.wheels[1].direction = mini_direction;
+	mini.wheels[1].axis = mini_axis;
+	mini.wheels[1].suspensionRestLength = mini_suspensionRestLength;
+	mini.wheels[1].radius = mini_wheel_radius;
+	mini.wheels[1].width = mini_wheel_width;
+	mini.wheels[1].front = true;
+	mini.wheels[1].drive = true;
+	mini.wheels[1].brake = false;
+	mini.wheels[1].steering = true;
+
+	// REAR-LEFT ------------------------
+	mini.wheels[2].connection.Set(mini_half_width - 0.3f * mini_wheel_width, mini_connection_height, -mini_half_length + mini_wheel_radius);
+	mini.wheels[2].direction = mini_direction;
+	mini.wheels[2].axis = mini_axis;
+	mini.wheels[2].suspensionRestLength = mini_suspensionRestLength;
+	mini.wheels[2].radius = mini_wheel_radius;
+	mini.wheels[2].width = mini_wheel_width;
+	mini.wheels[2].front = false;
+	mini.wheels[2].drive = false;
+	mini.wheels[2].brake = true;
+	mini.wheels[2].steering = false;
+
+	// REAR-RIGHT ------------------------
+	mini.wheels[3].connection.Set(-mini_half_width + 0.3f * mini_wheel_width, mini_connection_height, -mini_half_length + mini_wheel_radius);
+	mini.wheels[3].direction = mini_direction;
+	mini.wheels[3].axis = mini_axis;
+	mini.wheels[3].suspensionRestLength = mini_suspensionRestLength;
+	mini.wheels[3].radius = mini_wheel_radius;
+	mini.wheels[3].width = mini_wheel_width;
+	mini.wheels[3].front = false;
+	mini.wheels[3].drive = false;
+	mini.wheels[3].brake = true;
+	mini.wheels[3].steering = false;
 
 
 	vehicleSelected = false;
 	trailerAdded = false;
 
 	//timer
-	timer.Stop();
 	timerOn = false;
 
 
@@ -770,6 +848,12 @@ update_status ModulePlayer::Update(float dt)
 		 trailerAdded = true;
 	 }
 
+	else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && vehicleSelectedNum == 4 && !trailerAdded) { // TRAILER TO TRUCK
+		Trailer = App->physics->AddVehicle(trailer);
+		Trailer->SetPos(-72.5, 2, -7.5);
+		App->physics->AddConstraintP2P(*Mini, *Trailer, { 0, 0, 0 }, { 0, 0, 7.5f });
+		trailerAdded = true;
+	}
 	
 	if (!vehicleSelected) {
 		if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
@@ -795,6 +879,12 @@ update_status ModulePlayer::Update(float dt)
 			MonsterTruck->SetPos(-72.5, 1, -5);
 			vehicleSelected = true;
 			vehicleSelectedNum = 3;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN) {
+			Mini = App->physics->AddVehicle(mini);
+			Mini->SetPos(-72.5, 1, -5);
+			vehicleSelected = true;
+			vehicleSelectedNum = 4;
 		}
 	}
 
@@ -956,6 +1046,47 @@ update_status ModulePlayer::Update(float dt)
 
 		char title[80];
 		sprintf_s(title, "%.1f Km/h", MonsterTruck->GetKmh());
+
+		App->window->SetTitle(title);
+	}
+
+	else if (vehicleSelectedNum == 4) {	// MINI
+		turn = acceleration = brake = 0.0f;
+
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
+			if (Mini->GetKmh() < MAX_SPEED)
+				acceleration = MAX_ACCELERATION;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
+			if (Mini->GetKmh() > 3) brake = BRAKE_POWER;
+			else {
+				if (Mini->GetKmh() > MIN_SPEED)
+					acceleration = -BRAKE_POWER;
+			}
+		}
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+			if (turn < TURN_DEGREES) {
+				turn += TURN_DEGREES;
+			}
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+			if (turn > -TURN_DEGREES) {
+				turn -= TURN_DEGREES;
+			}
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
+			acceleration *= 4;
+		}
+		Mini->ApplyEngineForce(acceleration);
+		Mini->Turn(turn);
+		Mini->Brake(brake);
+		Mini->Render();
+		if (trailerAdded) Trailer->Render();
+
+		char title[80];
+		sprintf_s(title, "%.1f Km/h", Mini->GetKmh());
 
 		App->window->SetTitle(title);
 	}
