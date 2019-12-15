@@ -50,6 +50,8 @@ public:
 	void AddPerson(float posX, float posY, float posZ, int ethnicity);
 	Cube AddHead(int ethnicity);
 	Cube AddBody(int shirt);
+	Cube* water_lake;
+	Cube* start_line;
 
 public:
 	/*

@@ -61,7 +61,8 @@ update_status ModuleSceneIntro::Update(float dt)
 	up->Render();
 	down->Render();
 	flat->Render();
-
+	water_lake->Render();
+	start_line->Render();
 
 	//float start_line_size[3] = { 4, 2, 20 };
 	//float start_line_position[3] = { -75, 1, -5 };
@@ -230,7 +231,7 @@ void ModuleSceneIntro::AddObstacles(int zone) {
 		float pos_Y_water_lake = 0;
 		float pos_Z_water_lake = 145;
 		//add cube, set the size
-		Cube* water_lake = new Cube(size_X_water_lake, size_Y_water_lake, size_Z_water_lake);
+		water_lake = new Cube(size_X_water_lake, size_Y_water_lake, size_Z_water_lake);
 		//add location
 		water_lake->SetPos(pos_X_water_lake, pos_Y_water_lake, pos_Z_water_lake);
 		//colouring
@@ -265,13 +266,13 @@ void ModuleSceneIntro::AddObstacles(int zone) {
 		float pos_Y_water_lake = 0;
 		float pos_Z_water_lake = 10;
 		//add cube, set the size
-		Cube* start_line = new Cube(size_X_start_line, size_Y_start_line, size_Z_start_line);
+		start_line = new Cube(size_X_start_line, size_Y_start_line, size_Z_start_line);
 		//add location
 		start_line->SetPos(pos_X_water_lake, pos_Y_water_lake, pos_Z_water_lake);
 		//colouring
 		start_line->color = White;
 		//add body
-		App->physics->AddBody(*(start_line), 0.0f);
+		App->physics->AddBody(*(start_line), this, 0.0f, false);
 	}
 
 }
@@ -287,7 +288,7 @@ Cube ModuleSceneIntro::AddHead(int ethnicity){
 	float sizeHead_Z = 0.5;
 	Cube* Head = new Cube(sizeHead_X, sizeHead_Y, sizeHead_Z);
 
-	App->physics->AddBody(*(Head), 0.0f);
+	App->physics->AddBody(*(Head), this, 0.0f);
 
 	if (ethnicity == 1) Head->color = Skin2_T;
 	else Head->color = Skin_T;
@@ -303,7 +304,7 @@ Cube ModuleSceneIntro::AddBody(int shirt){
 	float sizeBody_Z = 1;
 	Cube* Body = new Cube(sizeBody_X, sizeBody_Y, sizeBody_Z);
 	
-	App->physics->AddBody(*(Body), 0.0f);
+	App->physics->AddBody(*(Body), this, 0.0f);
 
 	if (shirt == 1) Body->color = Red_T;
 	else if (shirt == 2) Body->color = Yellow_T;
