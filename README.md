@@ -110,7 +110,7 @@ CONTROLS:
 
 	DEBUG:
 
-	[F1] Collisions	(Don't be afraid if the vehicle disappears before RETURN)
+	[F1] Collisions	
 	[F2] Free camera	
 
 	Before coosing a vehicle:
@@ -128,7 +128,7 @@ CONTROLS:
 
 	The track has different zones, which have an element base to have different obstacles.
 
-	Each course has a trait that makes it interesting:
+	Each trait that makes the course interesting:
 
 		**Water course:** it has a lake.
 		**Earth course:** it has a mountain.

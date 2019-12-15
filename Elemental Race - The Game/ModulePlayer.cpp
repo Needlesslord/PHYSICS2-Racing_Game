@@ -1137,33 +1137,10 @@ update_status ModulePlayer::Update(float dt)
 		}
 	}
 
-	// Getting the checkpoints
-	if (vehicleSelectedNum = 0) {
-		float CarPosX = Car->vehicle->getRigidBody()->getCenterOfMassPosition().getX();
-		float CarPosZ = Car->vehicle->getRigidBody()->getCenterOfMassPosition().getZ();
-	}
-	else if (vehicleSelectedNum = 1) {
-		float CarPosX = Bus->vehicle->getRigidBody()->getCenterOfMassPosition().getX();
-		float CarPosZ = Bus->vehicle->getRigidBody()->getCenterOfMassPosition().getZ();
-	}
-	else if (vehicleSelectedNum = 2) {
-		float CarPosX = Truck->vehicle->getRigidBody()->getCenterOfMassPosition().getX();
-		float CarPosZ = Truck->vehicle->getRigidBody()->getCenterOfMassPosition().getZ();
-	}
-	else if (vehicleSelectedNum = 3) {
-		float CarPosX = MonsterTruck->vehicle->getRigidBody()->getCenterOfMassPosition().getX();
-		float CarPosZ = MonsterTruck->vehicle->getRigidBody()->getCenterOfMassPosition().getZ();
-	}
-	else if (vehicleSelectedNum = 4) {
-		float CarPosX = Mini->vehicle->getRigidBody()->getCenterOfMassPosition().getX();
-		float CarPosZ = Mini->vehicle->getRigidBody()->getCenterOfMassPosition().getZ();
-	}
-
 	if (timer.Read() > 210) {
-		timer.Stop();
 		App->scene_intro->currentStep == GameOver;
+		timer.Stop();
 	}
-
 
 	return UPDATE_CONTINUE;
 }

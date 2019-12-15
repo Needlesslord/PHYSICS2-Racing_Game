@@ -1,1 +1,0 @@
-Desert map, with wind blowing in one direction (gravity in X or Z)
