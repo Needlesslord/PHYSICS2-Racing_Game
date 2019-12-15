@@ -685,6 +685,7 @@ update_status ModulePlayer::Update(float dt)
 	else if (App->scene_intro->currentStep == LockVehicle) {
 		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) App->scene_intro->currentStep = Running;
 	}
+	
 	//CAMERA --------------------------------------------------------------------
 	{
 		// camera set on the beggining of the course, not set on vehicle
@@ -1105,41 +1106,7 @@ update_status ModulePlayer::Update(float dt)
 			App->window->SetTitle(title);
 		}
 	}
-
-	if (App->scene_intro->currentStep == Running) {
-		if (vehicleSelectedNum = 0) {
-			if (Car->GetPos().x < 10 && Car->GetPos().z < 10 && Car->GetPos().x > -10 && Car->GetPos().z > -10) {
-				raceFinished = true;
-
-			}
-		}
-		else if (vehicleSelectedNum = 1) {
-			if (Bus->GetPos().x < 10 && Bus->GetPos().z < 10 && Bus->GetPos().x > -10 && Bus->GetPos().z > -10) {
-				raceFinished = true;
-			}
-
-		}
-		else if (vehicleSelectedNum = 2) {
-			if (Truck->GetPos().x < 10 && Truck->GetPos().z < 10 && Truck->GetPos().x > -10 && Truck->GetPos().z > -10) {
-				raceFinished = true;
-			}
-
-		}
-		else if (vehicleSelectedNum = 3) {
-			if (MonsterTruck->GetPos().x < 10 && MonsterTruck->GetPos().z < 10 && MonsterTruck->GetPos().x > -10 && MonsterTruck->GetPos().z > -10) {
-				raceFinished = true;
-			}
-
-		}
-		else if (vehicleSelectedNum = 4) {
-			if (Mini->GetPos().x < 10 && Mini->GetPos().z < 10 && Mini->GetPos().x > -10 && Mini->GetPos().z > -10) {
-				raceFinished = true;
-			}
-
-		}
-	}
-
-	if (raceFinished) {
+	else if (App->scene_intro->currentStep == GameOver) {
 		if (timer.Read() <= 210) hasWon = true;
 		else if (timer.Read() > 210) hasWon = false;
 		timer.Stop();
@@ -1162,4 +1129,19 @@ update_status ModulePlayer::Update(float dt)
 	}
 
 	return UPDATE_CONTINUE;
+}
+
+void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2) {
+	if (body1 == Bus || body1 == Truck || body1 == MonsterTruck || body1 == Car || body1 == Mini) {
+		if (body2 == App->scene_intro->start_line && App->scene_intro->startActivated) {
+			App->scene_intro->startActivated = false;
+			App->scene_intro->midActivated = true;
+			if (App->scene_intro->lap < 1) App->scene_intro->lap++;
+			else App->scene_intro->currentStep = GameOver;
+		}
+		else if (body2 == App->scene_intro->mid_line && App->scene_intro->midActivated) {
+			App->scene_intro->midActivated = false;
+			App->scene_intro->startActivated = true;
+		}
+	}
 }
