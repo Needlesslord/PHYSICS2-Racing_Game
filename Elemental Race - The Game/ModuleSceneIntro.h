@@ -57,6 +57,7 @@ public:
 	Cube* water_lake;
 	Cube* start_line;
 
+	//fire archs
 	Cube* left_1;
 	Cube* top_1;
 	Cube* right_1;
@@ -70,8 +71,27 @@ public:
 	Cube* top_4;
 	Cube* right_4;
 
+	//bushes
+	Cube* bush_1;
+	Cube* bush_2;
+	Cube* bush_3;
+	Cube* bush_4;
+	Cube* bush_5;
+	Cube* bush_6;
+	Cube* bush_7;
+	Cube* bush_8;
+	Cube* bush_9;
+	Cube* bush_10;
+	Cube* bush_11;
+	Cube* bush_12;
+	Cube* bush_13;
+	Cube* bush_14;
+	Cube* bush_15;
+
+
 	void AddFireArch();
-	
+	void AddBush();
+
 	Steps currentStep;
 public:
 	//obstacles list
