@@ -9,14 +9,18 @@
 struct PhysBody3D;
 struct PhysMotor3D;
 
-//do we use this??? ------------
 struct cubePieces
 {
 	p2DynArray<PhysBody3D*>		phys_bodies;
 	p2DynArray<Cube>			prim_bodies;
 };
-//do we use this??? ------------
 
+enum Steps {
+	SelectVehicle,
+	LockVehicle,
+	Running,
+	GameOver
+};
 class ModuleSceneIntro : public Module
 {
 public:
@@ -55,29 +59,9 @@ public:
 
 	//checkpoint
 	void createCheckPoint(vec3 pos_left, vec3 pos_right);
-
-
+	
+	Steps currentStep;
 public:
-	/*
-	PhysBody3D* pb_snake[MAX_SNAKE];
-	Sphere s_snake[MAX_SNAKE];
-
-	PhysBody3D* pb_snake2[MAX_SNAKE];
-	Sphere s_snake2[MAX_SNAKE];
-	*/
-
-	PhysBody3D* pb_chassis;
-	Cube p_chassis;
-
-	PhysBody3D* pb_wheel;
-	Cylinder p_wheel;
-
-	PhysBody3D* pb_wheel2;
-	Cylinder p_wheel2;
-
-	PhysMotor3D* left_wheel;
-	PhysMotor3D* right_wheel;
-
 	//obstacles list
 	int num_trees;
 	int num_rocks;

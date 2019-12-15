@@ -24,36 +24,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
-	//// Bus properties ----------------------------------------
-	//bus.chassis_size.Set(5, 9, 12);
-	//bus.chassis_offset.Set(0, 4.5, 0);
-	//bus.mass = 500.0f;
-	//bus.suspensionStiffness = 15.88f;
-	//bus.suspensionCompression = 0.83f;
-	//bus.suspensionDamping = 0.88f;
-	//bus.maxSuspensionTravelCm = 1000.0f;
-	//bus.frictionSlip = 50.5;
-	//bus.maxSuspensionForce = 6000.0f;
-	//bus.chasisColor = Purple;
-	//
-	//// Wheel properties ---------------------------------------
-	//float bus_connection_height = 0.6f;
-	//float bus_wheel_radius = 1.2f;
-	//float bus_wheel_width = 0.8f;
-	//float bus_suspensionRestLength = 1.2f;
-
-	//// Don't change anything below this line ------------------
-
-	//float bus_half_width = bus.chassis_size.x * 0.5f;
-	//float bus_half_length = bus.chassis_size.z * 0.5f;
-	//
-	//vec3 bus_direction(0,-1,0);
-	//vec3 bus_axis(-1,0,0);
-	//
-	//bus.num_wheels = 6;
-	//bus.wheels = new Wheel[6];
-
-		// Bus properties (small) ----------------------------------------
+	// Bus properties (small) ----------------------------------------
 	bus.chassis_size.Set(4, 5.5, 11.5);
 	bus.chassis_offset.Set(0, 2.5, 0);
 	bus.mass = 500.0f;
@@ -707,7 +678,12 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
-
+	if (App->scene_intro->currentStep == SelectVehicle) {
+		if (vehicleSelected) App->scene_intro->currentStep = LockVehicle;
+	}
+	else if (App->scene_intro->currentStep == LockVehicle) {
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) App->scene_intro->currentStep = Running;
+	}
 	//CAMERA --------------------------------------------------------------------
 	{
 		// camera set on the beggining of the course, not set on vehicle
@@ -835,35 +811,7 @@ update_status ModulePlayer::Update(float dt)
 		//make isStart activated
 	}
 	
-	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && vehicleSelectedNum == 0 && !trailerAdded) { // TRAILER TO CAR
-		Trailer = App->physics->AddVehicle(trailer);
-		Trailer->SetPos(-72.5, 2, -15);
-		App->physics->AddConstraintP2P(*Car, *Trailer, { 0, 0, 0 }, { 0, 0, 10.0f });
-		trailerAdded = true;
-	}
-
-	 else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && vehicleSelectedNum == 1 && !trailerAdded) { // TRAILER TO BUS
-		 Trailer = App->physics->AddVehicle(trailer);
-		 Trailer->SetPos(-72.5, 2, -20);
-		 App->physics->AddConstraintP2P(*Bus, *Trailer, { 0, 0, 0 }, { 0, 0, 12.5f });
-		 trailerAdded = true;
-	 }
-
-	else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && vehicleSelectedNum == 2 && !trailerAdded) { // TRAILER TO TRUCK
-		 Trailer = App->physics->AddVehicle(trailer);
-		 Trailer->SetPos(-72.5, 2, -25);
-		 App->physics->AddConstraintP2P(*Truck, *Trailer, { 0, 0, 0 }, { 0, 0, 17.5f });
-		 trailerAdded = true;
-	 }
-
-	else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && vehicleSelectedNum == 4 && !trailerAdded) { // TRAILER TO TRUCK
-		Trailer = App->physics->AddVehicle(trailer);
-		Trailer->SetPos(-72.5, 2, -7.5);
-		App->physics->AddConstraintP2P(*Mini, *Trailer, { 0, 0, 0 }, { 0, 0, 7.5f });
-		trailerAdded = true;
-	}
-	
-	if (!vehicleSelected) {
+	if (App->scene_intro->currentStep == SelectVehicle) {
 		if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
 			Car = App->physics->AddVehicle(car);
 			Car->SetPos(-72.5, 1, -5);
@@ -896,207 +844,240 @@ update_status ModulePlayer::Update(float dt)
 		}
 	}
 
-	else if (vehicleSelectedNum == 0) {	// CAR
-		turn = acceleration = brake = 0.0f;
-
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)	
-			if (Car->GetKmh() < MAX_SPEED) acceleration = MAX_ACCELERATION;
-
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-			if (Car->GetKmh() > 3) brake = BRAKE_POWER;
-			else {
-				if (Car->GetKmh() > MIN_SPEED)
-					acceleration = -BRAKE_POWER;
-			}
+	else if (App->scene_intro->currentStep == LockVehicle) {
+		if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && vehicleSelectedNum == 0 && !trailerAdded) { // TRAILER TO CAR
+			Trailer = App->physics->AddVehicle(trailer);
+			Trailer->SetPos(-72.5, 2, -15);
+			App->physics->AddConstraintP2P(*Car, *Trailer, { 0, 0, 0 }, { 0, 0, 10.0f });
+			trailerAdded = true;
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-			if (turn < TURN_DEGREES)
-				turn += TURN_DEGREES;
+		else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && vehicleSelectedNum == 1 && !trailerAdded) { // TRAILER TO BUS
+			Trailer = App->physics->AddVehicle(trailer);
+			Trailer->SetPos(-72.5, 2, -20);
+			App->physics->AddConstraintP2P(*Bus, *Trailer, { 0, 0, 0 }, { 0, 0, 12.5f });
+			trailerAdded = true;
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-			if (turn > -TURN_DEGREES)
-				turn -= TURN_DEGREES;
+		else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && vehicleSelectedNum == 2 && !trailerAdded) { // TRAILER TO TRUCK
+			Trailer = App->physics->AddVehicle(trailer);
+			Trailer->SetPos(-72.5, 2, -25);
+			App->physics->AddConstraintP2P(*Truck, *Trailer, { 0, 0, 0 }, { 0, 0, 17.5f });
+			trailerAdded = true;
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
-			acceleration *= 4;
+		else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && vehicleSelectedNum == 4 && !trailerAdded) { // TRAILER TO TRUCK
+			Trailer = App->physics->AddVehicle(trailer);
+			Trailer->SetPos(-72.5, 2, -7.5);
+			App->physics->AddConstraintP2P(*Mini, *Trailer, { 0, 0, 0 }, { 0, 0, 7.5f });
+			trailerAdded = true;
 		}
-
-		Car->ApplyEngineForce(acceleration);
-		Car->Turn(turn);
-		Car->Brake(brake);
-		Car->Render();
-
-		char title[80];
-		sprintf_s(title, "%.1f Km/h", Car->GetKmh());
-		App->window->SetTitle(title);
 	}
 
-	else if (vehicleSelectedNum == 1) {	//BUS
-		turn = acceleration = brake = 0.0f;
+	else if (App->scene_intro->currentStep == Running) {
 
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
+		if (vehicleSelectedNum == 0) {	// CAR
+			turn = acceleration = brake = 0.0f;
+
+			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+				if (Car->GetKmh() < MAX_SPEED) acceleration = MAX_ACCELERATION;
+
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
+				if (Car->GetKmh() > 3) brake = BRAKE_POWER;
+				else {
+					if (Car->GetKmh() > MIN_SPEED)
+						acceleration = -BRAKE_POWER;
+				}
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+				if (turn < TURN_DEGREES)
+					turn += TURN_DEGREES;
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+				if (turn > -TURN_DEGREES)
+					turn -= TURN_DEGREES;
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
+				acceleration *= 4;
+			}
+
+			Car->ApplyEngineForce(acceleration);
+			Car->Turn(turn);
+			Car->Brake(brake);
+			Car->Render();
+
+			char title[80];
+			sprintf_s(title, "%.1f Km/h", Car->GetKmh());
+			App->window->SetTitle(title);
+		}
+
+		else if (vehicleSelectedNum == 1) {	//BUS
+			turn = acceleration = brake = 0.0f;
+
+			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
 				if (Bus->GetKmh() < MAX_SPEED)
 					acceleration = MAX_ACCELERATION / 2.5f;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-			if (Bus->GetKmh() > 3) brake = BRAKE_POWER / 3;
-			else {
-				if (Bus->GetKmh() > MIN_SPEED / 3)
-					acceleration = -BRAKE_POWER / 3;
 			}
-		}
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-			if (turn < TURN_DEGREES * 0.8)
-				turn += TURN_DEGREES * 0.8;
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-			if (turn > -TURN_DEGREES * 0.8)
-				turn -= TURN_DEGREES * 0.8;
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
-			acceleration *= 4;
-		}
-
-		Bus->ApplyEngineForce(acceleration);
-		Bus->Turn(turn);
-		Bus->Brake(brake);
-		Bus->Render();
-
-		char title[80];
-		sprintf_s(title, "%.1f Km/h", Bus->GetKmh());
-
-		App->window->SetTitle(title);
-	}
-
-
-	else if (vehicleSelectedNum == 2) {	//TRUCK
-		turn = acceleration = brake = 0.0f;
-
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
-			if (Truck->GetKmh() < MAX_SPEED)
-			acceleration = MAX_ACCELERATION;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-			if (Truck->GetKmh() > 3) brake = BRAKE_POWER / 5;
-			else {
-				if (Truck->GetKmh() > MIN_SPEED)
-					acceleration = -BRAKE_POWER / 3;
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
+				if (Bus->GetKmh() > 3) brake = BRAKE_POWER / 3;
+				else {
+					if (Bus->GetKmh() > MIN_SPEED / 3)
+						acceleration = -BRAKE_POWER / 3;
+				}
 			}
-		}
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-			if (turn < TURN_DEGREES * 2.5) {
-				turn += TURN_DEGREES * 2.5;
-				acceleration *= 9;
+			if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+				if (turn < TURN_DEGREES * 0.8)
+					turn += TURN_DEGREES * 0.8;
 			}
-		}
 
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-			if (turn > -TURN_DEGREES * 2.5) {
-				turn -= TURN_DEGREES * 2.5;
-				acceleration *= 9;
+			if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+				if (turn > -TURN_DEGREES * 0.8)
+					turn -= TURN_DEGREES * 0.8;
 			}
-		}
 
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
-			acceleration *= 4;
-		}
-		Truck->ApplyEngineForce(acceleration);
-		Truck->Turn(turn);
-		Truck->Brake(brake);
-		Truck->Render();
-		if (trailerAdded) Trailer->Render();
-
-		char title[80];
-		sprintf_s(title, "%.1f Km/h", Truck->GetKmh());
-
-		App->window->SetTitle(title);
-	}
-
-	else if (vehicleSelectedNum == 3) {	// MONSTER TRUCK
-		turn = acceleration = brake = 0.0f;
-
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
-			if (MonsterTruck->GetKmh() < MAX_SPEED)
-				acceleration = MAX_ACCELERATION;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-			if (MonsterTruck->GetKmh() > 3) brake = BRAKE_POWER;
-			else {
-				if (MonsterTruck->GetKmh() > MIN_SPEED)
-					acceleration = -BRAKE_POWER;
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
+				acceleration *= 4;
 			}
+
+			Bus->ApplyEngineForce(acceleration);
+			Bus->Turn(turn);
+			Bus->Brake(brake);
+			Bus->Render();
+
+			char title[80];
+			sprintf_s(title, "%.1f Km/h", Bus->GetKmh());
+
+			App->window->SetTitle(title);
 		}
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-			if (turn < TURN_DEGREES) {
-				turn += TURN_DEGREES;
+
+
+		else if (vehicleSelectedNum == 2) {	//TRUCK
+			turn = acceleration = brake = 0.0f;
+
+			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
+				if (Truck->GetKmh() < MAX_SPEED)
+					acceleration = MAX_ACCELERATION;
 			}
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-			if (turn > -TURN_DEGREES) {
-				turn -= TURN_DEGREES;
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
+				if (Truck->GetKmh() > 3) brake = BRAKE_POWER / 5;
+				else {
+					if (Truck->GetKmh() > MIN_SPEED)
+						acceleration = -BRAKE_POWER / 3;
+				}
 			}
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
-			acceleration *= 4;
-		}
-		MonsterTruck->ApplyEngineForce(acceleration);
-		MonsterTruck->Turn(turn);
-		MonsterTruck->Brake(brake);
-		MonsterTruck->Render();
-		if (trailerAdded) Trailer->Render();
-
-		char title[80];
-		sprintf_s(title, "%.1f Km/h", MonsterTruck->GetKmh());
-
-		App->window->SetTitle(title);
-	}
-
-	else if (vehicleSelectedNum == 4) {	// MINI
-		turn = acceleration = brake = 0.0f;
-
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
-			if (Mini->GetKmh() < MAX_SPEED)
-				acceleration = MAX_ACCELERATION;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-			if (Mini->GetKmh() > 3) brake = BRAKE_POWER;
-			else {
-				if (Mini->GetKmh() > MIN_SPEED)
-					acceleration = -BRAKE_POWER;
+			if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+				if (turn < TURN_DEGREES * 2.5) {
+					turn += TURN_DEGREES * 2.5;
+					acceleration *= 9;
+				}
 			}
-		}
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-			if (turn < TURN_DEGREES) {
-				turn += TURN_DEGREES;
+
+			if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+				if (turn > -TURN_DEGREES * 2.5) {
+					turn -= TURN_DEGREES * 2.5;
+					acceleration *= 9;
+				}
 			}
-		}
 
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-			if (turn > -TURN_DEGREES) {
-				turn -= TURN_DEGREES;
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
+				acceleration *= 4;
 			}
+			Truck->ApplyEngineForce(acceleration);
+			Truck->Turn(turn);
+			Truck->Brake(brake);
+			Truck->Render();
+			if (trailerAdded) Trailer->Render();
+
+			char title[80];
+			sprintf_s(title, "%.1f Km/h", Truck->GetKmh());
+
+			App->window->SetTitle(title);
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
-			acceleration *= 4;
+		else if (vehicleSelectedNum == 3) {	// MONSTER TRUCK
+			turn = acceleration = brake = 0.0f;
+
+			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
+				if (MonsterTruck->GetKmh() < MAX_SPEED)
+					acceleration = MAX_ACCELERATION;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
+				if (MonsterTruck->GetKmh() > 3) brake = BRAKE_POWER;
+				else {
+					if (MonsterTruck->GetKmh() > MIN_SPEED)
+						acceleration = -BRAKE_POWER;
+				}
+			}
+			if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+				if (turn < TURN_DEGREES) {
+					turn += TURN_DEGREES;
+				}
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+				if (turn > -TURN_DEGREES) {
+					turn -= TURN_DEGREES;
+				}
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
+				acceleration *= 4;
+			}
+			MonsterTruck->ApplyEngineForce(acceleration);
+			MonsterTruck->Turn(turn);
+			MonsterTruck->Brake(brake);
+			MonsterTruck->Render();
+			if (trailerAdded) Trailer->Render();
+
+			char title[80];
+			sprintf_s(title, "%.1f Km/h", MonsterTruck->GetKmh());
+
+			App->window->SetTitle(title);
 		}
-		Mini->ApplyEngineForce(acceleration);
-		Mini->Turn(turn);
-		Mini->Brake(brake);
-		Mini->Render();
-		if (trailerAdded) Trailer->Render();
 
-		char title[80];
-		sprintf_s(title, "%.1f Km/h", Mini->GetKmh());
+		else if (vehicleSelectedNum == 4) {	// MINI
+			turn = acceleration = brake = 0.0f;
 
-		App->window->SetTitle(title);
+			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
+				if (Mini->GetKmh() < MAX_SPEED)
+					acceleration = MAX_ACCELERATION;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
+				if (Mini->GetKmh() > 3) brake = BRAKE_POWER;
+				else {
+					if (Mini->GetKmh() > MIN_SPEED)
+						acceleration = -BRAKE_POWER;
+				}
+			}
+			if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+				if (turn < TURN_DEGREES) {
+					turn += TURN_DEGREES;
+				}
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+				if (turn > -TURN_DEGREES) {
+					turn -= TURN_DEGREES;
+				}
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
+				acceleration *= 4;
+			}
+			Mini->ApplyEngineForce(acceleration);
+			Mini->Turn(turn);
+			Mini->Brake(brake);
+			Mini->Render();
+			if (trailerAdded) Trailer->Render();
+
+			char title[80];
+			sprintf_s(title, "%.1f Km/h", Mini->GetKmh());
+
+			App->window->SetTitle(title);
+		}
 	}
 	return UPDATE_CONTINUE;
 }
