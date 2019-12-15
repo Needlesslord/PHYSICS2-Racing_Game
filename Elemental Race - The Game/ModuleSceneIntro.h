@@ -46,6 +46,9 @@ public:
 	//to add all the obstacles
 	void AddObstacles(int zone);
 	void AddBridge();
+	Cube* up;
+	Cube* flat;
+	Cube* down;
 
 public:
 	/*
