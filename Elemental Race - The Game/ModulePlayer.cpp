@@ -583,7 +583,7 @@ update_status ModulePlayer::Update(float dt)
 	//}
 
 	//MUSIC END ---------------------------------------------------------------------
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN && vehicleSelectedNum == 2 && !trailerAdded) { //TRAILER
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN && vehicleSelectedNum == 2/* && !trailerAdded*/) { //TRAILER
 		Trailer = App->physics->AddVehicle(trailer);
 		Trailer->SetPos(-72.5, 2, -25);
 		App->physics->AddConstraintP2P(*Truck, *Trailer, { 0, 0, 0 }, { 0, 0, 17.5f });
@@ -677,11 +677,11 @@ update_status ModulePlayer::Update(float dt)
 		Truck->Render();
 		if (trailerAdded) Trailer->Render();
 
-		char title[80];
+		char title2[80];
 		if (vehicleSelectedNum == 1)
-			sprintf_s(title, "%.1f Km/h", Truck->GetKmh());
+			sprintf_s(title2, "%.1f Km/h", Truck->GetKmh());
 
-		App->window->SetTitle(title);
+		App->window->SetTitle(title2);
 	}
 	return UPDATE_CONTINUE;
 }

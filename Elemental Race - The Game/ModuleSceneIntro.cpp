@@ -16,7 +16,6 @@ ModuleSceneIntro::~ModuleSceneIntro()
 bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
-	bool ret = true;
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 	
@@ -28,12 +27,14 @@ bool ModuleSceneIntro::Start()
 
 
 	AddBridge();
+
+	//add lake
 	AddObstacles(4);
 
 	//adding start line
 	AddObstacles(0);
 
-	return ret;
+	return true;
 }
 
 // Load assets
@@ -57,6 +58,11 @@ update_status ModuleSceneIntro::Update(float dt)
 		Course[i]->Render();
 	}
 	
+	up->Render();
+	down->Render();
+	flat->Render();
+
+
 	//float start_line_size[3] = { 4, 2, 20 };
 	//float start_line_position[3] = { -75, 1, -5 };
 	//Cube* start_line = new Cube(4, 2, 20);
@@ -169,9 +175,9 @@ void ModuleSceneIntro::AddBridge() {
 	float rot_Z_down = 1;
 
 	//add cube, set the size
-	Cube* up = new Cube		(		size_X_up,		size_Y_up,		size_Z_up		);
-	Cube* flat = new Cube	(		size_X_flat,	size_Y_flat,	size_Z_flat		);
-	Cube* down = new Cube	(		size_X_down,	size_Y_down,	size_Z_down		);
+	up = new Cube		(		size_X_up,		size_Y_up,		size_Z_up		);
+	flat = new Cube	(		size_X_flat,	size_Y_flat,	size_Z_flat		);
+	down = new Cube	(		size_X_down,	size_Y_down,	size_Z_down		);
 	//add location
 	up->SetPos(			pos_X_up,		pos_Y_up,		pos_Z_up		);
 	flat->SetPos(		pos_X_flat,		pos_Y_flat,		pos_Z_flat		);
