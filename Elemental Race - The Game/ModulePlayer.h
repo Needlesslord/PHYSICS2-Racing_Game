@@ -93,9 +93,9 @@ public:
 
 	//timer
 	Timer			timer;
-	bool			timerOn;
-	bool			hasWon;
-	bool			raceFinished;
+	bool			timerOn = false;
+	bool			hasWon = false;
+	bool			raceFinished = false;
 	//NUR
 	//checkpoints
 	int lap;
