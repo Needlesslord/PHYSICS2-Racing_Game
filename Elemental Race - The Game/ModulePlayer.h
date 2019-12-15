@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "p2Point.h"
 #include "PhysVehicle3D.h"
+#include "Timer.h"
 
 
 struct PhysVehicle3D;
@@ -93,6 +94,7 @@ public:
 	//timer
 	Timer			timer;
 	bool			timerOn;
+	Timer			crono;
 
 	//NUR
 	//checkpoints

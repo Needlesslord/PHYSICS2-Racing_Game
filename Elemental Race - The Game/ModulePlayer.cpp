@@ -605,15 +605,15 @@ bool ModulePlayer::Start()
 	monsterTruck.wheels[3].steeringOposite = true;
 
 
-
-
 	vehicleSelected = false;
 	trailerAdded = false;
 
 	//timer
-	timer.Stop();
+	//timer.Stop();
 	timerOn = false;
-
+	//title values
+	int laps = 0;
+	timer.Stop();
 
 	return true;
 }
