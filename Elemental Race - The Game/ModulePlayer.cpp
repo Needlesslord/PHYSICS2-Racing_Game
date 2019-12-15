@@ -445,6 +445,12 @@ bool ModulePlayer::Start()
 	vehicleSelected = false;
 	//vehicleSelectedNum == 0;
 	trailerAdded = false;
+
+	//timer
+	timer.Stop();
+	timerOn = false;
+
+
 	return true;
 }
 

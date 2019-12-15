@@ -57,4 +57,8 @@ public:
 	bool  following_camera;
 	vec3 dist_to_car;
 
+	//timer
+	Timer			timer;
+	bool			timerOn;
+
 };

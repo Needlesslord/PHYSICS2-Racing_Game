@@ -9,12 +9,13 @@
 struct PhysBody3D;
 struct PhysMotor3D;
 
-//NUR
+//do we use this??? ------------
 struct cubePieces
 {
 	p2DynArray<PhysBody3D*>		phys_bodies;
 	p2DynArray<Cube>			prim_bodies;
 };
+//do we use this??? ------------
 
 class ModuleSceneIntro : public Module
 {
@@ -38,10 +39,6 @@ public:
 	bool checkpointActivated[4] = { false,false,false,false };
 	uint checkpoints_list_size;
 	p2DynArray<PhysBody3D*>		Checkpoints;
-	////NUR
-	//void createRamp(const vec3 i, const vec3 f);
-	//cubePieces cube_circuit_pieces;
-	//void angleAndAxisFromRotMat(mat4x4 m, float &angle, vec3 &axis);
 
 	//to add all the obstacles
 	void AddObstacles(int zone);
