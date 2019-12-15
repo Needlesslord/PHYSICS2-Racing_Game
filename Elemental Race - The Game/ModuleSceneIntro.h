@@ -56,9 +56,6 @@ public:
 	Cube AddBody(int shirt);
 	Cube* water_lake;
 	Cube* start_line;
-
-	//checkpoint
-	void createCheckPoint(vec3 pos_left, vec3 pos_right);
 	
 	Steps currentStep;
 public:
