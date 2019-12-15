@@ -62,6 +62,21 @@ public:
 	bool startActivated;
 	bool midActivated;
 	uint lap;
+
+	Cube* left_1;
+	Cube* top_1;
+	Cube* right_1;
+	Cube* left_2;
+	Cube* top_2;
+	Cube* right_2;
+	Cube* left_3;
+	Cube* top_3;
+	Cube* right_3;
+	Cube* left_4;
+	Cube* top_4;
+	Cube* right_4;
+
+	void AddFireArch();
 	
 	Steps currentStep;
 public:
