@@ -616,7 +616,7 @@ bool ModulePlayer::Start()
 	mini.maxSuspensionTravelCm = 1000.0f;
 	mini.frictionSlip = 50.5;
 	mini.maxSuspensionForce = 6000.0f;
-	mini.chasisColor = Yellow;
+	mini.chasisColor = Yellow_T;
 
 	// Wheel properties ---------------------------------------
 	float mini_connection_height = 1.2f;
@@ -1099,6 +1099,46 @@ update_status ModulePlayer::Update(float dt)
 
 		App->window->SetTitle(title);
 	}
+
+	if (App->scene_intro->currentStep == Running) {
+		if (vehicleSelectedNum = 0) {
+			if (Car->GetPos().x < 10 && Car->GetPos().z < 10 && Car->GetPos().x > -10 && Car->GetPos().z > -10) {
+				raceFinished = true;
+
+			}
+		}
+		else if (vehicleSelectedNum = 1) {
+			if (Bus->GetPos().x < 10 && Bus->GetPos().z < 10 && Bus->GetPos().x > -10 && Bus->GetPos().z > -10) {
+				raceFinished = true;
+			}
+
+		}
+		else if (vehicleSelectedNum = 2) {
+			if (Truck->GetPos().x < 10 && Truck->GetPos().z < 10 && Truck->GetPos().x > -10 && Truck->GetPos().z > -10) {
+				raceFinished = true;
+			}
+
+		}
+		else if (vehicleSelectedNum = 3) {
+			if (MonsterTruck->GetPos().x < 10 && MonsterTruck->GetPos().z < 10 && MonsterTruck->GetPos().x > -10 && MonsterTruck->GetPos().z > -10) {
+				raceFinished = true;
+			}
+
+		}
+		else if (vehicleSelectedNum = 4) {
+			if (Mini->GetPos().x < 10 && Mini->GetPos().z < 10 && Mini->GetPos().x > -10 && Mini->GetPos().z > -10) {
+				raceFinished = true;
+			}
+
+		}
+	}
+
+	if (raceFinished) {
+		if (timer.Read() <= 210) hasWon = true;
+		else if (timer.Read() > 210) hasWon = false;
+		timer.Stop();
+	}
+
 	return UPDATE_CONTINUE;
 }
 

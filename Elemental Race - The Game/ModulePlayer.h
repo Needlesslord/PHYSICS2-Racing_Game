@@ -94,8 +94,8 @@ public:
 	//timer
 	Timer			timer;
 	bool			timerOn;
-	Timer			crono;
-
+	bool			hasWon;
+	bool			raceFinished;
 	//NUR
 	//checkpoints
 	int lap;
