@@ -51,11 +51,6 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	//NUR
-	bool UpdateCheckpoint(Checkpoint originalCheckpoint, Checkpoint nextCheckpoint, int lap, bool started);
-	void Respawn(PhysBody3D* respawn_point, Checkpoint activatedCheckpoint);
-	void RespawnAtOrigin();
-
 public:
 	VehicleInfo car;
 	VehicleInfo bus;
@@ -96,10 +91,4 @@ public:
 	bool			timerOn = false;
 	bool			hasWon = false;
 	bool			raceFinished = false;
-	//NUR
-	//checkpoints
-	int lap;
-	bool started = false;
-	int num_checkpoints = 4;
-
 };
