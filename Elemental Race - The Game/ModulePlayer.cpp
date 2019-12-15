@@ -899,6 +899,13 @@ update_status ModulePlayer::Update(float dt)
 			App->physics->AddConstraintP2P(*Mini, *Trailer, { 0, 0, 0 }, { 0, 0, 7.5f });
 			trailerAdded = true;
 		}
+
+		if (vehicleSelectedNum == 0) Car->Render();
+		else if (vehicleSelectedNum == 1) Bus->Render();
+		else if (vehicleSelectedNum == 2) Truck->Render();
+		else if (vehicleSelectedNum == 3) MonsterTruck->Render();
+		else if (vehicleSelectedNum == 4) Mini->Render();
+		if (trailerAdded) Trailer->Render();
 	}
 
 	else if (App->scene_intro->currentStep == Running) {
@@ -946,12 +953,12 @@ update_status ModulePlayer::Update(float dt)
 
 			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
 				if (Bus->GetKmh() < MAX_SPEED)
-					acceleration = MAX_ACCELERATION / 2.5f;
+					acceleration = MAX_ACCELERATION / 2;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
 				if (Bus->GetKmh() > 3) brake = BRAKE_POWER / 3;
 				else {
-					if (Bus->GetKmh() > MIN_SPEED / 3)
+					if (Bus->GetKmh() > MIN_SPEED)
 						acceleration = -BRAKE_POWER / 3;
 				}
 			}
