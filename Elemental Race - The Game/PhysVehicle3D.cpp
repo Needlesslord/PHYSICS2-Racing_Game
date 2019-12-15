@@ -87,6 +87,9 @@ void PhysVehicle3D::Turn(float degrees)
 		{
 			vehicle->setSteeringValue(degrees, i);
 		}
+		else if (info.wheels[i].steeringOposite == true) {
+			vehicle->setSteeringValue(-degrees, i);
+		}
 	}
 }
 
