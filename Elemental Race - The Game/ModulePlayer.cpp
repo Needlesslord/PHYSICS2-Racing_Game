@@ -587,7 +587,7 @@ bool ModulePlayer::Start()
 	mini.maxSuspensionTravelCm = 1000.0f;
 	mini.frictionSlip = 50.5;
 	mini.maxSuspensionForce = 6000.0f;
-	mini.chasisColor = Yellow;
+	mini.chasisColor = Yellow_T;
 
 	// Wheel properties ---------------------------------------
 	float mini_connection_height = 1.2f;
@@ -697,14 +697,17 @@ update_status ModulePlayer::Update(float dt)
 			following_camera = true;
 
 			//------------------- CAR, vehicleSelectedNum == 0 -------------------//
-			//vec3 p = vehicle->GetPos();
-			//vec3 f = vehicle->GetForwardVector();
-			//// setting camera on vehicle
-			//float speed_cam = 0.05f;
-			//vec3 dist_to_car = { -8.0f, 2.0f, -8.0f };
-			//vec3 new_camera_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
-			//vec3 camera_disp_vec = new_camera_position - App->camera->Position;
-			//App->camera->Look(App->camera->Position + (speed_cam * camera_disp_vec), p);
+			if (vehicleSelectedNum == 0) {
+				vec3 p = Car->GetPos();
+				vec3 f = Car->GetForwardVector();
+				// setting camera on vehicle
+				float speed_cam = 0.05f;
+				if (trailerAdded) dist_to_car = { -30.0f, 20.0f, -30.0f };
+				else dist_to_car = { -25.0f, 15.0f, -25.0f };
+				vec3 new_camera_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
+				vec3 camera_disp_vec = new_camera_position - App->camera->Position;
+				App->camera->Look(App->camera->Position + (speed_cam * camera_disp_vec), p);
+			}
 
 			//------------------- BUS, vehicleSelectedNum == 1 -------------------//
 			if (vehicleSelectedNum == 1) {
@@ -712,12 +715,13 @@ update_status ModulePlayer::Update(float dt)
 				vec3 f = Bus->GetForwardVector();
 				// setting camera on vehicle
 				float speed_cam = 0.05f;
-				dist_to_car = { -60.0f, 35.0f, -60.0f };
+				if (trailerAdded) dist_to_car = { -70.0f, 40.0f, -70.0f };
+				else dist_to_car = { -60.0f, 35.0f, -60.0f };
 				vec3 new_camera_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
 				vec3 camera_disp_vec = new_camera_position - App->camera->Position;
 				App->camera->Look(App->camera->Position + (speed_cam * camera_disp_vec), p);
 			}
-			//------------------- TRUCK SIMPLE, vehicleSelectedNum == 2 -------------------//
+			//------------------- TRUCK, vehicleSelectedNum == 2 -------------------//
 			if (vehicleSelectedNum == 2) {
 				vec3 p = Truck->GetPos();
 				vec3 f = Truck->GetForwardVector();
@@ -729,15 +733,30 @@ update_status ModulePlayer::Update(float dt)
 				vec3 camera_disp_vec = new_camera_position - App->camera->Position;
 				App->camera->Look(App->camera->Position + (speed_cam * camera_disp_vec), p);
 			}
-			//------------------- TRUCK + TRAILER, vehicleSelectedNum == 3 -------------------//
-			//vec3 p = vehicle->GetPos();
-			//vec3 f = vehicle->GetForwardVector();
-			//// setting camera on vehicle
-			//float speed_cam = 0.05f;
-			//vec3 dist_to_car = { -8.0f, 2.0f, -8.0f };
-			//vec3 new_camera_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
-			//vec3 camera_disp_vec = new_camera_position - App->camera->Position;
-			//App->camera->Look(App->camera->Position + (speed_cam * camera_disp_vec), p);
+			//------------------- MONSTERTRUCK, vehicleSelectedNum == 3 -------------------//
+			if (vehicleSelectedNum == 3) {
+				vec3 p = MonsterTruck->GetPos();
+				vec3 f = MonsterTruck->GetForwardVector();
+				// setting camera on vehicle
+				float speed_cam = 0.05f;
+				if (trailerAdded) dist_to_car = { -85.0f, 45.0f, -85.0f };
+				else dist_to_car = { -75.0f, 40.0f, -75.0f };
+				vec3 new_camera_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
+				vec3 camera_disp_vec = new_camera_position - App->camera->Position;
+				App->camera->Look(App->camera->Position + (speed_cam * camera_disp_vec), p);
+			}
+			//------------------- MINI, vehicleSelectedNum == 4 -------------------//
+			if (vehicleSelectedNum == 4) {
+				vec3 p = Mini->GetPos();
+				vec3 f = Mini->GetForwardVector();
+				// setting camera on vehicle
+				float speed_cam = 0.05f;
+				if (trailerAdded) dist_to_car = { -15.0f, 10.0f, -15.0f };
+				else dist_to_car = { -10.0f, 5.0f, -10.0f };
+				vec3 new_camera_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
+				vec3 camera_disp_vec = new_camera_position - App->camera->Position;
+				App->camera->Look(App->camera->Position + (speed_cam * camera_disp_vec), p);
+			}
 		}
 
 		// following vehicle
@@ -745,15 +764,15 @@ update_status ModulePlayer::Update(float dt)
 		{
 
 			//------------------- CAR, vehicleSelectedNum == 0 -------------------//
-			//float speed_cam = 0.09;
-			//vec3 p = vehicle->GetPos();
-			//vec3 f = vehicle->GetForwardVector();
-			//vec3 dist_to_car = { -8.0f, 5.0f, -8.0f };
-			//vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
-			//vec3 speed_camera = camera_new_position - App->camera->Position;
-
-			//App->camera->Look(App->camera->Position + (speed_cam * speed_camera), p);
-
+			if (vehicleSelectedNum == 0) {
+				float speed_cam = 0.09;
+				vec3 p = Car->GetPos();
+				vec3 f = Car->GetForwardVector();
+				dist_to_car = { -8.0f, 5.0f, -8.0f };
+				vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
+				vec3 speed_camera = camera_new_position - App->camera->Position;
+				App->camera->Look(App->camera->Position + (speed_cam * speed_camera), p);
+			}
 			//------------------- BUS, vehicleSelectedNum == 1 -------------------//
 			if (vehicleSelectedNum == 1) {
 				float speed_cam = 0.09;
@@ -764,7 +783,7 @@ update_status ModulePlayer::Update(float dt)
 				vec3 speed_camera = camera_new_position - App->camera->Position;
 				App->camera->Look(App->camera->Position + (speed_cam * speed_camera), p);
 			}
-			//------------------- TRUCK SIMPLE, vehicleSelectedNum == 2 -------------------//
+			//------------------- TRUCK, vehicleSelectedNum == 2 -------------------//
 			if (vehicleSelectedNum == 2) {
 				float speed_cam = 0.09;
 				vec3 p = Truck->GetPos();
@@ -775,15 +794,26 @@ update_status ModulePlayer::Update(float dt)
 
 				App->camera->Look(App->camera->Position + (speed_cam * speed_camera), p);
 			}
-			//------------------- TRUCK + TRAILER, vehicleSelectedNum == 3 -------------------//
-			//float speed_cam = 0.09;
-			//vec3 p = vehicle->GetPos();
-			//vec3 f = vehicle->GetForwardVector();
-			//vec3 dist_to_car = { -8.0f, 5.0f, -8.0f };
-			//vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
-			//vec3 speed_camera = camera_new_position - App->camera->Position;
-
-			//App->camera->Look(App->camera->Position + (speed_cam * speed_camera), p);
+			//------------------- MONSTERTRUCK, vehicleSelectedNum == 3 -------------------//
+			if (vehicleSelectedNum == 3) {
+				float speed_cam = 0.09;
+				vec3 p = MonsterTruck->GetPos();
+				vec3 f = MonsterTruck->GetForwardVector();
+				dist_to_car = { -8.0f, 5.0f, -8.0f };
+				vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
+				vec3 speed_camera = camera_new_position - App->camera->Position;
+				App->camera->Look(App->camera->Position + (speed_cam * speed_camera), p);
+			}
+			//------------------- MINI, vehicleSelectedNum == 4 -------------------//
+			if (vehicleSelectedNum == 4) {
+				float speed_cam = 0.09;
+				vec3 p = Mini->GetPos();
+				vec3 f = Mini->GetForwardVector();
+				dist_to_car = { -8.0f, 5.0f, -8.0f };
+				vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
+				vec3 speed_camera = camera_new_position - App->camera->Position;
+				App->camera->Look(App->camera->Position + (speed_cam * speed_camera), p);
+			}
 		}
 
 		// Activate/deactivate camera on car.
@@ -1077,5 +1107,61 @@ update_status ModulePlayer::Update(float dt)
 			App->window->SetTitle(title);
 		}
 	}
+
+	if (App->scene_intro->currentStep == Running) {
+		if (vehicleSelectedNum = 0) {
+			if (Car->GetPos().x < 10 && Car->GetPos().z < 10 && Car->GetPos().x > -10 && Car->GetPos().z > -10) {
+				raceFinished = true;
+
+			}
+		}
+		else if (vehicleSelectedNum = 1) {
+			if (Bus->GetPos().x < 10 && Bus->GetPos().z < 10 && Bus->GetPos().x > -10 && Bus->GetPos().z > -10) {
+				raceFinished = true;
+			}
+
+		}
+		else if (vehicleSelectedNum = 2) {
+			if (Truck->GetPos().x < 10 && Truck->GetPos().z < 10 && Truck->GetPos().x > -10 && Truck->GetPos().z > -10) {
+				raceFinished = true;
+			}
+
+		}
+		else if (vehicleSelectedNum = 3) {
+			if (MonsterTruck->GetPos().x < 10 && MonsterTruck->GetPos().z < 10 && MonsterTruck->GetPos().x > -10 && MonsterTruck->GetPos().z > -10) {
+				raceFinished = true;
+			}
+
+		}
+		else if (vehicleSelectedNum = 4) {
+			if (Mini->GetPos().x < 10 && Mini->GetPos().z < 10 && Mini->GetPos().x > -10 && Mini->GetPos().z > -10) {
+				raceFinished = true;
+			}
+
+		}
+	}
+
+	if (raceFinished) {
+		if (timer.Read() <= 210) hasWon = true;
+		else if (timer.Read() > 210) hasWon = false;
+		timer.Stop();
+
+		if (vehicleSelectedNum = 0) {
+			Car->SetPos(-72.5, 1, -5);
+		}
+		else if (vehicleSelectedNum = 1) {
+			Bus->SetPos(-72.5, 1, -5);
+		}
+		else if (vehicleSelectedNum = 2) {
+			Truck->SetPos(-72.5, 1, -5);
+		}
+		else if (vehicleSelectedNum = 3) {
+			MonsterTruck->SetPos(-72.5, 1, -5);
+		}
+		else if (vehicleSelectedNum = 4) {
+			Mini->SetPos(-72.5, 1, -5);
+		}
+	}
+
 	return UPDATE_CONTINUE;
 }

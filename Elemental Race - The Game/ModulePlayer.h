@@ -88,6 +88,7 @@ public:
 
 	//timer
 	Timer			timer;
-	bool			timerOn;
-	Timer			crono;
+	bool			timerOn = false;
+	bool			hasWon = false;
+	bool			raceFinished = false;
 };
