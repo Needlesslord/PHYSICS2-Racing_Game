@@ -34,7 +34,6 @@ bool ModuleSceneIntro::Start()
 
 	//adding start line
 	AddObstacles(0);
-	AddObstacles(100);
 	currentStep = SelectVehicle;
 
 	midActivated = true;
@@ -73,7 +72,6 @@ update_status ModuleSceneIntro::Update(float dt)
 	//lake
 	water_lake->Render();
 	start_line_cube->Render();
-	mid_line_cube->Render();
 	//fire archs
 	left_1->Render();
 	top_1->Render();
@@ -277,7 +275,7 @@ void ModuleSceneIntro::AddObstacles(int zone) {
 		float size_Y_mid_line = 0.1;
 		float size_Z_mid_line = 5;
 		float  pos_X_mid_line = 173.75;
-		float  pos_Y_mid_line = 0.10;
+		float  pos_Y_mid_line = -0.01;
 		float  pos_Z_mid_line = 10;
 		mid_line_cube = new Cube(size_X_mid_line, size_Y_mid_line, size_Z_mid_line);
 		mid_line_cube->SetPos(pos_X_mid_line, pos_Y_mid_line, pos_Z_mid_line);
@@ -292,7 +290,7 @@ void ModuleSceneIntro::AddObstacles(int zone) {
 		float size_Z_start_line = 5;
 		// position of the bridge/mountain
 		float pos_X_start_line = -73.75;
-		float pos_Y_start_line = 0.10;
+		float pos_Y_start_line = -0.01;
 		float pos_Z_start_line = 10;
 		//add cube, set the size
 		start_line_cube = new Cube(size_X_start_line, size_Y_start_line, size_Z_start_line);

@@ -899,6 +899,13 @@ update_status ModulePlayer::Update(float dt)
 			App->physics->AddConstraintP2P(*Mini, *Trailer, { 0, 0, 0 }, { 0, 0, 7.5f });
 			trailerAdded = true;
 		}
+
+		if (vehicleSelectedNum == 0)Car->Render();
+		else if (vehicleSelectedNum == 1) Bus->Render();
+		else if (vehicleSelectedNum == 2) Truck->Render();
+		else if (vehicleSelectedNum == 3) MonsterTruck->Render();
+		else if (vehicleSelectedNum == 4) Mini->Render();
+		if (trailerAdded) Trailer->Render();
 	}
 
 	else if (App->scene_intro->currentStep == Running) {
