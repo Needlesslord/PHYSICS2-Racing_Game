@@ -38,6 +38,8 @@ bool ModuleSceneIntro::Start()
 	//adding start line
 	AddObstacles(0);
 
+	currentStep = SelectVehicle;
+
 	return true;
 }
 
