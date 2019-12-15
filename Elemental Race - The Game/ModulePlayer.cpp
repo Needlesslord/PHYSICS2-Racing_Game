@@ -1106,27 +1106,57 @@ update_status ModulePlayer::Update(float dt)
 			App->window->SetTitle(title);
 		}
 	}
-	else if (App->scene_intro->currentStep == GameOver) {
-		if (timer.Read() <= 210) hasWon = true;
-		else if (timer.Read() > 210) hasWon = false;
-		timer.Stop();
 
-		if (vehicleSelectedNum = 0) {
+
+	else if (App->scene_intro->currentStep == GameOver) {
+		//if (timer.Read() <= 210) hasWon = true;
+		//else if (timer.Read() > 210) hasWon = false;
+		//timer.Stop();
+
+		if (vehicleSelectedNum == 0) {
 			Car->SetPos(-72.5, 1, -5);
 		}
-		else if (vehicleSelectedNum = 1) {
+		else if (vehicleSelectedNum == 1) {
 			Bus->SetPos(-72.5, 1, -5);
 		}
-		else if (vehicleSelectedNum = 2) {
+		else if (vehicleSelectedNum == 2) {
 			Truck->SetPos(-72.5, 1, -5);
 		}
-		else if (vehicleSelectedNum = 3) {
+		else if (vehicleSelectedNum == 3) {
 			MonsterTruck->SetPos(-72.5, 1, -5);
 		}
-		else if (vehicleSelectedNum = 4) {
+		else if (vehicleSelectedNum == 4) {
 			Mini->SetPos(-72.5, 1, -5);
 		}
 	}
+
+	// Getting the checkpoints
+	if (vehicleSelectedNum = 0) {
+		float CarPosX = Car->vehicle->getRigidBody()->getCenterOfMassPosition().getX();
+		float CarPosZ = Car->vehicle->getRigidBody()->getCenterOfMassPosition().getZ();
+	}
+	else if (vehicleSelectedNum = 1) {
+		float CarPosX = Bus->vehicle->getRigidBody()->getCenterOfMassPosition().getX();
+		float CarPosZ = Bus->vehicle->getRigidBody()->getCenterOfMassPosition().getZ();
+	}
+	else if (vehicleSelectedNum = 2) {
+		float CarPosX = Truck->vehicle->getRigidBody()->getCenterOfMassPosition().getX();
+		float CarPosZ = Truck->vehicle->getRigidBody()->getCenterOfMassPosition().getZ();
+	}
+	else if (vehicleSelectedNum = 3) {
+		float CarPosX = MonsterTruck->vehicle->getRigidBody()->getCenterOfMassPosition().getX();
+		float CarPosZ = MonsterTruck->vehicle->getRigidBody()->getCenterOfMassPosition().getZ();
+	}
+	else if (vehicleSelectedNum = 4) {
+		float CarPosX = Mini->vehicle->getRigidBody()->getCenterOfMassPosition().getX();
+		float CarPosZ = Mini->vehicle->getRigidBody()->getCenterOfMassPosition().getZ();
+	}
+
+	if (timer.Read() > 210) {
+		timer.Stop();
+		App->scene_intro->currentStep == GameOver;
+	}
+
 
 	return UPDATE_CONTINUE;
 }
