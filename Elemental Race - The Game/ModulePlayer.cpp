@@ -751,8 +751,8 @@ update_status ModulePlayer::Update(float dt)
 				vec3 f = Mini->GetForwardVector();
 				// setting camera on vehicle
 				float speed_cam = 0.05f;
-				if (trailerAdded) dist_to_car = { -15.0f, 10.0f, -15.0f };
-				else dist_to_car = { -10.0f, 5.0f, -10.0f };
+				if (trailerAdded) dist_to_car = { -30.0f, 20.0f, -30.0f };
+				else dist_to_car = { -15.0f, 10.0f, -15.0f };
 				vec3 new_camera_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
 				vec3 camera_disp_vec = new_camera_position - App->camera->Position;
 				App->camera->Look(App->camera->Position + (speed_cam * camera_disp_vec), p);
@@ -838,8 +838,6 @@ update_status ModulePlayer::Update(float dt)
 		timer.Start();
 		lap = 1;
 
-		for (int i = 0; i < num_checkpoints; i++) {}
-		//make isStart activated
 	}
 	
 	if (App->scene_intro->currentStep == SelectVehicle) {
