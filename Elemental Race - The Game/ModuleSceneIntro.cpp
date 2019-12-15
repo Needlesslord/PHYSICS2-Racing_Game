@@ -24,6 +24,10 @@ bool ModuleSceneIntro::Start()
 
 	checkpoints_list_size = 12;
 	//CreateCheckpoints(checkpoints_list, checkpoints_list_size);
+	createCheckPoint({ -19.0f, 0.0f, -175.0f }, 0.0f);
+	createCheckPoint({ -19.0f, 0.0f, -175.0f }, 0.0f);
+	createCheckPoint({ -19.0f, 0.0f, -175.0f }, 0.0f);
+	createCheckPoint({ -19.0f, 0.0f, -175.0f }, 0.0f);
 
 
 	AddBridge();
@@ -318,4 +322,32 @@ Cube ModuleSceneIntro::AddBody(int shirt){
 }
 
 
+void ModuleSceneIntro::createCheckPoint(vec3 pos_left, vec3 pos_right)
+{
+	float track_width = 25;
+
+	float radius = track_width / 2;
+	vec3 pos1(0, pos_left.y + 2.9, radius);
+	vec3 pos2(0, pos_right.y + 2.9, -radius);
+
+	Cube sensor;
+	vec3 dim(2.0f, 1.0f, track_width);
+	sensor.size = { dim.x, dim.y, dim.z };
+	sensor.SetPos(pos_left.x, pos_left.y + 1, pos_left.z);
+
+	Cube check_point;
+	check_point.size = { 2.0f, 2.0f, 2.0f };
+	check_point.SetPos(pos1.x + pos_left.x, pos1.y, pos1.z + pos_right.z);
+	check_point.color = White;
+	
+	Cube check_point2;
+	check_point2.size = { 2.0f, 2.0f, 2.0f };
+	check_point2.SetPos(pos2.x + pos_right.x, pos2.y, pos2.z + pos_left.z);
+	check_point2.color = White;
+
+	PhysBody3D* pb_sensor = App->physics->AddBody(sensor, this, 0.0f, true);
+	//check_points.PushBack(pb_sensor);
+	//prim_check_points.PushBack(check_point);
+	//prim_check_points.PushBack(check_point2);
+}
 

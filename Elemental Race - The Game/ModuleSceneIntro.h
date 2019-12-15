@@ -53,6 +53,10 @@ public:
 	Cube* water_lake;
 	Cube* start_line;
 
+	//checkpoint
+	void createCheckPoint(vec3 pos_left, vec3 pos_right);
+
+
 public:
 	/*
 	PhysBody3D* pb_snake[MAX_SNAKE];
