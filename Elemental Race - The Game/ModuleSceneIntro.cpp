@@ -188,8 +188,8 @@ void ModuleSceneIntro::AddBridge() {
 	flat->SetRotation(		angle_flat, {	rot_X_flat,		rot_Y_flat,		rot_Z_flat	});
 	down->SetRotation(		angle_down, {	rot_X_down,		rot_Y_down,		rot_Z_down	});
 	//colouring
-	up->color = Yellow_T;
-	flat->color = DarkOrange_T;
+	up->color = Brown_T;
+	flat->color = Brown_T;
 	down->color = Brown_T;
 	//add body
 	App->physics->AddBody(*(up), this, 0.0f);
@@ -228,7 +228,7 @@ void ModuleSceneIntro::AddObstacles(int zone) {
 		float size_Z_water_lake = 150;
 		// position of the bridge/mountain
 		float pos_X_water_lake = -58;
-		float pos_Y_water_lake = 0;
+		float pos_Y_water_lake = -0.5;
 		float pos_Z_water_lake = 145;
 		//add cube, set the size
 		water_lake = new Cube(size_X_water_lake, size_Y_water_lake, size_Z_water_lake);
@@ -257,18 +257,18 @@ void ModuleSceneIntro::AddObstacles(int zone) {
 	//else is going to be used to create fire archs and start line
 	else {
 		//start line
-		// size of the bridge/mountain
+		// size of the start line
 		float size_X_start_line = 50;
-		float size_Y_start_line = 0.5;
+		float size_Y_start_line = 0.01;
 		float size_Z_start_line = 5;
 		// position of the bridge/mountain
-		float pos_X_water_lake = -73.75;
-		float pos_Y_water_lake = 0;
-		float pos_Z_water_lake = 10;
+		float pos_X_start_line = -73.75;
+		float pos_Y_start_line = -0.01;
+		float pos_Z_start_line = 10;
 		//add cube, set the size
 		start_line = new Cube(size_X_start_line, size_Y_start_line, size_Z_start_line);
 		//add location
-		start_line->SetPos(pos_X_water_lake, pos_Y_water_lake, pos_Z_water_lake);
+		start_line->SetPos(pos_X_start_line, pos_Y_start_line, pos_Z_start_line);
 		//colouring
 		start_line->color = White;
 		//add body
