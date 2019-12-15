@@ -13,6 +13,34 @@ struct PhysVehicle3D;
 #define MAX_SPEED 200
 #define MIN_SPEED -50
 
+struct Checkpoint {
+
+	float sizeX;
+	float sizeY;
+	float sizeZ;
+
+	float posX_left;
+	float posY_left;
+	float posZ_left;
+
+	float posX_right;
+	float posY_right;
+	float posZ_right;
+
+	float posX_respawn_point;
+	float posY_respawn_point;
+	float posZ_respawn_point;
+	
+	int lap;
+	bool activated;
+	bool activated_last;
+	int colour;			// 0 for red, not activated; 1 for orange, activated 1; 2 for yellow, activated 2; 3 for green, activated 3
+
+	bool isStart = false;
+	int num_checkpoint;
+
+};
+
 class ModulePlayer : public Module {
 public:
 	ModulePlayer(Application* app, bool start_enabled = true);
@@ -21,6 +49,11 @@ public:
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
+
+	//NUR
+	bool UpdateCheckpoint(Checkpoint originalCheckpoint, Checkpoint nextCheckpoint, int lap, bool started);
+	void Respawn(PhysBody3D* respawn_point, Checkpoint activatedCheckpoint);
+	void RespawnAtOrigin();
 
 public:
 	VehicleInfo car;
@@ -54,11 +87,17 @@ public:
 	float acceleration;
 	float brake;
 
-	bool  following_camera;
+	bool following_camera;
 	vec3 dist_to_car;
 
 	//timer
 	Timer			timer;
 	bool			timerOn;
+
+	//NUR
+	//checkpoints
+	int lap;
+	bool started = false;
+	int num_checkpoints = 4;
 
 };

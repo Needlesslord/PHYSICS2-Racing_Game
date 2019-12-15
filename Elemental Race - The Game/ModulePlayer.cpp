@@ -824,9 +824,17 @@ update_status ModulePlayer::Update(float dt)
 	//	App->audio->PlayFx(App->audio->accelerateFx);
 	//}
 
-	//MUSIC END ---------------------------------------------------------------------ç
+	//MUSIC END ---------------------------------------------------------------------
+	
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && !started) {
+		started = true;
+		timer.Start();
+		lap = 1;
 
-
+		for (int i = 0; i < num_checkpoints; i++) {}
+		//make isStart activated
+	}
+	
 	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && vehicleSelectedNum == 0 && !trailerAdded) { // TRAILER TO CAR
 		Trailer = App->physics->AddVehicle(trailer);
 		Trailer->SetPos(-72.5, 2, -15);
@@ -1091,4 +1099,62 @@ update_status ModulePlayer::Update(float dt)
 		App->window->SetTitle(title);
 	}
 	return UPDATE_CONTINUE;
+}
+
+//NUR
+bool ModulePlayer::UpdateCheckpoint(Checkpoint originalCheckpoint, Checkpoint nextCheckpoint, int lap, bool started)
+{
+	int lap0 = 0;	// 0 for red, not activated; 
+	int lap1 = 1;	// 1 for orange, activated 1; 
+	int lap2 = 2;	// 2 for yellow, activated 2;
+	int lap3 = 3;	// 3 for green, activated 3
+
+	if (!originalCheckpoint.activated_last) RespawnAtOrigin();
+	
+	if (lap = 1 && originalCheckpoint.activated_last) {
+
+		originalCheckpoint.activated = true;
+		originalCheckpoint.activated_last = false;
+		nextCheckpoint.activated_last = true;
+
+		originalCheckpoint.colour = 1;
+	}
+
+	else if (lap = 2 && originalCheckpoint.activated_last) {
+
+		originalCheckpoint.activated = true;
+		originalCheckpoint.activated_last = false;
+		nextCheckpoint.activated_last = true;
+
+		originalCheckpoint.colour = 2;
+	}
+
+	else if (lap = 3 && originalCheckpoint.activated_last) {
+
+		originalCheckpoint.activated = true;
+		originalCheckpoint.activated_last = false;
+		nextCheckpoint.activated_last = true;
+
+		originalCheckpoint.colour = 3;
+	}
+
+	else originalCheckpoint.colour = 0;
+
+	if (originalCheckpoint.isStart && lap < 3) lap++;
+
+	return true;
+}
+
+//NUR
+void ModulePlayer::Respawn(PhysBody3D* respawn_point, Checkpoint activatedCheckpoint/*, int checkpointActivated*/)
+{
+	vec3 pos = respawn_point->GetPos();
+	Bus->SetPos(activatedCheckpoint.posX_respawn_point, activatedCheckpoint.posY_respawn_point, activatedCheckpoint.posZ_respawn_point);
+
+}
+
+//NUR
+void ModulePlayer::RespawnAtOrigin()
+{
+	Bus->SetPos(-72.5, 2, -5);
 }
