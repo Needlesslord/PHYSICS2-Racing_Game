@@ -27,6 +27,8 @@ bool ModuleSceneIntro::Start()
 
 	AddBridge();
 
+	AddFireArch();
+
 	//add lake
 	AddObstacles(4);
 
@@ -46,6 +48,7 @@ bool ModuleSceneIntro::CleanUp()
 		delete Course[i];
 	}
 	AddBridge();
+	AddFireArch();
 	return true;
 }
 
@@ -59,18 +62,27 @@ update_status ModuleSceneIntro::Update(float dt)
 		Course[i]->Render();
 	}
 	
+	//bridge
 	up->Render();
 	down->Render();
 	flat->Render();
+	//lake
 	water_lake->Render();
+	//start line
 	start_line->Render();
-
-	//float start_line_size[3] = { 4, 2, 20 };
-	//float start_line_position[3] = { -75, 1, -5 };
-	//Cube* start_line = new Cube(4, 2, 20);
-	//start_line->SetPos(300, 300, 300);
-	//start_line->color = White;
-	//start_line->Render();
+	//fire archs
+	left_1->Render();
+	top_1->Render();
+	right_1->Render();
+	left_2->Render();
+	top_2->Render();
+	right_2->Render();
+	left_3->Render();
+	top_3->Render();
+	right_3->Render();
+	left_4->Render();
+	top_4->Render();
+	right_4->Render();
 
 	return UPDATE_CONTINUE;
 }
@@ -316,4 +328,145 @@ Cube ModuleSceneIntro::AddBody(int shirt){
 	else Body->color = Grey_T;
 
 	return Cube{ 1,1,1 };
+}
+
+void ModuleSceneIntro::AddFireArch() {
+
+	// size of the arch 
+	//left
+	float size_X_left = 2.5;
+	float size_Y_left = 15;
+	float size_Z_left = 2.5;
+	//top
+	float size_X_top = 2.5;
+	float size_Y_top = 2.5;
+	float size_Z_top = 30;
+	//right
+	float size_X_right = 2.5;
+	float size_Y_right = 15;
+	float size_Z_right = 2.5;
+	// position of the arch 1
+	//left
+	float pos_X_left = 40;
+	float pos_Y_left = 7.5;
+	float pos_Z_left = 20;
+	//top
+	float pos_X_top = 40;
+	float pos_Y_top = 18;
+	float pos_Z_top = 30;
+	//right
+	float pos_X_right = 40;
+	float pos_Y_right = 7.5;
+	float pos_Z_right = 40;
+
+	//add cube, set the size
+	left_1 = new Cube(size_X_left, size_Y_left, size_Z_left);
+	top_1 = new Cube(size_X_top, size_Y_top, size_Z_top);
+	right_1 = new Cube(size_X_right, size_Y_right, size_Z_right);
+	//add location
+	left_1->SetPos(pos_X_left, pos_Y_left, pos_Z_left);
+	top_1->SetPos(pos_X_top, pos_Y_top, pos_Z_top);
+	right_1->SetPos(pos_X_right, pos_Y_right, pos_Z_right);
+	//colouring
+	left_1->color = Red;
+	top_1->color = Red;
+	right_1->color = Red;
+	//add body
+	App->physics->AddBody(*(left_1), this, 0.0f);
+	App->physics->AddBody(*(top_1), this, 0.0f);
+	App->physics->AddBody(*(right_1), this, 0.0f);
+
+	// position of the arch 2
+	//left
+	pos_X_left = 15;
+	pos_Y_left = 7.5;
+	pos_Z_left = 30;
+	//top
+	pos_X_top = 15;
+	pos_Y_top = 18;
+	pos_Z_top = 40;
+	//right
+	pos_X_right = 15;
+	pos_Y_right = 7.5;
+	pos_Z_right = 50;
+
+	//add cube, set the size
+	left_2 = new Cube(size_X_left, size_Y_left, size_Z_left);
+	top_2 = new Cube(size_X_top, size_Y_top, size_Z_top);
+	right_2 = new Cube(size_X_right, size_Y_right, size_Z_right);
+	//add location
+	left_2->SetPos(pos_X_left, pos_Y_left, pos_Z_left);
+	top_2->SetPos(pos_X_top, pos_Y_top, pos_Z_top);
+	right_2->SetPos(pos_X_right, pos_Y_right, pos_Z_right);
+	//colouring
+	left_2->color = Red;
+	top_2->color = Red;
+	right_2->color = Red;
+	//add body
+	App->physics->AddBody(*(left_2), this, 0.0f);
+	App->physics->AddBody(*(top_2), this, 0.0f);
+	App->physics->AddBody(*(right_2), this, 0.0f);
+
+	// position of the arch 3
+	//left
+	pos_X_left = -10;
+	pos_Y_left = 7.5;
+	pos_Z_left = 40;
+	//top
+	pos_X_top = -10;
+	pos_Y_top = 18;
+	pos_Z_top = 50;
+	//right
+	pos_X_right = -10;
+	pos_Y_right = 7.5;
+	pos_Z_right = 60;
+
+	//add cube, set the size
+	left_3 = new Cube(size_X_left, size_Y_left, size_Z_left);
+	top_3 = new Cube(size_X_top, size_Y_top, size_Z_top);
+	right_3 = new Cube(size_X_right, size_Y_right, size_Z_right);
+	//add location
+	left_3->SetPos(pos_X_left, pos_Y_left, pos_Z_left);
+	top_3->SetPos(pos_X_top, pos_Y_top, pos_Z_top);
+	right_3->SetPos(pos_X_right, pos_Y_right, pos_Z_right);
+	//colouring
+	left_3->color = Red;
+	top_3->color = Red;
+	right_3->color = Red;
+	//add body
+	App->physics->AddBody(*(left_3), this, 0.0f);
+	App->physics->AddBody(*(top_3), this, 0.0f);
+	App->physics->AddBody(*(right_3), this, 0.0f);
+
+	// position of the arch 4
+	//left
+	pos_X_left = -35;
+	pos_Y_left = 7.5;
+	pos_Z_left = 40;
+	//top
+	pos_X_top = -35;
+	pos_Y_top = 18;
+	pos_Z_top = 50;
+	//right
+	pos_X_right = -35;
+	pos_Y_right = 7.5;
+	pos_Z_right = 60;
+
+	//add cube, set the size
+	left_4 = new Cube(size_X_left, size_Y_left, size_Z_left);
+	top_4 = new Cube(size_X_top, size_Y_top, size_Z_top);
+	right_4 = new Cube(size_X_right, size_Y_right, size_Z_right);
+	//add location
+	left_4->SetPos(pos_X_left, pos_Y_left, pos_Z_left);
+	top_4->SetPos(pos_X_top, pos_Y_top, pos_Z_top);
+	right_4->SetPos(pos_X_right, pos_Y_right, pos_Z_right);
+	//colouring
+	left_4->color = Red;
+	top_4->color = Red;
+	right_4->color = Red;
+	//add body
+	App->physics->AddBody(*(left_4), this, 0.0f);
+	App->physics->AddBody(*(top_4), this, 0.0f);
+	App->physics->AddBody(*(right_4), this, 0.0f);
+
 }
