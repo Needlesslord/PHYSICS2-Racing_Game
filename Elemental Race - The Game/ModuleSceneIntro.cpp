@@ -32,8 +32,12 @@ bool ModuleSceneIntro::Start()
 
 	//adding start line
 	AddObstacles(0);
-
+	AddObstacles(100);
 	currentStep = SelectVehicle;
+
+	midActivated = true;
+	startActivated = false;
+	lap = 1;
 
 	return true;
 }
@@ -63,7 +67,8 @@ update_status ModuleSceneIntro::Update(float dt)
 	down->Render();
 	flat->Render();
 	water_lake->Render();
-	start_line->Render();
+	start_line_cube->Render();
+	mid_line_cube->Render();
 
 	//float start_line_size[3] = { 4, 2, 20 };
 	//float start_line_position[3] = { -75, 1, -5 };
@@ -256,6 +261,18 @@ void ModuleSceneIntro::AddObstacles(int zone) {
 		}
 	}
 	//else is going to be used to create fire archs and start line
+	else if (zone == 100) {
+		float size_X_mid_line = 50;
+		float size_Y_mid_line = 0.1;
+		float size_Z_mid_line = 5;
+		float  pos_X_mid_line = 173.75;
+		float  pos_Y_mid_line = 0.10;
+		float  pos_Z_mid_line = 10;
+		mid_line_cube = new Cube(size_X_mid_line, size_Y_mid_line, size_Z_mid_line);
+		mid_line_cube->SetPos(pos_X_mid_line, pos_Y_mid_line, pos_Z_mid_line);
+		mid_line_cube->color = White;
+		mid_line = App->physics->AddBody(*(mid_line_cube), this, 0.0f, false);
+	}
 	else {
 		//start line
 		// size of the start line
@@ -264,16 +281,16 @@ void ModuleSceneIntro::AddObstacles(int zone) {
 		float size_Z_start_line = 5;
 		// position of the bridge/mountain
 		float pos_X_start_line = -73.75;
-		float pos_Y_start_line = -0.01;
+		float pos_Y_start_line = 0.10;
 		float pos_Z_start_line = 10;
 		//add cube, set the size
-		start_line = new Cube(size_X_start_line, size_Y_start_line, size_Z_start_line);
+		start_line_cube = new Cube(size_X_start_line, size_Y_start_line, size_Z_start_line);
 		//add location
-		start_line->SetPos(pos_X_start_line, pos_Y_start_line, pos_Z_start_line);
+		start_line_cube->SetPos(pos_X_start_line, pos_Y_start_line, pos_Z_start_line);
 		//colouring
-		start_line->color = White;
+		start_line_cube->color = White;
 		//add body
-		App->physics->AddBody(*(start_line), this, 0.0f, false);
+		start_line = App->physics->AddBody(*(start_line_cube), this, 0.0f, false);
 	}
 
 }
