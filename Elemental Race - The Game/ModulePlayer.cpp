@@ -8,7 +8,7 @@
 #include "Color.h"
 #include "ModuleAudio.h"
 
-ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), Bus(NULL)
+ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), Player(NULL)
 {
 	turn = acceleration = brake = 0.0f;
 
@@ -663,7 +663,6 @@ bool ModulePlayer::Start()
 	timerOn = false;
 	//title values
 	int laps = 0;
-	timer.Stop();
 
 	return true;
 }
@@ -683,7 +682,10 @@ update_status ModulePlayer::Update(float dt)
 		if (vehicleSelected) App->scene_intro->currentStep = LockVehicle;
 	}
 	else if (App->scene_intro->currentStep == LockVehicle) {
-		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) App->scene_intro->currentStep = Running;
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+			App->scene_intro->currentStep = Running;
+			timer.Start();
+		}
 	}
 	
 	//CAMERA --------------------------------------------------------------------
@@ -699,8 +701,8 @@ update_status ModulePlayer::Update(float dt)
 
 			//------------------- CAR, vehicleSelectedNum == 0 -------------------//
 			if (vehicleSelectedNum == 0) {
-				vec3 p = Car->GetPos();
-				vec3 f = Car->GetForwardVector();
+				vec3 p = Player->GetPos();
+				vec3 f = Player->GetForwardVector();
 				// setting camera on vehicle
 				float speed_cam = 0.05f;
 				if (trailerAdded) dist_to_car = { -30.0f, 20.0f, -30.0f };
@@ -712,8 +714,8 @@ update_status ModulePlayer::Update(float dt)
 
 			//------------------- BUS, vehicleSelectedNum == 1 -------------------//
 			if (vehicleSelectedNum == 1) {
-				vec3 p = Bus->GetPos();
-				vec3 f = Bus->GetForwardVector();
+				vec3 p = Player->GetPos();
+				vec3 f = Player->GetForwardVector();
 				// setting camera on vehicle
 				float speed_cam = 0.05f;
 				if (trailerAdded) dist_to_car = { -70.0f, 40.0f, -70.0f };
@@ -724,8 +726,8 @@ update_status ModulePlayer::Update(float dt)
 			}
 			//------------------- TRUCK, vehicleSelectedNum == 2 -------------------//
 			if (vehicleSelectedNum == 2) {
-				vec3 p = Truck->GetPos();
-				vec3 f = Truck->GetForwardVector();
+				vec3 p = Player->GetPos();
+				vec3 f = Player->GetForwardVector();
 				// setting camera on vehicle
 				float speed_cam = 0.05f;
 				if (trailerAdded) dist_to_car = { -85.0f, 45.0f, -85.0f };
@@ -736,8 +738,8 @@ update_status ModulePlayer::Update(float dt)
 			}
 			//------------------- MONSTERTRUCK, vehicleSelectedNum == 3 -------------------//
 			if (vehicleSelectedNum == 3) {
-				vec3 p = MonsterTruck->GetPos();
-				vec3 f = MonsterTruck->GetForwardVector();
+				vec3 p = Player->GetPos();
+				vec3 f = Player->GetForwardVector();
 				// setting camera on vehicle
 				float speed_cam = 0.05f;
 				if (trailerAdded) dist_to_car = { -85.0f, 45.0f, -85.0f };
@@ -748,8 +750,8 @@ update_status ModulePlayer::Update(float dt)
 			}
 			//------------------- MINI, vehicleSelectedNum == 4 -------------------//
 			if (vehicleSelectedNum == 4) {
-				vec3 p = Mini->GetPos();
-				vec3 f = Mini->GetForwardVector();
+				vec3 p = Player->GetPos();
+				vec3 f = Player->GetForwardVector();
 				// setting camera on vehicle
 				float speed_cam = 0.05f;
 				if (trailerAdded) dist_to_car = { -30.0f, 20.0f, -30.0f };
@@ -767,8 +769,8 @@ update_status ModulePlayer::Update(float dt)
 			//------------------- CAR, vehicleSelectedNum == 0 -------------------//
 			if (vehicleSelectedNum == 0) {
 				float speed_cam = 0.09;
-				vec3 p = Car->GetPos();
-				vec3 f = Car->GetForwardVector();
+				vec3 p = Player->GetPos();
+				vec3 f = Player->GetForwardVector();
 				dist_to_car = { -8.0f, 5.0f, -8.0f };
 				vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
 				vec3 speed_camera = camera_new_position - App->camera->Position;
@@ -777,8 +779,8 @@ update_status ModulePlayer::Update(float dt)
 			//------------------- BUS, vehicleSelectedNum == 1 -------------------//
 			if (vehicleSelectedNum == 1) {
 				float speed_cam = 0.09;
-				vec3 p = Bus->GetPos();
-				vec3 f = Bus->GetForwardVector();
+				vec3 p = Player->GetPos();
+				vec3 f = Player->GetForwardVector();
 				dist_to_car = { -8.0f, 5.0f, -8.0f };
 				vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
 				vec3 speed_camera = camera_new_position - App->camera->Position;
@@ -787,8 +789,8 @@ update_status ModulePlayer::Update(float dt)
 			//------------------- TRUCK, vehicleSelectedNum == 2 -------------------//
 			if (vehicleSelectedNum == 2) {
 				float speed_cam = 0.09;
-				vec3 p = Truck->GetPos();
-				vec3 f = Truck->GetForwardVector();
+				vec3 p = Player->GetPos();
+				vec3 f = Player->GetForwardVector();
 				dist_to_car = { -8.0f, 5.0f, -8.0f };
 				vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
 				vec3 speed_camera = camera_new_position - App->camera->Position;
@@ -798,8 +800,8 @@ update_status ModulePlayer::Update(float dt)
 			//------------------- MONSTERTRUCK, vehicleSelectedNum == 3 -------------------//
 			if (vehicleSelectedNum == 3) {
 				float speed_cam = 0.09;
-				vec3 p = MonsterTruck->GetPos();
-				vec3 f = MonsterTruck->GetForwardVector();
+				vec3 p = Player->GetPos();
+				vec3 f = Player->GetForwardVector();
 				dist_to_car = { -8.0f, 5.0f, -8.0f };
 				vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
 				vec3 speed_camera = camera_new_position - App->camera->Position;
@@ -808,8 +810,8 @@ update_status ModulePlayer::Update(float dt)
 			//------------------- MINI, vehicleSelectedNum == 4 -------------------//
 			if (vehicleSelectedNum == 4) {
 				float speed_cam = 0.09;
-				vec3 p = Mini->GetPos();
-				vec3 f = Mini->GetForwardVector();
+				vec3 p = Player->GetPos();
+				vec3 f = Player->GetForwardVector();
 				dist_to_car = { -8.0f, 5.0f, -8.0f };
 				vec3 camera_new_position = { p.x + (f.x * dist_to_car.x), p.y + f.y + dist_to_car.y, p.z + (f.z * dist_to_car.z) };
 				vec3 speed_camera = camera_new_position - App->camera->Position;
@@ -832,40 +834,35 @@ update_status ModulePlayer::Update(float dt)
 	//	App->audio->PlayFx(App->audio->accelerateFx);
 	//}
 
-	//MUSIC END ---------------------------------------------------------------------
-	
-	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-		timer.Start();
-	}
-	
+	//MUSIC END ---------------------------------------------------------------------	
 	if (App->scene_intro->currentStep == SelectVehicle) {
 		if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
-			Car = App->physics->AddVehicle(car);
-			Car->SetPos(-72.5, 1, -5);
+			Player = App->physics->AddVehicle(car);
+			Player->SetPos(-72.5, 1, -5);
 			vehicleSelected = true;
 			vehicleSelectedNum = 0;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) { //BUS
-			Bus = App->physics->AddVehicle(bus);
-			Bus->SetPos(-72.5, 2, -5);
+			Player = App->physics->AddVehicle(bus);
+			Player->SetPos(-72.5, 2, -5);
 			vehicleSelected = true;
 			vehicleSelectedNum = 1;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) { //
-			Truck = App->physics->AddVehicle(truck);
-			Truck->SetPos(-72.5, 1, -5);
+			Player = App->physics->AddVehicle(truck);
+			Player->SetPos(-72.5, 1, -5);
 			vehicleSelected = true;
 			vehicleSelectedNum = 2;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
-			MonsterTruck = App->physics->AddVehicle(monsterTruck);
-			MonsterTruck->SetPos(-72.5, 1, -5);
+			Player = App->physics->AddVehicle(monsterTruck);
+			Player->SetPos(-72.5, 1, -5);
 			vehicleSelected = true;
 			vehicleSelectedNum = 3;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN) {
-			Mini = App->physics->AddVehicle(mini);
-			Mini->SetPos(-72.5, 1, -5);
+			Player = App->physics->AddVehicle(mini);
+			Player->SetPos(-72.5, 1, -5);
 			vehicleSelected = true;
 			vehicleSelectedNum = 4;
 		}
@@ -875,51 +872,50 @@ update_status ModulePlayer::Update(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && vehicleSelectedNum == 0 && !trailerAdded) { // TRAILER TO CAR
 			Trailer = App->physics->AddVehicle(trailer);
 			Trailer->SetPos(-72.5, 2, -15);
-			App->physics->AddConstraintP2P(*Car, *Trailer, { 0, 0, 0 }, { 0, 0, 10.0f });
+			App->physics->AddConstraintP2P(*Player, *Trailer, { 0, 0, 0 }, { 0, 0, 10.0f });
 			trailerAdded = true;
 		}
 
 		else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && vehicleSelectedNum == 1 && !trailerAdded) { // TRAILER TO BUS
 			Trailer = App->physics->AddVehicle(trailer);
 			Trailer->SetPos(-72.5, 2, -20);
-			App->physics->AddConstraintP2P(*Bus, *Trailer, { 0, 0, 0 }, { 0, 0, 12.5f });
+			App->physics->AddConstraintP2P(*Player, *Trailer, { 0, 0, 0 }, { 0, 0, 12.5f });
 			trailerAdded = true;
 		}
 
 		else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && vehicleSelectedNum == 2 && !trailerAdded) { // TRAILER TO TRUCK
 			Trailer = App->physics->AddVehicle(trailer);
 			Trailer->SetPos(-72.5, 2, -25);
-			App->physics->AddConstraintP2P(*Truck, *Trailer, { 0, 0, 0 }, { 0, 0, 17.5f });
+			App->physics->AddConstraintP2P(*Player, *Trailer, { 0, 0, 0 }, { 0, 0, 17.5f });
 			trailerAdded = true;
 		}
 
 		else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && vehicleSelectedNum == 4 && !trailerAdded) { // TRAILER TO TRUCK
 			Trailer = App->physics->AddVehicle(trailer);
 			Trailer->SetPos(-72.5, 2, -7.5);
-			App->physics->AddConstraintP2P(*Mini, *Trailer, { 0, 0, 0 }, { 0, 0, 7.5f });
+			App->physics->AddConstraintP2P(*Player, *Trailer, { 0, 0, 0 }, { 0, 0, 7.5f });
 			trailerAdded = true;
 		}
 
-		if (vehicleSelectedNum == 0) Car->Render();
-		else if (vehicleSelectedNum == 1) Bus->Render();
-		else if (vehicleSelectedNum == 2) Truck->Render();
-		else if (vehicleSelectedNum == 3) MonsterTruck->Render();
-		else if (vehicleSelectedNum == 4) Mini->Render();
+		if (vehicleSelectedNum == 0) Player->Render();
+		else if (vehicleSelectedNum == 1) Player->Render();
+		else if (vehicleSelectedNum == 2) Player->Render();
+		else if (vehicleSelectedNum == 3) Player->Render();
+		else if (vehicleSelectedNum == 4) Player->Render();
 		if (trailerAdded) Trailer->Render();
 	}
 
 	else if (App->scene_intro->currentStep == Running) {
+		turn = acceleration = brake = 0.0f;
 
-		if (vehicleSelectedNum == 0) {	// CAR
-			turn = acceleration = brake = 0.0f;
-
+		if (vehicleSelectedNum == 0) { // CAR
 			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-				if (Car->GetKmh() < MAX_SPEED) acceleration = MAX_ACCELERATION;
+				if (Player->GetKmh() < MAX_SPEED) acceleration = MAX_ACCELERATION;
 
 			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-				if (Car->GetKmh() > 3) brake = BRAKE_POWER;
+				if (Player->GetKmh() > 3) brake = BRAKE_POWER;
 				else {
-					if (Car->GetKmh() > MIN_SPEED)
+					if (Player->GetKmh() > MIN_SPEED)
 						acceleration = -BRAKE_POWER;
 				}
 			}
@@ -937,28 +933,17 @@ update_status ModulePlayer::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
 				acceleration *= 4;
 			}
-
-			Car->ApplyEngineForce(acceleration);
-			Car->Turn(turn);
-			Car->Brake(brake);
-			Car->Render();
-
-			char title[80];
-			sprintf_s(title, "%.1f Km/h", Car->GetKmh());
-			App->window->SetTitle(title);
 		}
 
 		else if (vehicleSelectedNum == 1) {	//BUS
-			turn = acceleration = brake = 0.0f;
-
 			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
-				if (Bus->GetKmh() < MAX_SPEED)
+				if (Player->GetKmh() < MAX_SPEED)
 					acceleration = MAX_ACCELERATION / 2;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-				if (Bus->GetKmh() > 3) brake = BRAKE_POWER / 3;
+				if (Player->GetKmh() > 3) brake = BRAKE_POWER / 3;
 				else {
-					if (Bus->GetKmh() > MIN_SPEED)
+					if (Player->GetKmh() > MIN_SPEED)
 						acceleration = -BRAKE_POWER / 3;
 				}
 			}
@@ -975,30 +960,18 @@ update_status ModulePlayer::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
 				acceleration *= 4;
 			}
-
-			Bus->ApplyEngineForce(acceleration);
-			Bus->Turn(turn);
-			Bus->Brake(brake);
-			Bus->Render();
-
-			char title[80];
-			sprintf_s(title, "%.1f Km/h", Bus->GetKmh());
-
-			App->window->SetTitle(title);
 		}
 
 
 		else if (vehicleSelectedNum == 2) {	//TRUCK
-			turn = acceleration = brake = 0.0f;
-
 			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
-				if (Truck->GetKmh() < MAX_SPEED)
+				if (Player->GetKmh() < MAX_SPEED)
 					acceleration = MAX_ACCELERATION;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-				if (Truck->GetKmh() > 3) brake = BRAKE_POWER / 5;
+				if (Player->GetKmh() > 3) brake = BRAKE_POWER / 5;
 				else {
-					if (Truck->GetKmh() > MIN_SPEED)
+					if (Player->GetKmh() > MIN_SPEED)
 						acceleration = -BRAKE_POWER / 3;
 				}
 			}
@@ -1019,29 +992,17 @@ update_status ModulePlayer::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
 				acceleration *= 4;
 			}
-			Truck->ApplyEngineForce(acceleration);
-			Truck->Turn(turn);
-			Truck->Brake(brake);
-			Truck->Render();
-			if (trailerAdded) Trailer->Render();
-
-			char title[80];
-			sprintf_s(title, "%.1f Km/h", Truck->GetKmh());
-
-			App->window->SetTitle(title);
 		}
 
 		else if (vehicleSelectedNum == 3) {	// MONSTER TRUCK
-			turn = acceleration = brake = 0.0f;
-
 			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
-				if (MonsterTruck->GetKmh() < MAX_SPEED)
+				if (Player->GetKmh() < MAX_SPEED)
 					acceleration = MAX_ACCELERATION;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-				if (MonsterTruck->GetKmh() > 3) brake = BRAKE_POWER;
+				if (Player->GetKmh() > 3) brake = BRAKE_POWER;
 				else {
-					if (MonsterTruck->GetKmh() > MIN_SPEED)
+					if (Player->GetKmh() > MIN_SPEED)
 						acceleration = -BRAKE_POWER;
 				}
 			}
@@ -1060,29 +1021,17 @@ update_status ModulePlayer::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
 				acceleration *= 4;
 			}
-			MonsterTruck->ApplyEngineForce(acceleration);
-			MonsterTruck->Turn(turn);
-			MonsterTruck->Brake(brake);
-			MonsterTruck->Render();
-			if (trailerAdded) Trailer->Render();
-
-			char title[80];
-			sprintf_s(title, "%.1f Km/h", MonsterTruck->GetKmh());
-
-			App->window->SetTitle(title);
 		}
 
 		else if (vehicleSelectedNum == 4) {	// MINI
-			turn = acceleration = brake = 0.0f;
-
 			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
-				if (Mini->GetKmh() < MAX_SPEED)
+				if (Player->GetKmh() < MAX_SPEED)
 					acceleration = MAX_ACCELERATION;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-				if (Mini->GetKmh() > 3) brake = BRAKE_POWER;
+				if (Player->GetKmh() > 3) brake = BRAKE_POWER;
 				else {
-					if (Mini->GetKmh() > MIN_SPEED)
+					if (Player->GetKmh() > MIN_SPEED)
 						acceleration = -BRAKE_POWER;
 				}
 			}
@@ -1101,44 +1050,32 @@ update_status ModulePlayer::Update(float dt)
 			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
 				acceleration *= 4;
 			}
-			Mini->ApplyEngineForce(acceleration);
-			Mini->Turn(turn);
-			Mini->Brake(brake);
-			Mini->Render();
-			if (trailerAdded) Trailer->Render();
-
-			char title[80];
-			sprintf_s(title, "%.1f Km/h", Mini->GetKmh());
-
-			App->window->SetTitle(title);
 		}
+		Player->ApplyEngineForce(acceleration);
+		Player->Turn(turn);
+		Player->Brake(brake);
+		Player->Render();
+		if (trailerAdded) Trailer->Render();
+
+		char title[40];		
+		sprintf_s(title, "%.1f Km/h %d Seconds", Player->GetKmh(), 210 - timer.Read() / 1000);
+		App->window->SetTitle(title);
 	}
 
 
 	else if (App->scene_intro->currentStep == GameOver) {
-		//if (timer.Read() <= 210) hasWon = true;
-		//else if (timer.Read() > 210) hasWon = false;
-		//timer.Stop();
-
-		if (vehicleSelectedNum == 0) {
-			Car->SetPos(-72.5, 1, -5);
-		}
-		else if (vehicleSelectedNum == 1) {
-			Bus->SetPos(-72.5, 1, -5);
-		}
-		else if (vehicleSelectedNum == 2) {
-			Truck->SetPos(-72.5, 1, -5);
-		}
-		else if (vehicleSelectedNum == 3) {
-			MonsterTruck->SetPos(-72.5, 1, -5);
-		}
-		else if (vehicleSelectedNum == 4) {
-			Mini->SetPos(-72.5, 1, -5);
-		}
+		timer.Stop();
+		Player->SetPos(-72.5, 1, -5);
+		Player->Render();
+		if (trailerAdded) Trailer->Render();
+		char title[40];
+		if (hasWon) sprintf_s(title, "Congratz, bitch! You won with %d seconds left", 210 - timer.Read() / 1000);
+		else sprintf_s(title, "You Lose, bitch");
+		App->window->SetTitle(title);
 	}
 
-	if (timer.Read() > 210) {
-		App->scene_intro->currentStep == GameOver;
+	if (timer.Read()/1000 > 210 && vehicleSelected) {
+		App->scene_intro->currentStep = GameOver;
 		timer.Stop();
 	}
 
@@ -1146,16 +1083,5 @@ update_status ModulePlayer::Update(float dt)
 }
 
 void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2) {
-	if (body1 == Bus || body1 == Truck || body1 == MonsterTruck || body1 == Car || body1 == Mini) {
-		if (body2 == App->scene_intro->start_line && App->scene_intro->startActivated) {
-			App->scene_intro->startActivated = false;
-			App->scene_intro->midActivated = true;
-			if (App->scene_intro->lap < 1) App->scene_intro->lap++;
-			else App->scene_intro->currentStep = GameOver;
-		}
-		else if (body2 == App->scene_intro->mid_line && App->scene_intro->midActivated) {
-			App->scene_intro->midActivated = false;
-			App->scene_intro->startActivated = true;
-		}
-	}
+
 }

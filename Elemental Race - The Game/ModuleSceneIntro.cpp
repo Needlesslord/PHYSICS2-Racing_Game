@@ -1,5 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
+#include "ModulePlayer.h"
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
 #include "PhysBody3D.h"
@@ -102,6 +103,9 @@ update_status ModuleSceneIntro::Update(float dt)
 	bush_13->Render();
 	bush_14->Render();
 	bush_15->Render();
+
+	//App->player->pos.x - clients[i].transform[12]) < 3 && abs(App->player->pos.z - clients[i].transform[14]) < 3;
+	
 
 	return UPDATE_CONTINUE;
 }
