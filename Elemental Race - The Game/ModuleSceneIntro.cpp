@@ -27,6 +27,7 @@ bool ModuleSceneIntro::Start()
 	CreateCheckpoints(checkpoints_list, checkpoints_list_size);
 	checkpointToActivate = 0;
 	checkpointActivated = -1;
+	lap = 0;
 
 	//add bridge
 	AddBridge();
@@ -38,19 +39,10 @@ bool ModuleSceneIntro::Start()
 	AddObstacles(4);
 	//adding start line
 	currentStep = SelectVehicle;
-
-	midActivated = true;
-	startActivated = false;
-	lap = 1;
-
 	//music
-	App->audio->PlayMusic("audio/music/background_music.ogg");
-	winFx = App->audio->LoadFx("audio/fx/win.wav");
-	loseFx = App->audio->LoadFx("audio/fx/lose.wav");
+	App->audio->PlayMusic("audio/music/bensound-badass.ogg");
 	checkpointFx = App->audio->LoadFx("audio/fx/checkpoint.wav");
-	turboFx = App->audio->LoadFx("audio/fx/turbo.wav");
-	startCarFx = App->audio->LoadFx("audio/fx/startCar.wav");
-	motorFx = App->audio->LoadFx("audio/fx/motor.wav");
+	musicActivatedSI = true;
 
 	return true;
 }
@@ -113,31 +105,37 @@ update_status ModuleSceneIntro::Update(float dt)
 	bush_14->Render();
 	bush_15->Render();
 
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) musicActivatedSI = !musicActivatedSI;
+
+
 	for (int i = 0; i < Checkpoints.Count(); i++) {
 		checkpoint_cubes[i]->Render();
 	}
 
 	if (App->player->vehicleSelected && currentStep == Running) {
 		for (int i = 0; i < Checkpoints.Count(); i++) {
-			if (checkpointToActivate == i && (checkpointActivated == i - 1 || checkpointActivated==Checkpoints.Count())) {
+			if (checkpointToActivate == i && (checkpointActivated == i - 1 || checkpointActivated == Checkpoints.Count()-1)) {
 				if (abs(App->player->Player->GetPos().x - Checkpoints[i]->GetPos().x < 12.5) && abs(Checkpoints[i]->GetPos().z - App->player->Player->GetPos().z < 2.5) &&
 					abs(-App->player->Player->GetPos().x + Checkpoints[i]->GetPos().x < 12.5) && abs(-Checkpoints[i]->GetPos().z + App->player->Player->GetPos().z < 2.5)) {
 						checkpointToActivate = i + 1;
 						checkpointActivated = i;
-						if (checkpointToActivate > 2) {
-							checkpointToActivate = 0;
-							for (int i = 0; i < Checkpoints.Count(); i++) {
-								checkpoint_cubes[i]->color = Red;
-							}
+						if (checkpointActivated == 0) {
+							lap++;
+							checkpoint_cubes[i + 2]->color = Red;
+						}
+						if (lap > 2) {
+							App->player->hasWon = true;
+							currentStep = GameOver;
 						}
 						checkpoint_cubes[i]->color = Green;
+						if (musicActivatedSI) App->audio->PlayFx(checkpointFx);
+
+						if (i != 0) checkpoint_cubes[i - 1]->color = Red;
+						if (checkpointToActivate > 2) checkpointToActivate = 0;
 				}
 			}
 		}
 	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) musicActivatedSI = !musicActivatedSI;
-
 	return UPDATE_CONTINUE;
 }
 
@@ -323,39 +321,6 @@ void ModuleSceneIntro::AddObstacles(int zone) {
 			float sizeLog_Z = 1;
 		}
 	}
-	//else is going to be used to create fire archs and start line
-	else if (zone == 100) {
-		float size_X_mid_line = 50;
-		float size_Y_mid_line = 0.1;
-		float size_Z_mid_line = 5;
-		float  pos_X_mid_line = 173.75;
-		float  pos_Y_mid_line = -0.01;
-		float  pos_Z_mid_line = 10;
-		mid_line_cube = new Cube(size_X_mid_line, size_Y_mid_line, size_Z_mid_line);
-		mid_line_cube->SetPos(pos_X_mid_line, pos_Y_mid_line, pos_Z_mid_line);
-		mid_line_cube->color = White;
-		mid_line = App->physics->AddBody(*(mid_line_cube), this, 0.0f, false);
-	}
-	else {
-		//start line
-		// size of the start line
-		float size_X_start_line = 50;
-		float size_Y_start_line = 0.1;
-		float size_Z_start_line = 5;
-		// position of the bridge/mountain
-		float pos_X_start_line = -73.75;
-		float pos_Y_start_line = -0.01;
-		float pos_Z_start_line = 10;
-		//add cube, set the size
-		start_line_cube = new Cube(size_X_start_line, size_Y_start_line, size_Z_start_line);
-		//add location
-		start_line_cube->SetPos(pos_X_start_line, pos_Y_start_line, pos_Z_start_line);
-		//colouring
-		start_line_cube->color = White;
-		//add body
-		start_line = App->physics->AddBody(*(start_line_cube), this, 0.0f, false);
-	}
-
 }
 
 void ModuleSceneIntro::AddPerson(float posX, float posY, float posZ, int ethnicity) {

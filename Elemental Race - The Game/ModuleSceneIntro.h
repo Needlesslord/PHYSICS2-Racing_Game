@@ -57,12 +57,6 @@ public:
 	Cube AddHead(int ethnicity);
 	Cube AddBody(int shirt);
 	Cube* water_lake;
-	PhysBody3D* start_line;
-	Cube* start_line_cube;
-	PhysBody3D* mid_line;
-	Cube* mid_line_cube;
-	bool startActivated;
-	bool midActivated;
 	uint lap;
 
 	//fire archs
@@ -96,13 +90,6 @@ public:
 	Cube* bush_14;
 	Cube* bush_15;
 
-	//music
-	uint winFx;
-	uint loseFx;
-	uint checkpointFx;
-	uint turboFx;
-	uint startCarFx;
-	uint motorFx;
 
 	void AddFireArch();
 	void AddBush();
@@ -115,7 +102,8 @@ public:
 	int num_fire_archs;
 	int num_fireballs;
 	int num_people;
-
+	//music
+	uint checkpointFx;
 	bool musicActivatedSI;
 
 };
