@@ -681,16 +681,6 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
-	if (App->scene_intro->currentStep == SelectVehicle) {
-		if (vehicleSelected) App->scene_intro->currentStep = LockVehicle;
-	}
-	else if (App->scene_intro->currentStep == LockVehicle) {
-		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-			App->scene_intro->currentStep = Running;
-			timer.Start();
-		}
-	}
-	
 	//CAMERA --------------------------------------------------------------------
 	{
 		// camera set on the beggining of the course, not set on vehicle
@@ -846,31 +836,39 @@ update_status ModulePlayer::Update(float dt)
 			Player->SetPos(-72.5, 1, -5);
 			vehicleSelected = true;
 			vehicleSelectedNum = 0;
+			App->scene_intro->currentStep = LockVehicle;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) { //BUS
 			Player = App->physics->AddVehicle(bus);
 			Player->SetPos(-72.5, 2, -5);
 			vehicleSelected = true;
 			vehicleSelectedNum = 1;
+			App->scene_intro->currentStep = LockVehicle;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) { //
 			Player = App->physics->AddVehicle(truck);
 			Player->SetPos(-72.5, 1, -5);
 			vehicleSelected = true;
 			vehicleSelectedNum = 2;
+			App->scene_intro->currentStep = LockVehicle;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
 			Player = App->physics->AddVehicle(monsterTruck);
 			Player->SetPos(-72.5, 1, -5);
 			vehicleSelected = true;
 			vehicleSelectedNum = 3;
+			App->scene_intro->currentStep = LockVehicle;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN) {
 			Player = App->physics->AddVehicle(mini);
 			Player->SetPos(-72.5, 1, -5);
 			vehicleSelected = true;
 			vehicleSelectedNum = 4;
+			App->scene_intro->currentStep = LockVehicle;
 		}
+		char title[150];
+		sprintf_s(title, "SELECT:               CAR(0)               BUS(1)               TRUCK(2)               MONSTERTRUCK(3)               MINI(4)");
+		App->window->SetTitle(title);
 	}
 
 	else if (App->scene_intro->currentStep == LockVehicle) {
@@ -883,33 +881,40 @@ update_status ModulePlayer::Update(float dt)
 			App->physics->AddConstraintP2P(*Player, *Trailer, { 0, 0, 0 }, { 0, 0, 10.0f });
 			trailerAdded = true;
 		}
-
 		else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && vehicleSelectedNum == 1 && !trailerAdded) { // TRAILER TO BUS
 			Trailer = App->physics->AddVehicle(trailer);
 			Trailer->SetPos(-72.5, 2, -20);
 			App->physics->AddConstraintP2P(*Player, *Trailer, { 0, 0, 0 }, { 0, 0, 12.5f });
 			trailerAdded = true;
 		}
-
 		else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && vehicleSelectedNum == 2 && !trailerAdded) { // TRAILER TO TRUCK
 			Trailer = App->physics->AddVehicle(trailer);
 			Trailer->SetPos(-72.5, 2, -25);
 			App->physics->AddConstraintP2P(*Player, *Trailer, { 0, 0, 0 }, { 0, 0, 17.5f });
 			trailerAdded = true;
 		}
-
 		else if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && vehicleSelectedNum == 4 && !trailerAdded) { // TRAILER TO TRUCK
 			Trailer = App->physics->AddVehicle(trailer);
 			Trailer->SetPos(-72.5, 2, -7.5);
 			App->physics->AddConstraintP2P(*Player, *Trailer, { 0, 0, 0 }, { 0, 0, 7.5f });
 			trailerAdded = true;
 		}
+		else if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+			App->scene_intro->currentStep = Running;
+		}
 
-		if (vehicleSelectedNum == 0) Player->Render();
-		else if (vehicleSelectedNum == 1) Player->Render();
-		else if (vehicleSelectedNum == 2) Player->Render();
-		else if (vehicleSelectedNum == 3) Player->Render();
-		else if (vehicleSelectedNum == 4) Player->Render();
+		if (vehicleSelectedNum == 3) {
+			char title2[50];
+			sprintf_s(title2, "PRESS ENTER TO START");
+			App->window->SetTitle(title2);
+		}
+		else {
+			char titleToStart[50];
+			sprintf_s(titleToStart, "PRESS T TO ADD A TRAILER OR PRESS ENTER TO START");
+			App->window->SetTitle(titleToStart);
+		}
+
+		Player->Render();
 		if (trailerAdded) Trailer->Render();
 	}
 

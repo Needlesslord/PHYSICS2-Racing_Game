@@ -23,8 +23,11 @@ bool ModuleSceneIntro::Start()
 	Mario_size = 1248;
 	CreateCourse(Mario, Mario_size);
 
-	checkpoints_list_size = 12;
-	
+	checkpoints_list_size = 9;
+	CreateCheckpoints(checkpoints_list, checkpoints_list_size);
+	checkpointToActivate = 0;
+	checkpointActivated = -1;
+
 	//add bridge
 	AddBridge();
 	//add fire archs
@@ -34,7 +37,6 @@ bool ModuleSceneIntro::Start()
 	//add lake
 	AddObstacles(4);
 	//adding start line
-	AddObstacles(0);
 	currentStep = SelectVehicle;
 
 	midActivated = true;
@@ -54,8 +56,7 @@ bool ModuleSceneIntro::Start()
 }
 
 // Load assets
-bool ModuleSceneIntro::CleanUp()
-{
+bool ModuleSceneIntro::CleanUp() {
 	LOG("Unloading Intro scene");
 	for (uint i = 0; i < course_index; i++) {
 		delete Course[i];
@@ -82,7 +83,6 @@ update_status ModuleSceneIntro::Update(float dt)
 	flat->Render();
 	//lake
 	water_lake->Render();
-	start_line_cube->Render();
 	//fire archs
 	left_1->Render();
 	top_1->Render();
@@ -113,7 +113,29 @@ update_status ModuleSceneIntro::Update(float dt)
 	bush_14->Render();
 	bush_15->Render();
 
-	//App->player->pos.x - clients[i].transform[12]) < 3 && abs(App->player->pos.z - clients[i].transform[14]) < 3;
+	for (int i = 0; i < Checkpoints.Count(); i++) {
+		checkpoint_cubes[i]->Render();
+	}
+
+	if (App->player->vehicleSelected && currentStep == Running) {
+		for (int i = 0; i < Checkpoints.Count(); i++) {
+			if (checkpointToActivate == i && checkpointActivated == i - 1) {
+				if (abs(App->player->Player->GetPos().x - Checkpoints[i]->GetPos().x < 12.5) && abs(Checkpoints[i]->GetPos().z - App->player->Player->GetPos().z < 2.5) &&
+					abs(-App->player->Player->GetPos().x + Checkpoints[i]->GetPos().x < 12.5) && abs(-Checkpoints[i]->GetPos().z + App->player->Player->GetPos().z < 2.5)) {
+						checkpointToActivate = i + 1;
+						checkpointActivated = i;
+						if (checkpointToActivate > 2) {
+							checkpointToActivate = 0;
+							for (int i = 0; i < Checkpoints.Count(); i++) {
+								checkpoint_cubes[i]->color = Red;
+							}
+						}
+						if (checkpointActivated > 2) checkpointActivated = 0;
+						checkpoint_cubes[i]->color = Green;
+				}
+			}
+		}
+	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) musicActivatedSI = !musicActivatedSI;
 
@@ -146,13 +168,15 @@ bool ModuleSceneIntro::CreateCourse(float list[], uint size) {
 }
 
 void ModuleSceneIntro::AddCheckpoint(float posX, float posY, float posZ) {
-	float sizeX = 5;
-	float sizeY = 5;
-	float sizeZ = 5;
-	Cube checkpoint_cube(sizeX, sizeY, sizeZ);
-	checkpoint_cube.SetPos(posX, posY + sizeY / 2, posZ);
-	PhysBody3D*	Checkpoint = App->physics->AddBody(checkpoint_cube, this, 0.0f, false);
+	float sizeX = 25;
+	float sizeY = 1;
+	float sizeZ = 5;	
+	checkpoint_cubes[checkpoint_index] = new Cube(sizeX, sizeY, sizeZ);
+	checkpoint_cubes[checkpoint_index]->SetPos(posX, posY - sizeY / 2, posZ);
+	checkpoint_cubes[checkpoint_index]->color = Red;
+	PhysBody3D*	Checkpoint = App->physics->AddBody(*checkpoint_cubes[checkpoint_index], this, 0.0f);
 	Checkpoints.PushBack(Checkpoint);
+	checkpoint_index++;
 }
 
 bool ModuleSceneIntro::CreateCheckpoints(float list[], uint size) {
