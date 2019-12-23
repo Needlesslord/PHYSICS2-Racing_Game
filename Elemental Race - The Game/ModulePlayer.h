@@ -94,4 +94,8 @@ public:
 	bool			timerOn = false;
 	bool			hasWon = false;
 	bool			raceFinished = false;
+
+	bool musicActivatedP;
+	uint lockFx;
+
 };

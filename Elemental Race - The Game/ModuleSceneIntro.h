@@ -96,6 +96,13 @@ public:
 	Cube* bush_14;
 	Cube* bush_15;
 
+	//music
+	uint winFx;
+	uint loseFx;
+	uint checkpointFx;
+	uint turboFx;
+	uint startCarFx;
+	uint motorFx;
 
 	void AddFireArch();
 	void AddBush();
@@ -108,5 +115,7 @@ public:
 	int num_fire_archs;
 	int num_fireballs;
 	int num_people;
+
+	bool musicActivatedSI;
 
 };
