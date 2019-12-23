@@ -655,7 +655,7 @@ bool ModulePlayer::Start()
 	mini.wheels[3].brake = true;
 	mini.wheels[3].steering = false;
 
-
+	hasWon = false;
 	vehicleSelected = false;
 	trailerAdded = false;
 	initialPosition.Set(-72.5, 1, -5);
@@ -944,6 +944,7 @@ update_status ModulePlayer::Update(float dt)
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 			App->scene_intro->currentStep = Running;
+			timer.Start();
 		}
 
 		if (vehicleSelectedNum == 3) {
@@ -1137,7 +1138,7 @@ update_status ModulePlayer::Update(float dt)
 		timer.Stop();
 		Player->Render();
 		if (trailerAdded) Trailer->Render();
-		char title[40];
+		char title[60];
 		if (hasWon) {
 			sprintf_s(title, "Congratulations! You won with %d seconds left", 210 - timer.Read() / 1000);
 

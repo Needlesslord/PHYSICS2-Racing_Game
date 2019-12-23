@@ -120,8 +120,8 @@ update_status ModuleSceneIntro::Update(float dt)
 							checkpoint_cubes[i + 2]->color = Red;
 						}
 						if (lap > 2) {
-							currentStep = GameOver;
 							App->player->hasWon = true;
+							currentStep = GameOver;
 						}
 						checkpoint_cubes[i]->color = Green;
 						if (i != 0) checkpoint_cubes[i - 1]->color = Red;

@@ -84,7 +84,7 @@ public:
 	//timer
 	Timer			timer;
 	bool			timerOn = false;
-	bool			hasWon = false;
+	bool			hasWon;
 	bool			raceFinished = false;
 	//music
 	bool musicActivatedP;
