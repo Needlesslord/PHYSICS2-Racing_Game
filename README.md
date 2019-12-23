@@ -40,7 +40,7 @@ FX:
 	[Turbo](http://www.grsites.com/archive/sounds/)
 	[CarStart](http://www.grsites.com/archive/sounds/)
 	[Win](http://www.grsites.com/archive/sounds/)
-	[Lose]()
+	[Lose](https://www.youtube.com/)
 	[Checkpoint](http://www.grsites.com/archive/sounds/)
 
 Design and Development: 

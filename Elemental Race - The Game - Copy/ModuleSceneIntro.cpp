@@ -39,7 +39,7 @@ bool ModuleSceneIntro::Start()
 	//adding start line
 	currentStep = SelectVehicle;
 	//music
-	App->audio->PlayMusic("audio/music/background_music.ogg");
+	App->audio->PlayMusic("audio/music/bensound-badass.ogg");
 	checkpointFx = App->audio->LoadFx("audio/fx/checkpoint.wav");
 
 	return true;
@@ -121,6 +121,9 @@ update_status ModuleSceneIntro::Update(float dt)
 							}
 						}
 						checkpoint_cubes[i]->color = Green;
+						App->audio->PlayFx(checkpointFx);
+
+
 				}
 			}
 		}
