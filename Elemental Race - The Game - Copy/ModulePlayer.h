@@ -94,4 +94,17 @@ public:
 	bool			timerOn = false;
 	bool			hasWon = false;
 	bool			raceFinished = false;
+	//music
+	bool musicActivatedP;
+	uint lockFx;
+	uint winFx;
+	uint loseFx;
+	uint checkpointFx;
+	uint turboFx;
+	uint startCarFx;
+	bool lockJustOnce;
+	bool winJustOnce;
+	bool loseJustOnce;
+	bool startCarJustOnce;
+
 };
