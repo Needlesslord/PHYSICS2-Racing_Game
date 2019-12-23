@@ -36,6 +36,12 @@
 Music:
 	Ben Sound
 
+FX:
+	[Turbo](http://www.grsites.com/archive/sounds/)
+	[CarStart](http://www.grsites.com/archive/sounds/)
+	[Win](http://www.grsites.com/archive/sounds/)
+	[Lose]()
+	[Checkpoint](http://www.grsites.com/archive/sounds/)
 
 Design and Development: 
 
@@ -141,6 +147,7 @@ CONTROLS:
 	**Forest course:** it has bushes.
 	**Fire course:** it has fire archs.
 
+	The Window will show you all the comands to select the car, if you've won/lost, etc.
 
 
 ## Disclosure

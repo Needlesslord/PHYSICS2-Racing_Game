@@ -663,6 +663,19 @@ bool ModulePlayer::Start()
 	timerOn = false;
 	//title values
 	int laps = 0;
+	//music
+	lockFx = App->audio->LoadFx("audio/fx/checkpoint_2.wav");
+	lockJustOnce = true;
+	startCarJustOnce = true;
+	winJustOnce = true;
+	loseJustOnce = true;
+	musicActivatedP = true;
+	winFx = App->audio->LoadFx("audio/fx/win.wav");
+	loseFx = App->audio->LoadFx("audio/fx/lose.wav");
+	checkpointFx = App->audio->LoadFx("audio/fx/checkpoint.wav");
+	turboFx = App->audio->LoadFx("audio/fx/turbo.wav");
+	startCarFx = App->audio->LoadFx("audio/fx/startCar.wav");
+
 
 	return true;
 }
@@ -752,6 +765,9 @@ update_status ModulePlayer::Update(float dt)
 			}
 		}
 
+		//music activated
+		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) musicActivatedP = !musicActivatedP;
+		
 		// following vehicle
 		if (following_camera)
 		{
@@ -819,10 +835,10 @@ update_status ModulePlayer::Update(float dt)
 
 	//MUSIC -------------------------------------------------------------------------
 
-	//if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
-	//{
-	//	App->audio->PlayFx(App->audio->accelerateFx);
-	//}
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && musicActivatedP)
+	{
+		App->audio->PlayFx(turboFx);
+	}
 
 	//MUSIC END ---------------------------------------------------------------------	
 	if (App->scene_intro->currentStep == SelectVehicle) {
@@ -832,6 +848,13 @@ update_status ModulePlayer::Update(float dt)
 			vehicleSelected = true;
 			vehicleSelectedNum = 0;
 			App->scene_intro->currentStep = LockVehicle;
+
+
+			if (lockJustOnce && musicActivatedP) {
+				App->audio->PlayFx(lockFx);
+				lockJustOnce = !lockJustOnce;
+			}
+
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) { //BUS
 			Player = App->physics->AddVehicle(bus);
@@ -839,6 +862,13 @@ update_status ModulePlayer::Update(float dt)
 			vehicleSelected = true;
 			vehicleSelectedNum = 1;
 			App->scene_intro->currentStep = LockVehicle;
+
+
+			if (lockJustOnce && musicActivatedP) {
+				App->audio->PlayFx(lockFx);
+				lockJustOnce = !lockJustOnce;
+			}
+
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) { //
 			Player = App->physics->AddVehicle(truck);
@@ -846,6 +876,13 @@ update_status ModulePlayer::Update(float dt)
 			vehicleSelected = true;
 			vehicleSelectedNum = 2;
 			App->scene_intro->currentStep = LockVehicle;
+
+
+			if (lockJustOnce && musicActivatedP) {
+				App->audio->PlayFx(lockFx);
+				lockJustOnce = !lockJustOnce;
+			}
+
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
 			Player = App->physics->AddVehicle(monsterTruck);
@@ -853,6 +890,13 @@ update_status ModulePlayer::Update(float dt)
 			vehicleSelected = true;
 			vehicleSelectedNum = 3;
 			App->scene_intro->currentStep = LockVehicle;
+
+
+			if (lockJustOnce && musicActivatedP) {
+				App->audio->PlayFx(lockFx);
+				lockJustOnce = !lockJustOnce;
+			}
+
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN) {
 			Player = App->physics->AddVehicle(mini);
@@ -860,6 +904,13 @@ update_status ModulePlayer::Update(float dt)
 			vehicleSelected = true;
 			vehicleSelectedNum = 4;
 			App->scene_intro->currentStep = LockVehicle;
+
+
+			if (lockJustOnce && musicActivatedP) {
+				App->audio->PlayFx(lockFx);
+				lockJustOnce = !lockJustOnce;
+			}
+
 		}
 		char title[150];
 		sprintf_s(title, "SELECT:               CAR(0)               BUS(1)               TRUCK(2)               MONSTERTRUCK(3)               MINI(4)");
@@ -911,6 +962,12 @@ update_status ModulePlayer::Update(float dt)
 	}
 
 	else if (App->scene_intro->currentStep == Running) {
+
+		if (startCarJustOnce && musicActivatedP) {
+			App->audio->PlayFx(startCarFx);
+			startCarJustOnce = !startCarJustOnce;
+		}
+
 		turn = acceleration = brake = 0.0f;
 
 		if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) {
@@ -1081,8 +1138,24 @@ update_status ModulePlayer::Update(float dt)
 		Player->Render();
 		if (trailerAdded) Trailer->Render();
 		char title[40];
-		if (hasWon) sprintf_s(title, "Congratz, bitch! You won with %d seconds left", 210 - timer.Read() / 1000);
-		else sprintf_s(title, "You Lose, bitch");
+		if (hasWon) {
+			sprintf_s(title, "Congratulations! You won with %d seconds left", 210 - timer.Read() / 1000);
+
+			if (winJustOnce && musicActivatedP) {
+				App->audio->PlayFx(winFx);
+				winJustOnce = !winJustOnce;
+			}
+
+		}
+		else {
+			sprintf_s(title, "You Lose :( Want to try again?");
+			
+			if (loseJustOnce && musicActivatedP) {
+				App->audio->PlayFx(loseFx);
+				loseJustOnce = !loseJustOnce;
+			}
+
+		}
 		App->window->SetTitle(title);
 	}
 

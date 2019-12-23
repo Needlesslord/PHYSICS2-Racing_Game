@@ -102,5 +102,8 @@ public:
 	int num_fire_archs;
 	int num_fireballs;
 	int num_people;
+	//music
+	uint checkpointFx;
+	bool musicActivatedSI;
 
 };

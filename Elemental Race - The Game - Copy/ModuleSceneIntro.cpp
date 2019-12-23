@@ -39,6 +39,9 @@ bool ModuleSceneIntro::Start()
 	AddObstacles(4);
 	//adding start line
 	currentStep = SelectVehicle;
+	//music
+	App->audio->PlayMusic("audio/music/background_music.ogg");
+	checkpointFx = App->audio->LoadFx("audio/fx/checkpoint.wav");
 
 	return true;
 }
