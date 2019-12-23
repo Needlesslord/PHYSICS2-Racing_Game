@@ -116,7 +116,7 @@ CONTROLS:
 
 	[C]		Go to saved checkpoint (time will still run!)
 	[N]		New game
-	[M]		Activate/Deactivate music and FX
+	[M]		Activate/Deactivate FX
 
 	DEBUG:
 

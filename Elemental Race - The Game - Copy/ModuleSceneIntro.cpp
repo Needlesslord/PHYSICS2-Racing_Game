@@ -42,6 +42,7 @@ bool ModuleSceneIntro::Start()
 	//music
 	App->audio->PlayMusic("audio/music/bensound-badass.ogg");
 	checkpointFx = App->audio->LoadFx("audio/fx/checkpoint.wav");
+	musicActivatedSI = true;
 
 	return true;
 }
@@ -103,6 +104,9 @@ update_status ModuleSceneIntro::Update(float dt)
 	bush_13->Render();
 	bush_14->Render();
 	bush_15->Render();
+
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) musicActivatedSI = !musicActivatedSI;
+
 
 	for (int i = 0; i < Checkpoints.Count(); i++) {
 		checkpoint_cubes[i]->Render();
