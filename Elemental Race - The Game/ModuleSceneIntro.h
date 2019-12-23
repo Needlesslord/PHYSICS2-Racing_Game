@@ -40,9 +40,11 @@ public:
 	void AddCheckpoint(float posX, float posY, float posZ);
 	bool CreateCheckpoints(float list[], uint size);
 	uint checkpoint_index = 0;
-	bool checkpointActivated[4] = { false,false,false,false };
 	uint checkpoints_list_size;
 	p2DynArray<PhysBody3D*>		Checkpoints;
+	Cube* checkpoint_cubes[3];
+	uint checkpointToActivate;
+	int checkpointActivated;
 
 	//to add all the obstacles
 	void AddObstacles(int zone);

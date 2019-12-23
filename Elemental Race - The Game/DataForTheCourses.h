@@ -497,14 +497,13 @@ float Mario[1248] = { //452 //678
 	//
 };
 
-float checkpoints_list[12] = {
-	-72.5,	   2,	20,
-	1000,	1000, 1000,
-	1000,	1000, 1000,
-	1000,	1000, 1000
+float checkpoints_list[9] = {
+	-74, 0,	 20,
+	79, 0, 120,
+	167.5, 0,  20
 };
 
-float forest[105] = {
+float forest[6] = {
 	-82.5, 2, -25 
 };
 #endif // !__DATAFORTHECOURSES_H__
