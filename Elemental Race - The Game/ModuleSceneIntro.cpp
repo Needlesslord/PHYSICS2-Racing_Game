@@ -106,7 +106,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	if (App->player->vehicleSelected && currentStep == Running) {
 		for (int i = 0; i < Checkpoints.Count(); i++) {
-			if (checkpointToActivate == i && checkpointActivated == i - 1) {
+			if (checkpointToActivate == i && (checkpointActivated == i - 1 || checkpointActivated==Checkpoints.Count())) {
 				if (abs(App->player->Player->GetPos().x - Checkpoints[i]->GetPos().x < 12.5) && abs(Checkpoints[i]->GetPos().z - App->player->Player->GetPos().z < 2.5) &&
 					abs(-App->player->Player->GetPos().x + Checkpoints[i]->GetPos().x < 12.5) && abs(-Checkpoints[i]->GetPos().z + App->player->Player->GetPos().z < 2.5)) {
 						checkpointToActivate = i + 1;
@@ -117,7 +117,6 @@ update_status ModuleSceneIntro::Update(float dt)
 								checkpoint_cubes[i]->color = Red;
 							}
 						}
-						if (checkpointActivated > 2) checkpointActivated = 0;
 						checkpoint_cubes[i]->color = Green;
 				}
 			}
