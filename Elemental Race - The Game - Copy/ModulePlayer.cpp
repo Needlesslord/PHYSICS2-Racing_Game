@@ -655,10 +655,10 @@ bool ModulePlayer::Start()
 	mini.wheels[3].brake = true;
 	mini.wheels[3].steering = false;
 
-
+	hasWon = false;
 	vehicleSelected = false;
 	trailerAdded = false;
-
+	initialPosition.Set(-72.5, 1, -5);
 	//timer
 	timerOn = false;
 	//title values
@@ -858,7 +858,7 @@ update_status ModulePlayer::Update(float dt)
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) { //BUS
 			Player = App->physics->AddVehicle(bus);
-			Player->SetPos(-72.5, 2, -5);
+			Player->SetPos(-72.5, 1, -5);
 			vehicleSelected = true;
 			vehicleSelectedNum = 1;
 			App->scene_intro->currentStep = LockVehicle;
@@ -944,6 +944,7 @@ update_status ModulePlayer::Update(float dt)
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 			App->scene_intro->currentStep = Running;
+			timer.Start();
 		}
 
 		if (vehicleSelectedNum == 3) {
@@ -969,6 +970,14 @@ update_status ModulePlayer::Update(float dt)
 		}
 
 		turn = acceleration = brake = 0.0f;
+
+		if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) {
+			if (App->scene_intro->checkpointActivated == -1)
+				Player->SetPos(initialPosition.x, initialPosition.y, initialPosition.z);
+			else Player->SetPos(App->scene_intro->Checkpoints[App->scene_intro->checkpointActivated]->GetPos().x, 
+				App->scene_intro->Checkpoints[App->scene_intro->checkpointActivated]->GetPos().y, 
+				App->scene_intro->Checkpoints[App->scene_intro->checkpointActivated]->GetPos().z);
+		}
 
 		if (vehicleSelectedNum == 0) { // CAR
 			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
@@ -1127,10 +1136,9 @@ update_status ModulePlayer::Update(float dt)
 
 	else if (App->scene_intro->currentStep == GameOver) {
 		timer.Stop();
-		Player->SetPos(-72.5, 1, -5);
 		Player->Render();
 		if (trailerAdded) Trailer->Render();
-		char title[40];
+		char title[60];
 		if (hasWon) {
 			sprintf_s(title, "Congratulations! You won with %d seconds left", 210 - timer.Read() / 1000);
 
