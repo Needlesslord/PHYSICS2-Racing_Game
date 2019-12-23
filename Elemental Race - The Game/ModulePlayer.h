@@ -97,5 +97,6 @@ public:
 
 	bool musicActivatedP;
 	uint lockFx;
+	bool lockJustOnce;
 
 };
