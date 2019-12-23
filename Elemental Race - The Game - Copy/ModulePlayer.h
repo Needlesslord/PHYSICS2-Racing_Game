@@ -64,16 +64,6 @@ public:
 	VehicleInfo bigTrailer;
 	VehicleInfo mini;
 
-	/*PhysVehicle3D* Car;
-	PhysVehicle3D* Bus;
-	PhysVehicle3D* Bike;
-	PhysVehicle3D* Truck;
-	PhysVehicle3D* RacingCar;
-	PhysVehicle3D* MonsterTruck;
-	PhysVehicle3D* BigTruck;
-	PhysVehicle3D* BigTrailer;
-	PhysVehicle3D* Mini;*/
-
 	PhysVehicle3D* Player;
 	PhysVehicle3D* Trailer;
 	//STRUCT VEHICLE
@@ -88,6 +78,8 @@ public:
 
 	bool following_camera;
 	vec3 dist_to_car;
+	vec3 initialPosition;
+	vec3 positionCheckpointActivated;
 
 	//timer
 	Timer			timer;

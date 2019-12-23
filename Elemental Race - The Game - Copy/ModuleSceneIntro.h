@@ -57,12 +57,6 @@ public:
 	Cube AddHead(int ethnicity);
 	Cube AddBody(int shirt);
 	Cube* water_lake;
-	PhysBody3D* start_line;
-	Cube* start_line_cube;
-	PhysBody3D* mid_line;
-	Cube* mid_line_cube;
-	bool startActivated;
-	bool midActivated;
 	uint lap;
 
 	//fire archs
