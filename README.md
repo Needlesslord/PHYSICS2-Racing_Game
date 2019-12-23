@@ -47,7 +47,7 @@ Design and Development:
 ## Elemental Race: The Game
 
 
-Elemental Race: The Game is a simple racing game where you can choose between different vehicles to run on a track based on some of the elements (water, fire, Earth, forest), and you have a limited amount of time to finish 3 rounds.
+Elemental Race: The Game is a simple racing game where you can choose between different vehicles to run on a track based on some of the elements (water, fire, Earth, forest), and you have a limited amount of time (3 min) to finish 2 laps.
 
 
 ## Gameplay
@@ -97,7 +97,7 @@ CONTROLS:
 
 	PLAYER:
 
-	To choose between vehicles:
+	To choose between vehicles (only before [ENTER]):
 
 	[0] 		Default car		
 	[1] 		Bus
@@ -105,35 +105,41 @@ CONTROLS:
 	[3] 		MonsterTruck (no Trailer available)
 	[4] 		Mini
 	[T] 		Add a trailer (if you want to, ONLY at the beggining when choosing)
-	[RETURN] 	To start the race
+	[RETURN/ENTER] 	To start the race
 	[SPACE]		Turbo (you cannot turn when activated)
+
+	[C]		Go to saved checkpoint (time will still run!)
+	[N]		New game
+	[M]		Activate/Deactivate music and FX
 
 	DEBUG:
 
 	[F1] Collisions	
 	[F2] Free camera	
 
-	Before coosing a vehicle:
+	Before choosing a vehicle:
 
-	[W][A][S][D] - [R][F] - [Mouse's right click]	Move the camera around - Move the camera up and down - Rotate the camera
+	[W][A][S][D]		Move the camera around
+	[R][F]			Move the camera up and down
+	[Mouse's right click]	Rotate the camera
 
 
 ## Content
 
 	### Innovation
 
-	It is possible to choose between different vehicles, which behave differently. With some of the vehicles you can get off course, but the fun part is to try to stay inside (also, it was fun that way!).
+	It is possible to choose between different vehicles, which behave differently. With some of the vehicles you can get off course, but the fun part is to try to stay inside (also, it is fun that way!); however, the timer will still be on, so don't take a lot of time going back to your last checkpoint.
 
-	You have a turbo as well with SPACE.
+		You have a turbo as well with [SPACE].
 
 	The track has different zones, which have an element base to have different obstacles.
 
 	Each trait that makes the course interesting:
 
-		**Water course:** it has a lake.
-		**Earth course:** it has a mountain.
-		**Forest course:** it has bushes.
-		**Fire course:** it has fire archs.
+	**Water course:** it has a lake.
+	**Earth course:** it has a mountain.
+	**Forest course:** it has bushes.
+	**Fire course:** it has fire archs.
 
 
 
@@ -146,7 +152,7 @@ This is a game made by two second year students of the Videogame Design and Deve
 The games is a simple racing game against the clock with 5 vehicles to choose from and the possibility of a trailer with the elements theme.
 
 
-The game has been made using C++, Bullet3D, SDL and pugi libraries. 
+The game has been made using C++, Bullet3D and SDL. 
 
 
 

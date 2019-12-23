@@ -41,6 +41,15 @@ bool ModuleSceneIntro::Start()
 	startActivated = false;
 	lap = 1;
 
+	//music
+	App->audio->PlayMusic("audio/music/background_music.ogg");
+	winFx = App->audio->LoadFx("audio/fx/win.wav");
+	loseFx = App->audio->LoadFx("audio/fx/lose.wav");
+	checkpointFx = App->audio->LoadFx("audio/fx/checkpoint.wav");
+	turboFx = App->audio->LoadFx("audio/fx/turbo.wav");
+	startCarFx = App->audio->LoadFx("audio/fx/startCar.wav");
+	motorFx = App->audio->LoadFx("audio/fx/motor.wav");
+
 	return true;
 }
 
@@ -106,6 +115,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	//App->player->pos.x - clients[i].transform[12]) < 3 && abs(App->player->pos.z - clients[i].transform[14]) < 3;
 	
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) musicActivatedSI = !musicActivatedSI;
 
 	return UPDATE_CONTINUE;
 }

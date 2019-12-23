@@ -659,6 +659,9 @@ bool ModulePlayer::Start()
 	vehicleSelected = false;
 	trailerAdded = false;
 
+	//music
+	lockFx = App->audio->LoadFx("audio/fx/checkpoint_2.wav");
+
 	//timer
 	timerOn = false;
 	//title values
@@ -834,6 +837,8 @@ update_status ModulePlayer::Update(float dt)
 	//	App->audio->PlayFx(App->audio->accelerateFx);
 	//}
 
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) musicActivatedP = !musicActivatedP;
+
 	//MUSIC END ---------------------------------------------------------------------	
 	if (App->scene_intro->currentStep == SelectVehicle) {
 		if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
@@ -869,6 +874,9 @@ update_status ModulePlayer::Update(float dt)
 	}
 
 	else if (App->scene_intro->currentStep == LockVehicle) {
+
+		App->audio->PlayFx(lockFx);
+
 		if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && vehicleSelectedNum == 0 && !trailerAdded) { // TRAILER TO CAR
 			Trailer = App->physics->AddVehicle(trailer);
 			Trailer->SetPos(-72.5, 2, -15);
