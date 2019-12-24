@@ -841,6 +841,7 @@ update_status ModulePlayer::Update(float dt)
 	}
 
 	//MUSIC END ---------------------------------------------------------------------	
+	
 	if (App->scene_intro->currentStep == SelectVehicle) {
 		if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
 			Player = App->physics->AddVehicle(car);
@@ -1164,6 +1165,52 @@ update_status ModulePlayer::Update(float dt)
 		App->scene_intro->currentStep = GameOver;
 		timer.Stop();
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
+
+		if (vehicleSelectedNum == 0) { // CAR
+			Player->SetPos(-72.5, 1, -5);
+		}
+		else if (vehicleSelectedNum == 1) { // BUS
+			Player->SetPos(-72.5, 1, -5);
+		}
+		else if (vehicleSelectedNum == 2) { // TRUCK
+			Player->SetPos(-72.5, 1, -5);
+		}
+		else if (vehicleSelectedNum == 3) { // MONSTERTRUCK
+			Player->SetPos(-72.5, 1, -5);
+		}
+		else if (vehicleSelectedNum == 4) { // MINI
+			Player->SetPos(-72.5, 1, -5);
+		}
+
+		if (trailerAdded) {
+			if (vehicleSelectedNum == 0) { // TRAILER TO CAR
+				Trailer->SetPos(-72.5, 2, -15);
+			}
+			else if (vehicleSelectedNum == 1) { // TRAILER TO BUS
+				Trailer->SetPos(-72.5, 2, -20);
+			}
+			else if (vehicleSelectedNum == 2) { // TRAILER TO TRUCK
+				Trailer->SetPos(-72.5, 2, -25);
+			}
+			else if (vehicleSelectedNum == 4) { // TRAILER TO MINI
+				Trailer->SetPos(-72.5, 2, -7.5);
+			}
+		}
+
+		App->scene_intro->lap = 0;
+
+		for (int i = 0; i<2; i++) App->scene_intro->checkpoint_cubes[i]->color = Red;
+
+		App->scene_intro->checkpointActivated = -1;
+		App->scene_intro->checkpointToActivate = 0;
+
+		App->scene_intro->currentStep = Running;
+		timer.Start();
+
+	}
+
 
 	return UPDATE_CONTINUE;
 }
